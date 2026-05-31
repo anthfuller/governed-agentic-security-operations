@@ -746,6 +746,34 @@ Tool execution
 Execution audit
 ```
 
+### Tool Execution Token Requirements
+
+After a tool request is authorized, the Tool Gateway MUST NOT pass broad credentials or rely only on the original agent request.
+
+The Tool Gateway SHOULD exchange the approved `policy_decision` for a short-lived, cryptographically signed execution token. The execution token SHOULD be scoped to the approved action and SHOULD include, where applicable:
+
+| Claim | Purpose |
+|---|---|
+| `tenant_id` | Tenant or customer boundary |
+| `customer_id` | Customer service boundary |
+| `case_id` | Incident or case boundary |
+| `workflow_id` | Approved workflow context |
+| `agent_id` | Requesting agent identity |
+| `tool_id` | Authorized tool |
+| `allowed_operations` | Explicit operations approved for execution |
+| `target_entity` | Approved asset, identity, evidence object, or resource target |
+| `policy_decision_id` | Policy decision authorizing the action |
+| `approval_record_id` | Human approval reference when required |
+| `audit_reference_id` | Audit chain reference |
+| `correlation_id` | End-to-end trace identifier |
+| `iat` | Token issue time |
+| `nbf` | Not-before time |
+| `exp` | Token expiration time |
+
+Downstream tools and APIs MUST validate the execution token before action. Execution MUST fail closed if the token is missing, expired, reused outside scope, cryptographically invalid, mismatched to the request, missing required claims, or authorizes an operation outside the approved policy decision.
+
+The execution token MUST NOT grant broader access than the PDP decision, approval record, tool contract, tenant scope, case scope, or customer authorization allow.
+
 ---
 
 ## Audit and Traceability Requirements
@@ -798,6 +826,7 @@ Audit logs MUST support reconstruction of governed decisions, approvals, tool ex
 | Governance | Agent ownership, lifecycle, access review, and auditability |
 | Privacy | Data minimization, masking, and controlled evidence handling |
 | Resilience | Workflow stops or escalates when controls fail |
+| Performance / Latency | Deterministic controls such as schema validation, token validation, policy checks, and PEP enforcement SHOULD have defined latency budgets and remain materially faster than LLM inference. Remote PDP calls SHOULD define timeout, cache, retry, and fail-closed behavior. |
 | Service Alignment | Service tower boundaries, escalation paths, and customer approvals |
 
 ---
