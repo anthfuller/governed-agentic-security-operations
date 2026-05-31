@@ -1,0 +1,362 @@
+{
+  "schema_version": "1.0.0",
+  "example_name": "alert-triage-to-recommendation",
+  "artifact_type": "example_audit_event",
+  "audit_event_id": "audit-event-example-alert-triage-0001",
+  "audit_reference_id": "audit-example-alert-triage-0001",
+  "correlation_id": "corr-example-alert-triage-0001",
+  "event_type": "agentic_alert_triage_recommendation_audit",
+  "event_category": "agentic_security_operations",
+  "event_outcome": "recommendation_allowed_internal_only",
+  "event_status": "completed_with_restrictions",
+  "created_at": "2026-05-31T15:48:05Z",
+  "event_producer": {
+    "system_id": "agentic-security-ops-audit-pipeline",
+    "system_type": "audit_event_pipeline",
+    "environment": "example",
+    "schema_owner": "security-architecture"
+  },
+  "source_artifacts": {
+    "request_id": "req-example-alert-triage-0001",
+    "request_artifact": "example-request.json",
+    "judge_output_id": "judge-output-example-alert-triage-0001",
+    "judge_output_artifact": "example-judge-output.json",
+    "policy_decision_id": "policy-decision-example-alert-triage-0001",
+    "policy_decision_artifact": "example-policy-decision.json",
+    "agent_output_reference_id": "agent-output-example-alert-triage-0001"
+  },
+  "service_model": {
+    "primary": "MDR",
+    "also_applicable_to": [
+      "MSSP",
+      "SOC / Incident Response"
+    ],
+    "dfir_applicability": "not_applicable_unless_alert_escalates_to_evidence_handling_or_forensic_casework",
+    "private_local_llm_dfir_applicability": "not_applicable_for_this_triage_only_example"
+  },
+  "scope": {
+    "tenant_id": "tenant-example-001",
+    "customer_id": "customer-example-001",
+    "customer_name": "Example Customer",
+    "environment_id": "prod-example-customer",
+    "case_id": "case-example-2026-0001",
+    "incident_id": "incident-example-2026-0001",
+    "alert_id": "alert-example-0001",
+    "workflow_id": "workflow-alert-triage-0001",
+    "scope_result": "tenant_customer_incident_workflow_scoped",
+    "scope_violations_detected": false
+  },
+  "actors": {
+    "requester": {
+      "user_id": "analyst-example-001",
+      "user_role": "soc_analyst",
+      "team": "managed_detection_and_response",
+      "requesting_system": "case-management-system"
+    },
+    "agent": {
+      "agent_id": "agent-alert-triage-001",
+      "agent_role": "triage_recommendation_assistant"
+    },
+    "judge": {
+      "judge_id": "judge-alert-recommendation-quality-001",
+      "judge_type": "agentic_triage_recommendation_assurance"
+    },
+    "pdp": {
+      "pdp_id": "pdp-agentic-security-ops-001",
+      "policy_bundle_id": "policy-bundle-alert-triage-001",
+      "policy_bundle_version": "1.0.0"
+    },
+    "pep_enforcement_points": [
+      "pep-workflow-orchestrator-001",
+      "pep-tool-access-001",
+      "pep-retrieval-001",
+      "pep-output-publishing-001",
+      "pep-model-gateway-001"
+    ]
+  },
+  "mission_context": {
+    "mission": "Triage a high-severity endpoint alert and produce a governed response recommendation.",
+    "authorized_purpose": "Alert triage, enrichment review, recommendation drafting, and escalation assessment.",
+    "requested_outcome": "Produce a recommendation for analyst review. Do not execute containment or customer-impacting actions.",
+    "workflow_stage": "triage",
+    "urgency": "high"
+  },
+  "alert_reference": {
+    "source_system_id": "xdr-platform-example",
+    "source_alert_url": "https://example.invalid/alerts/alert-example-0001",
+    "title": "Suspicious PowerShell execution with encoded command",
+    "severity": "high",
+    "confidence": "medium",
+    "category": "endpoint_detection",
+    "tactic": "Execution",
+    "technique": "PowerShell",
+    "mitre_attack_ids": [
+      "T1059.001"
+    ],
+    "detected_at": "2026-05-31T15:31:42Z",
+    "affected_asset_ids": [
+      "host-example-001"
+    ],
+    "affected_identity_ids": [
+      "user-example-014"
+    ]
+  },
+  "data_governance": {
+    "data_classification": "confidential",
+    "sensitivity_label": "customer-security-operations",
+    "contains_customer_data": true,
+    "contains_evidence": false,
+    "evidence_object_ids": [],
+    "data_residency_requirement": "customer-approved-region",
+    "retention_policy_id": "retention-security-ops-example-90d"
+  },
+  "retrieval_and_memory": {
+    "rag_used": true,
+    "knowledge_store_id": "ks-example-customer-001-security-context",
+    "knowledge_store_or_memory_scope": "tenant-example-001/customer-example-001/incidents/incident-example-2026-0001",
+    "knowledge_memory_scope_result": "customer_and_incident_scoped_pass",
+    "retrieved_context_ids": [
+      "ctx-alert-example-0001",
+      "ctx-asset-example-host-001",
+      "ctx-identity-example-user-014",
+      "ctx-threat-intel-powershell-encoded-command"
+    ],
+    "memory_read_performed": false,
+    "persistent_memory_write_performed": false,
+    "retrieval_scope_violations_detected": false,
+    "stale_context_detected": false,
+    "cross_customer_context_detected": false
+  },
+  "model_runtime": {
+    "model_routing_policy_id": "model-routing-policy-security-triage-001",
+    "routing_mode": "approved_models_only",
+    "validated_model_required": true,
+    "selected_model_profile_id": "validated-security-triage-model-profile-001",
+    "model_version": "validated-2026-05",
+    "validation_reference_id": "model-validation-example-2026-05-001",
+    "unvalidated_model_fallback_used": false,
+    "external_network_access_allowed": false,
+    "training_on_customer_data_allowed": false,
+    "prompt_and_response_logging": "metadata_and_references_only"
+  },
+  "budget_and_runtime": {
+    "budget_policy_id": "budget-policy-alert-triage-001",
+    "max_prompt_tokens_allowed": 8000,
+    "max_completion_tokens_allowed": 1500,
+    "max_total_tokens_allowed": 9500,
+    "max_retrieval_results": 8,
+    "max_agent_iterations": 1,
+    "max_tool_iterations": 0,
+    "max_runtime_seconds": 45,
+    "max_retry_attempts": 1,
+    "estimated_cost_ceiling_usd": 0.25,
+    "actual_prompt_tokens": 4260,
+    "actual_completion_tokens": 740,
+    "actual_total_tokens": 5000,
+    "actual_retrieval_results": 4,
+    "actual_agent_iterations": 1,
+    "actual_tool_iterations": 0,
+    "actual_runtime_seconds": 18,
+    "actual_retry_attempts": 0,
+    "estimated_cost_usd": 0.11,
+    "budget_exceeded": false,
+    "budget_enforcement_result": "pass"
+  },
+  "agent_activity": {
+    "requested_action": "draft_internal_alert_triage_recommendation",
+    "agent_permissions_used": [
+      "read_alert_context",
+      "read_customer_scoped_enrichment",
+      "draft_recommendation"
+    ],
+    "prohibited_actions_attempted": [],
+    "tool_execution_attempted": false,
+    "tool_execution_performed": false,
+    "customer_notification_attempted": false,
+    "customer_facing_output_created": false,
+    "case_note_write_attempted": false,
+    "ticket_update_attempted": false,
+    "alert_closure_attempted": false,
+    "recommendation_summary": "Escalate suspicious encoded PowerShell launched from a document process for analyst review. Do not execute containment or customer notification without separate policy decision and human approval.",
+    "agent_output_destination": "internal_case_workbench"
+  },
+  "judge_evaluation": {
+    "judge_output_id": "judge-output-example-alert-triage-0001",
+    "overall_result": "conditional_pass_for_internal_recommendation_only",
+    "overall_risk_level": "medium_high",
+    "recommended_policy_path": "allow_recommendation_only_require_human_approval_before_sensitive_action",
+    "human_review_required": true,
+    "customer_facing_release_allowed": false,
+    "tool_execution_allowed": false,
+    "ticket_or_case_write_allowed": false,
+    "dfir_escalation_required": false,
+    "notable_findings": [
+      {
+        "check_id": "evidence-001",
+        "result": "conditional_pass",
+        "summary": "Recommendation is supported for triage but is not sufficient for final forensic conclusion."
+      },
+      {
+        "check_id": "policy-001",
+        "result": "conditional_pass",
+        "summary": "Recommendation is acceptable for internal analyst review only and is not execution approval."
+      },
+      {
+        "check_id": "human-approval-001",
+        "result": "pass",
+        "summary": "Sensitive response actions require human approval."
+      }
+    ]
+  },
+  "policy_decision": {
+    "policy_decision_id": "policy-decision-example-alert-triage-0001",
+    "decision_engine": "pdp-agentic-security-ops-001",
+    "policy_evaluation_mode": "deny_by_default",
+    "outcome": "allow_recommendation_only",
+    "decision_status": "approved_with_restrictions",
+    "execution_authority_granted": false,
+    "customer_facing_release_allowed": false,
+    "tool_execution_allowed": false,
+    "case_note_write_allowed": false,
+    "ticket_update_allowed": false,
+    "persistent_memory_write_allowed": false,
+    "human_approval_required_before_sensitive_action": true,
+    "customer_authorization_required": false,
+    "dfir_escalation_required": false
+  },
+  "pep_enforcement_results": [
+    {
+      "pep_id": "pep-workflow-orchestrator-001",
+      "boundary": "workflow_orchestrator",
+      "decision_enforced": "allow_internal_recommendation_only",
+      "result": "pass",
+      "details": "Workflow state moved to pending_human_analyst_review."
+    },
+    {
+      "pep_id": "pep-tool-access-001",
+      "boundary": "tool_wrapper",
+      "decision_enforced": "deny_direct_tool_execution",
+      "result": "pass",
+      "details": "No endpoint, identity, containment, blocking, quarantine, deletion, notification, or ticket closure tool calls were executed."
+    },
+    {
+      "pep_id": "pep-retrieval-001",
+      "boundary": "retrieval_layer",
+      "decision_enforced": "customer_and_incident_scoped_retrieval_only",
+      "result": "pass",
+      "details": "Retrieved context remained scoped to the authorized customer and incident."
+    },
+    {
+      "pep_id": "pep-output-publishing-001",
+      "boundary": "output_destination",
+      "decision_enforced": "internal_case_workbench_only",
+      "result": "pass",
+      "details": "Output was not released to a customer-facing destination."
+    },
+    {
+      "pep_id": "pep-model-gateway-001",
+      "boundary": "model_gateway",
+      "decision_enforced": "validated_model_and_budget_constraints",
+      "result": "pass",
+      "details": "Model routing and budget constraints were enforced."
+    }
+  ],
+  "human_approval": {
+    "approval_required": true,
+    "approval_required_for": [
+      "containment",
+      "isolation",
+      "blocking",
+      "quarantine",
+      "credential_reset",
+      "customer_notification",
+      "customer_facing_release",
+      "case_closure"
+    ],
+    "approval_record_id": null,
+    "approval_status": "not_requested_for_recommendation_only",
+    "reason": "Internal recommendation is allowed, but any sensitive or customer-impacting follow-on action requires separate approval."
+  },
+  "customer_authorization": {
+    "required_for_current_output": false,
+    "customer_authorization_reference": null,
+    "reason": "The current output remains internal and does not notify the customer or perform customer-impacting action."
+  },
+  "execution_and_output": {
+    "execution_performed": false,
+    "execution_result": "no_operational_action_executed",
+    "output_created": true,
+    "output_type": "internal_triage_recommendation",
+    "output_destination": "internal_case_workbench",
+    "output_release_status": "internal_only",
+    "customer_facing_release_status": "not_released",
+    "case_state_after_event": "pending_human_analyst_review"
+  },
+  "deny_and_fail_closed_observations": {
+    "deny_paths_triggered": [],
+    "fail_closed_triggered": false,
+    "blocked_operations": [
+      "execute_endpoint_isolation",
+      "block_indicator",
+      "quarantine_file",
+      "delete_file",
+      "reset_credentials",
+      "disable_account",
+      "notify_customer",
+      "publish_customer_report",
+      "close_alert",
+      "write_persistent_memory",
+      "access_other_customer_context"
+    ],
+    "fail_closed_conditions_monitored": [
+      "missing_tenant_id",
+      "missing_customer_id",
+      "missing_incident_id",
+      "missing_workflow_id",
+      "policy_unavailable",
+      "unapproved_model_profile",
+      "budget_exceeded",
+      "retrieval_scope_mismatch",
+      "missing_required_approval",
+      "unauthorized_output_destination",
+      "cross_customer_context_requested"
+    ]
+  },
+  "audit_integrity": {
+    "audit_event_complete": true,
+    "replay_supported": true,
+    "reconstruction_fields_present": [
+      "request_id",
+      "judge_output_id",
+      "policy_decision_id",
+      "tenant_id",
+      "customer_id",
+      "incident_id",
+      "workflow_id",
+      "agent_id",
+      "policy_decision",
+      "retrieved_context_ids",
+      "output_destination",
+      "correlation_id",
+      "audit_reference_id"
+    ],
+    "tamper_evident_logging_required": true,
+    "log_retention_policy_id": "retention-security-ops-example-90d"
+  },
+  "final_state": {
+    "workflow_state": "pending_human_analyst_review",
+    "next_allowed_actions": [
+      "human analyst reviews recommendation",
+      "request additional read-only enrichment within approved scope",
+      "create separate approval request for containment if analyst determines it is needed",
+      "escalate to DFIR only if evidence handling or forensic investigation is required"
+    ],
+    "next_disallowed_actions_without_approval": [
+      "execute containment",
+      "notify customer",
+      "close alert",
+      "publish report",
+      "write persistent memory"
+    ]
+  }
+}
