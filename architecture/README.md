@@ -10,7 +10,7 @@ The files in this directory explain the overall operating model, major architect
 |---|---|
 | `executive-view.md` | Summarizes the architecture for leadership, governance, and service-owner audiences. |
 | `engineering-view.md` | Describes the major engineering components, handoffs, and implementation considerations. |
-| `layered-architecture.md` | Organizes the architecture into practical layers for agentic security operations. |
+| `governed-agentic-shared-operating-model.md` | Organizes the architecture into practical layers that show how agentic security operations. |
 | `control-loop.md` | Defines the repo-native governed agentic security operations loop. |
 | `architecture-principles.md` | Agents do not remove human accountability. |
 | `architecture-assumptions.md` | Defines the assumptions and contraints behind the Governed Agentic Operations Architecture. |
