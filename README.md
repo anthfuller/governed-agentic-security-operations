@@ -74,6 +74,7 @@ governed-agentic-security-operations-architecture/
 │       ├── executive-architecture.png
 │       ├── engineering-architecture.png
 │       ├── layered-architecture.png
+|       ├── f7-las-executive-control-loop-agentic-systems.png
 │       └── control-loop.png
 │
 ├── patterns/
