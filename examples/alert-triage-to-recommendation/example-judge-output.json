@@ -7,6 +7,21 @@
   "correlation_id": "corr-example-alert-triage-0001",
   "audit_reference_id": "audit-example-alert-triage-0001",
   "created_at": "2026-05-31T15:46:30Z",
+  "judge_id": "judge-alert-recommendation-quality-001",
+  "tenant_id": "tenant-example-001",
+  "case_id": "case-example-2026-0001",
+  "agent_output_id": "agent-output-example-alert-triage-0001",
+  "evaluation_result": "requires_review",
+  "evidence_supported": true,
+  "unsupported_claims": [
+    "Encoded command content is redacted",
+    "No confirmed malware verdict"
+  ],
+  "tenant_boundary_risk": false,
+  "sensitive_action_detected": true,
+  "hitl_required": true,
+  "recommended_disposition": "require_approval_review",
+  "rationale": "The recommendation may lead to endpoint isolation or other containment activity, which is customer-impacting and requires human approval before execution.",
   "service_model": {
     "primary": "MDR",
     "also_applicable_to": [
