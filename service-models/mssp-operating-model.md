@@ -139,15 +139,17 @@ The MSSP service model supports managed security operations across multiple cust
 
 MSSP workflows may recommend sensitive actions, but they must not execute them without approval and enforcement.
 
+An **authorized response path** means the response action is executed only through a documented, approved, and replayable workflow. For enterprise use, the response path should be represented as an **idempotent workflow** or **signed playbook** that defines the allowed action, required approvals, customer authorization requirements, PEP enforcement point, rollback or recovery expectation where applicable, and audit fields.
+
 | Sensitive Action | MSSP Agent Output Allowed | Execution Allowed? |
 |---|---:|---:|
 | Endpoint isolation | Recommendation only | Only after approval and authorized response path. |
 | Indicator blocking | Recommendation only | Only after approval and authorized response path. |
-| Credential reset | Recommendation only | Only after approval and customer authorization where required. |
-| Account disablement | Recommendation only | Only after approval and customer authorization where required. |
-| Customer notification | Draft only | Only after release approval and customer authorization where required. |
-| Evidence export | Not routine MSSP action | Requires DFIR / data handling authorization. |
-| Incident closure | Draft recommendation only | Human-controlled workflow decision required. |
+| Credential reset | Recommendation only | Only after approval, customer authorization where required, and authorized response path. |
+| Account disablement | Recommendation only | Only after approval, customer authorization where required, and authorized response path. |
+| Customer notification | Draft only | Only after release approval, customer authorization where required, and controlled output path. |
+| Evidence export | Not routine MSSP action | Requires DFIR / data handling authorization and approved evidence-transfer path. |
+| Incident closure | Draft recommendation only | Human-controlled workflow decision required with audit-linked closure rationale. |
 
 ## Escalation Paths
 
@@ -166,7 +168,7 @@ MSSP workflows should emit or preserve:
 
 - request identifier;
 - correlation identifier;
-- audit reference identifier;
+- audit reference identifier — this **MUST** match the audit reference identifier used in the related `example-audit-event.json` structure so the request, decision, approval, enforcement, and final workflow state remain linked;
 - tenant and customer identifiers;
 - case or incident identifier where applicable;
 - workflow identifier;
@@ -204,6 +206,8 @@ MSSP workflows should emit or preserve:
 | [`local-llm-forensic-timeline`](../examples/local-llm-forensic-timeline/) | Applies only if MSSP hands off or supports DFIR timeline work. |
 
 ## Relationship to Patterns
+
+Service owners must map the PDP / PEP boundaries defined in this operating model to specific infrastructure components in their deployment guide, such as workflow orchestrators, tool wrappers, API gateways, retrieval gateways, ticket connectors, memory gateways, and output publishing controls.
 
 | Pattern | MSSP Usage |
 |---|---|
