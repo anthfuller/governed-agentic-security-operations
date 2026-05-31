@@ -2,13 +2,13 @@
 
 ## Purpose
 
-The F7-LAS Agentic Execution Control Loop defines how agentic security actions move from request, reasoning, and proposed action through policy decision, conditional human oversight, scoped execution, output validation, monitoring, and continuous assurance.
+The F7-LAS Agentic Execution Control Loop defines the runtime governance pattern used across the **Agentic MSSP / MDR / DFIR Security Operations Architecture**. It shows how agentic actions are proposed, policy-evaluated, human-reviewed when required, executed within scoped boundaries, validated, monitored, and fed back into continuous assurance.
 
-It is intended to support governed security operations across **MSSP**, **MDR**, **SOC / Incident Response**, **DFIR**, and related agent-assisted security workflows.
+Its purpose is to ensure that agentic systems do not act on implicit trust, but operate through explicit mission context, policy decisioning, enforcement points, human oversight, auditability, and fail-closed controls.
 
 ## Where It Applies
 
-This control loop can be used anywhere an agent, automation, workflow, or AI-assisted security process may propose or execute an action that affects tools, data, evidence, tenants, cases, customers, or operational outcomes.
+This control loop supports governed security operations across **MSSP**, **MDR**, **SOC / Incident Response**, **DFIR**, and **Private / Local LLM-assisted DFIR** where applicable.
 
 Primary use cases include:
 
