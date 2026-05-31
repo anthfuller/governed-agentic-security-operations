@@ -81,6 +81,7 @@
   },
   "alert": {
     "source_system_id": "xdr-platform-example",
+    "evidence_ref": "evidence://tenant-example-001/incident-example-2026-0001/alert-example-0001",
     "source_alert_url": "https://example.invalid/alerts/alert-example-0001",
     "title": "Suspicious PowerShell execution with encoded command",
     "severity": "high",
@@ -93,6 +94,11 @@
       "T1059.001"
     ],
     "detected_at": "2026-05-31T15:31:42Z",
+    "ingestion_timestamp": "2026-05-31T15:35:10Z",
+    "entity_refs": [
+      "host-example-001",
+      "user-example-014"
+    ],
     "affected_assets": [
       {
         "asset_id": "host-example-001",
