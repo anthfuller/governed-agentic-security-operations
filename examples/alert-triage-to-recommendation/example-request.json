@@ -1,0 +1,275 @@
+{
+  "schema_version": "1.0.0",
+  "example_name": "alert-triage-to-recommendation",
+  "request_type": "agentic_alert_triage_request",
+  "request_id": "req-example-alert-triage-0001",
+  "correlation_id": "corr-example-alert-triage-0001",
+  "audit_reference_id": "audit-example-alert-triage-0001",
+  "created_at": "2026-05-31T15:45:00Z",
+  "service_model": {
+    "primary": "MDR",
+    "also_applicable_to": [
+      "MSSP",
+      "SOC / Incident Response"
+    ],
+    "not_primary_for": [
+      "DFIR",
+      "Private / Local LLM-assisted DFIR"
+    ],
+    "dfir_escalation_note": "DFIR controls apply only if this alert triage workflow escalates into evidence handling, forensic investigation, or local/private forensic analysis."
+  },
+  "mission_context": {
+    "mission": "Triage a high-severity endpoint alert and produce a governed response recommendation.",
+    "authorized_purpose": "Alert triage, enrichment review, recommendation drafting, and escalation assessment.",
+    "requested_outcome": "Produce a recommendation for analyst review. Do not execute containment or customer-impacting actions.",
+    "workflow_stage": "triage",
+    "urgency": "high",
+    "business_impact_assessment_required": true
+  },
+  "scope": {
+    "tenant_id": "tenant-example-001",
+    "customer_id": "customer-example-001",
+    "customer_name": "Example Customer",
+    "environment_id": "prod-example-customer",
+    "case_id": "case-example-2026-0001",
+    "incident_id": "incident-example-2026-0001",
+    "alert_id": "alert-example-0001",
+    "workflow_id": "workflow-alert-triage-0001",
+    "allowed_scope": {
+      "tenant_scope": "tenant-example-001 only",
+      "customer_scope": "customer-example-001 only",
+      "case_scope": "case-example-2026-0001 only",
+      "incident_scope": "incident-example-2026-0001 only",
+      "time_window_utc": {
+        "start": "2026-05-31T13:45:00Z",
+        "end": "2026-05-31T15:45:00Z"
+      }
+    },
+    "out_of_scope": [
+      "Other customers",
+      "Other tenants",
+      "Unrelated incidents",
+      "Historical cases not explicitly authorized",
+      "Production containment actions",
+      "Customer notification",
+      "Evidence modification"
+    ]
+  },
+  "requester": {
+    "user_id": "analyst-example-001",
+    "user_role": "soc_analyst",
+    "team": "managed_detection_and_response",
+    "requesting_system": "case-management-system",
+    "source_ip": "192.0.2.10"
+  },
+  "agent_context": {
+    "agent_id": "agent-alert-triage-001",
+    "agent_role": "triage_recommendation_assistant",
+    "agent_permissions": [
+      "read_alert_context",
+      "read_customer_scoped_enrichment",
+      "draft_recommendation"
+    ],
+    "agent_restrictions": [
+      "no_direct_tool_execution",
+      "no_containment_execution",
+      "no_customer_notification",
+      "no_ticket_closure",
+      "no_cross_customer_retrieval",
+      "no_persistent_memory_write"
+    ]
+  },
+  "alert": {
+    "source_system_id": "xdr-platform-example",
+    "source_alert_url": "https://example.invalid/alerts/alert-example-0001",
+    "title": "Suspicious PowerShell execution with encoded command",
+    "severity": "high",
+    "confidence": "medium",
+    "alert_status": "new",
+    "category": "endpoint_detection",
+    "tactic": "Execution",
+    "technique": "PowerShell",
+    "mitre_attack_ids": [
+      "T1059.001"
+    ],
+    "detected_at": "2026-05-31T15:31:42Z",
+    "affected_assets": [
+      {
+        "asset_id": "host-example-001",
+        "hostname": "EXAMPLE-WKS-014",
+        "asset_type": "workstation",
+        "criticality": "medium",
+        "customer_owned": true
+      }
+    ],
+    "affected_identities": [
+      {
+        "identity_id": "user-example-014",
+        "username": "example.user",
+        "identity_type": "user",
+        "privilege_level": "standard_user"
+      }
+    ],
+    "observed_indicators": [
+      {
+        "indicator_type": "process",
+        "value": "powershell.exe -EncodedCommand <redacted>",
+        "classification": "suspicious"
+      },
+      {
+        "indicator_type": "parent_process",
+        "value": "winword.exe",
+        "classification": "suspicious_parent_child_relationship"
+      },
+      {
+        "indicator_type": "file_path",
+        "value": "C:\\Users\\example.user\\AppData\\Local\\Temp\\invoice_viewer.ps1",
+        "classification": "suspicious_path"
+      }
+    ],
+    "initial_summary": "Endpoint detection indicates suspicious encoded PowerShell launched from a document process. No containment action has been taken."
+  },
+  "approved_context_sources": [
+    {
+      "source_system_id": "xdr-platform-example",
+      "source_type": "alert_context",
+      "access_mode": "read_only",
+      "scope": "customer_and_incident_scoped",
+      "allowed": true
+    },
+    {
+      "source_system_id": "asset-inventory-example",
+      "source_type": "asset_context",
+      "access_mode": "read_only",
+      "scope": "customer_scoped",
+      "allowed": true
+    },
+    {
+      "source_system_id": "identity-context-example",
+      "source_type": "identity_context",
+      "access_mode": "read_only",
+      "scope": "customer_scoped",
+      "allowed": true
+    },
+    {
+      "source_system_id": "threat-intel-example",
+      "source_type": "approved_threat_intelligence",
+      "access_mode": "read_only",
+      "scope": "approved_reference_context",
+      "allowed": true
+    }
+  ],
+  "retrieval_and_memory_scope": {
+    "rag_used": true,
+    "knowledge_store_or_memory_scope": {
+      "knowledge_store_id": "ks-example-customer-001-security-context",
+      "namespace": "tenant-example-001/customer-example-001/incidents/incident-example-2026-0001",
+      "scope_type": "customer_incident_scoped",
+      "allowed_context_types": [
+        "alert_context",
+        "asset_context",
+        "identity_context",
+        "approved_threat_intelligence",
+        "current_incident_notes"
+      ],
+      "disallowed_context_types": [
+        "other_customer_data",
+        "other_tenant_data",
+        "unrelated_case_memory",
+        "persistent_agent_memory",
+        "unapproved_customer_reports"
+      ]
+    },
+    "knowledge_memory_scope_result": "must_be_customer_and_incident_scoped",
+    "persistent_memory_write_allowed": false,
+    "memory_read_allowed": false,
+    "retrieval_freshness_requirement": "current_incident_context_only"
+  },
+  "data_governance": {
+    "data_classification": "confidential",
+    "sensitivity_label": "customer-security-operations",
+    "contains_customer_data": true,
+    "contains_evidence": false,
+    "evidence_object_ids": [],
+    "data_residency_requirement": "customer-approved-region",
+    "retention_policy_id": "retention-security-ops-example-90d"
+  },
+  "requested_agent_task": {
+    "task_id": "task-alert-triage-recommendation-0001",
+    "task_type": "triage_and_recommendation",
+    "instructions": [
+      "Summarize the alert using only authorized context.",
+      "Identify the likely risk and supporting observations.",
+      "State confidence and uncertainty.",
+      "Recommend the next analyst action.",
+      "Do not execute containment, blocking, deletion, credential reset, or customer notification.",
+      "Flag whether human approval would be required before any sensitive action."
+    ],
+    "required_output": {
+      "format": "structured_recommendation",
+      "include_fields": [
+        "summary",
+        "risk_assessment",
+        "supporting_context",
+        "recommended_next_step",
+        "confidence",
+        "uncertainties",
+        "human_approval_required",
+        "policy_considerations"
+      ]
+    }
+  },
+  "allowed_actions": [
+    "read_alert_context",
+    "read_customer_scoped_enrichment",
+    "draft_internal_recommendation",
+    "recommend_escalation_for_analyst_review"
+  ],
+  "prohibited_actions": [
+    "execute_endpoint_isolation",
+    "block_indicator",
+    "quarantine_file",
+    "delete_file",
+    "reset_credentials",
+    "disable_account",
+    "notify_customer",
+    "publish_customer_report",
+    "close_alert",
+    "modify_detection_rule",
+    "write_persistent_memory",
+    "access_other_customer_context"
+  ],
+  "output_controls": {
+    "output_destination": "internal_case_workbench",
+    "customer_facing_output": false,
+    "ticket_update_allowed": false,
+    "case_note_write_allowed": false,
+    "requires_output_validation": true,
+    "requires_policy_decision_before_release": true
+  },
+  "policy_expectations": {
+    "pdp_required": true,
+    "pep_required_before_tool_use_or_output_write": true,
+    "deny_by_default": true,
+    "fail_closed_on_missing_scope": true,
+    "fail_closed_on_policy_unavailable": true,
+    "human_approval_required_for_sensitive_actions": true,
+    "sensitive_action_categories": [
+      "containment",
+      "isolation",
+      "blocking",
+      "quarantine",
+      "deletion",
+      "credential_reset",
+      "customer_notification",
+      "customer_facing_release"
+    ]
+  },
+  "expected_decision_paths": [
+    "allow_recommendation_only",
+    "require_human_approval_for_sensitive_action",
+    "return_for_clarification_if_scope_missing",
+    "deny_if_cross_customer_context_requested",
+    "escalate_if_evidence_handling_required"
+  ]
+}
