@@ -1,0 +1,315 @@
+{
+  "schema_version": "1.0.0",
+  "example_name": "alert-triage-to-recommendation",
+  "artifact_type": "example_policy_decision",
+  "policy_decision_id": "policy-decision-example-alert-triage-0001",
+  "request_id": "req-example-alert-triage-0001",
+  "judge_output_id": "judge-output-example-alert-triage-0001",
+  "correlation_id": "corr-example-alert-triage-0001",
+  "audit_reference_id": "audit-example-alert-triage-0001",
+  "created_at": "2026-05-31T15:47:15Z",
+  "decision_engine": {
+    "pdp_id": "pdp-agentic-security-ops-001",
+    "pdp_name": "Agentic Security Operations Policy Decision Point",
+    "policy_bundle_id": "policy-bundle-alert-triage-001",
+    "policy_bundle_version": "1.0.0",
+    "policy_evaluation_mode": "deny_by_default",
+    "policy_evaluation_result": "conditional_allow",
+    "policy_unavailable_behavior": "fail_closed"
+  },
+  "service_model": {
+    "primary": "MDR",
+    "also_applicable_to": [
+      "MSSP",
+      "SOC / Incident Response"
+    ],
+    "dfir_applicability": "not_applicable_unless_alert_escalates_to_evidence_handling_or_forensic_casework",
+    "private_local_llm_dfir_applicability": "not_applicable_for_this_triage_only_example"
+  },
+  "decision_subject": {
+    "tenant_id": "tenant-example-001",
+    "customer_id": "customer-example-001",
+    "case_id": "case-example-2026-0001",
+    "incident_id": "incident-example-2026-0001",
+    "alert_id": "alert-example-0001",
+    "workflow_id": "workflow-alert-triage-0001",
+    "agent_id": "agent-alert-triage-001",
+    "requester_user_id": "analyst-example-001",
+    "requested_action": "draft_internal_alert_triage_recommendation",
+    "requested_output_destination": "internal_case_workbench",
+    "data_classification": "confidential",
+    "sensitivity_label": "customer-security-operations"
+  },
+  "decision": {
+    "outcome": "allow_recommendation_only",
+    "decision_status": "approved_with_restrictions",
+    "execution_authority_granted": false,
+    "customer_facing_release_allowed": false,
+    "tool_execution_allowed": false,
+    "case_note_write_allowed": false,
+    "ticket_update_allowed": false,
+    "persistent_memory_write_allowed": false,
+    "human_approval_required_before_sensitive_action": true,
+    "customer_authorization_required": false,
+    "dfir_escalation_required": false,
+    "decision_summary": "The agent may produce an internal alert triage recommendation for analyst review. The agent is not authorized to execute containment, modify tools or tickets, notify the customer, close the alert, or publish customer-facing output."
+  },
+  "allowed_operations": [
+    {
+      "operation": "produce_internal_recommendation",
+      "scope": "tenant-example-001/customer-example-001/incident-example-2026-0001",
+      "conditions": [
+        "Use only authorized customer and incident-scoped context.",
+        "Include confidence and uncertainty.",
+        "Flag that sensitive actions require human approval.",
+        "Send output only to internal_case_workbench."
+      ]
+    },
+    {
+      "operation": "request_additional_read_only_enrichment",
+      "scope": "customer_and_incident_scoped",
+      "conditions": [
+        "Retrieval must remain within approved context sources.",
+        "No persistent memory write is allowed.",
+        "No cross-customer or unrelated case retrieval is allowed."
+      ]
+    },
+    {
+      "operation": "recommend_escalation_for_analyst_review",
+      "scope": "workflow-alert-triage-0001",
+      "conditions": [
+        "Escalation must be routed to an authorized MDR or SOC analyst.",
+        "Escalation must include policy decision and judge output references."
+      ]
+    }
+  ],
+  "denied_operations": [
+    {
+      "operation": "execute_endpoint_isolation",
+      "reason": "Customer-impacting containment action requires separate policy decision and human approval.",
+      "required_path": "human_approved_sensitive_action"
+    },
+    {
+      "operation": "block_indicator",
+      "reason": "Blocking is a sensitive response action and is not authorized by this triage decision.",
+      "required_path": "human_approved_sensitive_action"
+    },
+    {
+      "operation": "quarantine_file",
+      "reason": "Quarantine may affect customer assets and requires human approval.",
+      "required_path": "human_approved_sensitive_action"
+    },
+    {
+      "operation": "delete_file",
+      "reason": "Destructive action is prohibited in this triage workflow.",
+      "required_path": "deny"
+    },
+    {
+      "operation": "reset_credentials",
+      "reason": "Identity-impacting action requires human approval and customer authorization where applicable.",
+      "required_path": "human_approved_sensitive_action"
+    },
+    {
+      "operation": "notify_customer",
+      "reason": "Customer-facing communication is not authorized by this internal recommendation decision.",
+      "required_path": "customer_authorization_if_required"
+    },
+    {
+      "operation": "publish_customer_report",
+      "reason": "Customer-facing release requires output validation, human review, and customer authorization where required.",
+      "required_path": "human_approved_sensitive_action"
+    },
+    {
+      "operation": "close_alert",
+      "reason": "Alert closure is not authorized from agent recommendation alone.",
+      "required_path": "human_review"
+    },
+    {
+      "operation": "write_persistent_memory",
+      "reason": "Persistent memory writes are not allowed for this request.",
+      "required_path": "deny"
+    },
+    {
+      "operation": "access_other_customer_context",
+      "reason": "Cross-customer retrieval violates tenant and customer boundary policy.",
+      "required_path": "deny_fail_closed"
+    }
+  ],
+  "policy_checks": [
+    {
+      "check_id": "scope-tenant-customer-case-001",
+      "check_name": "Tenant, customer, case, and incident scope",
+      "result": "pass",
+      "details": "Required scope identifiers are present and aligned to the alert triage workflow."
+    },
+    {
+      "check_id": "agent-permission-001",
+      "check_name": "Agent permission boundary",
+      "result": "pass",
+      "details": "Agent is limited to reading scoped context and drafting internal recommendation output."
+    },
+    {
+      "check_id": "tool-execution-001",
+      "check_name": "Tool execution authority",
+      "result": "restricted",
+      "details": "No tool execution is authorized by this policy decision."
+    },
+    {
+      "check_id": "human-approval-001",
+      "check_name": "Sensitive action approval",
+      "result": "required_for_sensitive_actions",
+      "details": "Containment, isolation, blocking, quarantine, deletion, credential reset, customer notification, and customer-facing release require human approval before execution."
+    },
+    {
+      "check_id": "output-destination-001",
+      "check_name": "Output destination",
+      "result": "pass",
+      "details": "Output is restricted to internal_case_workbench and is not customer-facing."
+    },
+    {
+      "check_id": "rag-memory-001",
+      "check_name": "RAG and memory scope",
+      "result": "pass",
+      "details": "Retrieval is limited to customer and incident-scoped context. Persistent memory write is denied."
+    },
+    {
+      "check_id": "evidence-001",
+      "check_name": "Evidence scope",
+      "result": "not_applicable",
+      "details": "No DFIR evidence objects are in scope for this triage-only example."
+    },
+    {
+      "check_id": "model-routing-001",
+      "check_name": "Validated model routing",
+      "result": "pass",
+      "details": "Request requires routing to a validated model profile and blocks unapproved model fallback."
+    },
+    {
+      "check_id": "budget-001",
+      "check_name": "Budget and runtime constraints",
+      "result": "pass",
+      "details": "Token, runtime, retry, retrieval, and cost constraints are present and enforceable."
+    }
+  ],
+  "obligations": [
+    {
+      "obligation_id": "obl-output-internal-only-001",
+      "description": "Write recommendation only to the internal case workbench.",
+      "enforced_by": "output_publishing_pep"
+    },
+    {
+      "obligation_id": "obl-no-tool-execution-001",
+      "description": "Do not execute endpoint, identity, containment, blocking, quarantine, deletion, notification, or ticket closure actions.",
+      "enforced_by": "tool_access_pep"
+    },
+    {
+      "obligation_id": "obl-human-approval-required-001",
+      "description": "Route any sensitive or customer-impacting next action to qualified human approval.",
+      "enforced_by": "workflow_orchestrator_pep"
+    },
+    {
+      "obligation_id": "obl-audit-record-001",
+      "description": "Emit an audit event linking request, judge output, policy decision, recommendation, and final workflow state.",
+      "enforced_by": "audit_event_pipeline"
+    },
+    {
+      "obligation_id": "obl-scope-preservation-001",
+      "description": "Preserve tenant, customer, incident, and workflow scope in all downstream workflow state.",
+      "enforced_by": "workflow_state_manager"
+    }
+  ],
+  "restrictions": {
+    "max_prompt_tokens_allowed": 8000,
+    "max_completion_tokens_allowed": 1500,
+    "max_total_tokens_allowed": 9500,
+    "max_retrieval_results": 8,
+    "max_agent_iterations": 1,
+    "max_tool_iterations": 0,
+    "max_runtime_seconds": 45,
+    "max_retry_attempts": 1,
+    "estimated_cost_ceiling_usd": 0.25,
+    "model_routing_policy": "approved_models_only",
+    "allow_unvalidated_model_fallback": false,
+    "external_network_access_allowed": false,
+    "training_on_customer_data_allowed": false
+  },
+  "pep_enforcement": {
+    "required": true,
+    "enforcement_points": [
+      {
+        "pep_id": "pep-workflow-orchestrator-001",
+        "boundary": "workflow_orchestrator",
+        "responsibility": "Enforce decision outcome, approval requirements, state transitions, and fail-closed behavior."
+      },
+      {
+        "pep_id": "pep-tool-access-001",
+        "boundary": "tool_wrapper",
+        "responsibility": "Block direct tool execution and deny sensitive response actions."
+      },
+      {
+        "pep_id": "pep-retrieval-001",
+        "boundary": "retrieval_layer",
+        "responsibility": "Restrict retrieval to approved customer and incident-scoped context."
+      },
+      {
+        "pep_id": "pep-output-publishing-001",
+        "boundary": "output_destination",
+        "responsibility": "Allow output only to internal_case_workbench and block customer-facing release."
+      },
+      {
+        "pep_id": "pep-model-gateway-001",
+        "boundary": "model_gateway",
+        "responsibility": "Route only to approved validated model profiles and enforce runtime and budget constraints."
+      }
+    ],
+    "fail_closed_conditions": [
+      "missing_tenant_id",
+      "missing_customer_id",
+      "missing_incident_id",
+      "missing_workflow_id",
+      "policy_unavailable",
+      "unapproved_model_profile",
+      "budget_exceeded",
+      "retrieval_scope_mismatch",
+      "missing_required_approval",
+      "unauthorized_output_destination",
+      "cross_customer_context_requested"
+    ]
+  },
+  "next_state": {
+    "workflow_state": "pending_human_analyst_review",
+    "allowed_next_state_transitions": [
+      "present_internal_recommendation",
+      "request_additional_read_only_context",
+      "escalate_to_human_analyst"
+    ],
+    "blocked_next_state_transitions": [
+      "execute_containment",
+      "notify_customer",
+      "close_alert",
+      "publish_customer_report",
+      "write_persistent_memory"
+    ],
+    "required_next_artifact": "example-audit-event.json"
+  },
+  "traceability": {
+    "tenant_id": "tenant-example-001",
+    "customer_id": "customer-example-001",
+    "case_id": "case-example-2026-0001",
+    "incident_id": "incident-example-2026-0001",
+    "workflow_id": "workflow-alert-triage-0001",
+    "agent_id": "agent-alert-triage-001",
+    "requester_user_id": "analyst-example-001",
+    "knowledge_store_or_memory_scope": "tenant-example-001/customer-example-001/incidents/incident-example-2026-0001",
+    "knowledge_memory_scope_result": "customer_and_incident_scoped_pass",
+    "evidence_object_ids": [],
+    "approval_required": true,
+    "approval_record_id": null,
+    "output_destination": "internal_case_workbench",
+    "data_classification": "confidential",
+    "sensitivity_label": "customer-security-operations",
+    "policy_decision": "allow_recommendation_only",
+    "correlation_id": "corr-example-alert-triage-0001",
+    "audit_reference_id": "audit-example-alert-triage-0001"
+  }
+}
