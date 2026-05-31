@@ -1,0 +1,541 @@
+{
+  "schema_version": "1.0.0",
+  "example_name": "cloud-iam-compromise",
+  "artifact_type": "example_audit_event",
+  "audit_event_id": "audit-event-example-cloud-iam-0001",
+  "audit_reference_id": "audit-example-cloud-iam-0001",
+  "correlation_id": "corr-example-cloud-iam-0001",
+  "event_type": "cloud_iam_compromise_scoped_response_audit",
+  "event_category": "agentic_security_operations",
+  "event_outcome": "scoped_sensitive_iam_actions_executed_with_conditions",
+  "event_status": "completed_with_restrictions",
+  "created_at": "2026-05-31T16:12:30Z",
+  "event_producer": {
+    "system_id": "agentic-security-ops-audit-pipeline",
+    "system_type": "audit_event_pipeline",
+    "environment": "example",
+    "schema_owner": "security-architecture"
+  },
+  "source_artifacts": {
+    "request_id": "req-example-cloud-iam-0001",
+    "request_artifact": "example-request.json",
+    "approval_request_id": "approval-request-example-cloud-iam-0001",
+    "approval_record_id": "approval-example-cloud-iam-0001",
+    "approval_record_artifact": "example-approval-record.json",
+    "policy_decision_id": "policy-decision-example-cloud-iam-0001",
+    "policy_decision_artifact": "example-policy-decision.json",
+    "agent_output_reference_id": "agent-output-example-cloud-iam-0001"
+  },
+  "service_model": {
+    "primary": "MDR",
+    "also_applicable_to": [
+      "MSSP",
+      "SOC / Incident Response"
+    ],
+    "conditional_applicability": [
+      {
+        "service_model": "DFIR",
+        "condition": "Applies if IAM compromise response escalates into evidence preservation, forensic timeline reconstruction, or chain-of-custody handling."
+      },
+      {
+        "service_model": "Private / Local LLM-assisted DFIR",
+        "condition": "Applies only if cloud IAM evidence or forensic artifacts are analyzed in a local, private, isolated, or customer-controlled LLM environment."
+      }
+    ]
+  },
+  "scope": {
+    "tenant_id": "tenant-example-001",
+    "customer_id": "customer-example-001",
+    "customer_name": "Example Customer",
+    "environment_id": "cloud-prod-example-customer",
+    "cloud_provider": "example-cloud",
+    "cloud_account_or_subscription_id": "cloud-account-example-001",
+    "case_id": "case-example-cloud-2026-0001",
+    "incident_id": "incident-example-cloud-iam-0001",
+    "alert_id": "alert-example-cloud-iam-0001",
+    "workflow_id": "workflow-cloud-iam-compromise-0001",
+    "scope_result": "tenant_customer_cloud_account_identity_incident_workflow_scoped",
+    "scope_violations_detected": false
+  },
+  "actors": {
+    "requester": {
+      "user_id": "analyst-example-002",
+      "user_role": "mdr_cloud_analyst",
+      "team": "managed_detection_and_response",
+      "requesting_system": "cloud-security-case-workbench"
+    },
+    "agent": {
+      "agent_id": "agent-cloud-iam-investigation-001",
+      "agent_role": "cloud_iam_compromise_assistant"
+    },
+    "human_reviewer": {
+      "reviewer_id": "reviewer-example-iam-001",
+      "reviewer_role": "mdr_incident_lead",
+      "reviewer_authorization_level": "approve_sensitive_cloud_iam_response"
+    },
+    "customer_authorizer": {
+      "customer_authorization_reference": "customer-auth-example-cloud-iam-0001",
+      "customer_authorizer_role": "customer_security_contact"
+    },
+    "pdp": {
+      "pdp_id": "pdp-agentic-security-ops-001",
+      "policy_bundle_id": "policy-bundle-cloud-iam-compromise-001",
+      "policy_bundle_version": "1.0.0"
+    },
+    "pep_enforcement_points": [
+      "pep-workflow-orchestrator-iam-001",
+      "pep-cloud-iam-tool-wrapper-001",
+      "pep-identity-api-gateway-001",
+      "pep-retrieval-cloud-iam-001",
+      "pep-output-publishing-cloud-iam-001",
+      "pep-model-gateway-cloud-iam-001",
+      "pep-audit-cloud-iam-001"
+    ]
+  },
+  "mission_context": {
+    "mission": "Investigate a suspected cloud IAM compromise and prepare a governed response recommendation with approval routing for sensitive actions.",
+    "authorized_purpose": "Cloud IAM compromise triage, risk assessment, response recommendation, and approved scoped containment.",
+    "requested_outcome": "Execute only approved scoped IAM containment actions after human approval and customer authorization are verified.",
+    "workflow_stage": "approved_scoped_containment_execution",
+    "urgency": "critical"
+  },
+  "cloud_iam_signal_reference": {
+    "source_system_id": "cloud-identity-protection-example",
+    "source_alert_url": "https://example.invalid/cloud/iam/alerts/alert-example-cloud-iam-0001",
+    "title": "Suspicious privileged cloud sign-in followed by OAuth consent and mailbox access",
+    "severity": "critical",
+    "confidence": "high",
+    "category": "cloud_iam_compromise",
+    "tactics": [
+      "Credential Access",
+      "Privilege Escalation",
+      "Persistence",
+      "Collection"
+    ],
+    "techniques": [
+      "Valid Accounts",
+      "OAuth Application Abuse",
+      "Cloud Account Discovery",
+      "Email Collection"
+    ],
+    "mitre_attack_ids": [
+      "T1078",
+      "T1098.003",
+      "T1526",
+      "T1114"
+    ],
+    "detected_at": "2026-05-31T15:52:10Z",
+    "affected_identity_ids": [
+      "identity-example-admin-001"
+    ],
+    "affected_resource_ids": [
+      "oauth-app-consent-example-001",
+      "mailbox-example-admin-001"
+    ]
+  },
+  "data_governance": {
+    "data_classification": "confidential",
+    "sensitivity_label": "customer-cloud-security-operations",
+    "contains_customer_data": true,
+    "contains_identity_data": true,
+    "contains_privileged_identity_data": true,
+    "contains_evidence": false,
+    "evidence_object_ids": [],
+    "data_residency_requirement": "customer-approved-region",
+    "retention_policy_id": "retention-cloud-security-ops-example-180d"
+  },
+  "retrieval_and_memory": {
+    "rag_used": true,
+    "knowledge_store_id": "ks-example-customer-001-cloud-iam-context",
+    "knowledge_store_or_memory_scope": "tenant-example-001/customer-example-001/incidents/incident-example-cloud-iam-0001",
+    "knowledge_memory_scope_result": "customer_identity_and_incident_scoped_pass",
+    "retrieved_context_ids": [
+      "ctx-cloud-iam-alert-example-0001",
+      "ctx-signin-identity-example-admin-001",
+      "ctx-audit-oauth-consent-example-001",
+      "ctx-identity-role-example-admin-001",
+      "ctx-oauth-app-consent-example-001",
+      "ctx-case-notes-cloud-iam-example-0001"
+    ],
+    "memory_read_performed": false,
+    "persistent_memory_write_performed": false,
+    "retrieval_scope_violations_detected": false,
+    "stale_context_detected": false,
+    "cross_customer_context_detected": false
+  },
+  "model_runtime": {
+    "model_routing_policy_id": "model-routing-policy-cloud-iam-001",
+    "routing_mode": "approved_models_only",
+    "validated_model_required": true,
+    "selected_model_profile_id": "validated-cloud-iam-security-model-profile-001",
+    "model_version": "validated-2026-05",
+    "validation_reference_id": "model-validation-cloud-iam-example-2026-05-001",
+    "unvalidated_model_fallback_used": false,
+    "external_network_access_allowed": false,
+    "training_on_customer_data_allowed": false,
+    "prompt_and_response_logging": "metadata_and_references_only"
+  },
+  "budget_and_runtime": {
+    "budget_policy_id": "budget-policy-cloud-iam-001",
+    "max_prompt_tokens_allowed": 12000,
+    "max_completion_tokens_allowed": 2500,
+    "max_total_tokens_allowed": 14500,
+    "max_retrieval_results": 12,
+    "max_agent_iterations": 1,
+    "max_tool_iterations": 3,
+    "max_runtime_seconds": 120,
+    "max_retry_attempts": 1,
+    "estimated_cost_ceiling_usd": 0.5,
+    "actual_prompt_tokens": 6820,
+    "actual_completion_tokens": 1180,
+    "actual_total_tokens": 8000,
+    "actual_retrieval_results": 6,
+    "actual_agent_iterations": 1,
+    "actual_tool_iterations": 3,
+    "actual_runtime_seconds": 52,
+    "actual_retry_attempts": 0,
+    "estimated_cost_usd": 0.21,
+    "budget_exceeded": false,
+    "budget_enforcement_result": "pass"
+  },
+  "approval_validation": {
+    "approval_required": true,
+    "approval_record_id": "approval-example-cloud-iam-0001",
+    "approval_status": "approved_with_conditions",
+    "approval_valid_from": "2026-05-31T16:08:45Z",
+    "approval_expires_at": "2026-05-31T17:08:45Z",
+    "approval_single_use": true,
+    "approval_reuse_allowed": false,
+    "approval_scope_match_result": "pass",
+    "approval_conditions_enforced": true,
+    "customer_authorization_required": true,
+    "customer_authorization_reference": "customer-auth-example-cloud-iam-0001",
+    "customer_authorization_status": "confirmed",
+    "approval_record_reused": false
+  },
+  "policy_decision": {
+    "policy_decision_id": "policy-decision-example-cloud-iam-0001",
+    "decision_engine": "pdp-agentic-security-ops-001",
+    "policy_evaluation_mode": "deny_by_default",
+    "policy_unavailable_behavior": "fail_closed",
+    "outcome": "allow_scoped_sensitive_iam_actions_with_conditions",
+    "decision_status": "approved_with_conditions",
+    "execution_authority_granted": true,
+    "execution_authority_scope": "limited_to_approved_identity_and_oauth_grant",
+    "tool_execution_allowed": true,
+    "customer_facing_release_allowed": false,
+    "customer_notification_allowed": false,
+    "incident_closure_allowed": false,
+    "evidence_export_allowed": false,
+    "persistent_memory_write_allowed": false,
+    "case_note_write_allowed": true,
+    "human_approval_satisfied": true,
+    "customer_authorization_satisfied": true,
+    "dfir_escalation_required": false
+  },
+  "approved_action_execution": [
+    {
+      "action_id": "exec-cloud-iam-0001",
+      "operation": "revoke_active_sessions",
+      "target_identity_id": "identity-example-admin-001",
+      "target_scope": "customer-example-001/cloud-account-example-001",
+      "tool_id": "cloud-iam-tool-wrapper-example",
+      "tool_version": "1.0.0",
+      "source_system_id": "cloud-security-case-workbench",
+      "destination_system_id": "identity-api-gateway-example",
+      "approved_by": "approval-example-cloud-iam-0001",
+      "policy_decision_id": "policy-decision-example-cloud-iam-0001",
+      "pep_id": "pep-cloud-iam-tool-wrapper-001",
+      "execution_status": "succeeded",
+      "executed_at": "2026-05-31T16:10:12Z",
+      "parameters_enforced": {
+        "session_revocation_scope": "affected_identity_only",
+        "include_refresh_tokens": true,
+        "include_active_sessions": true,
+        "exclude_other_identities": true
+      },
+      "result_summary": "Active sessions and refresh tokens were revoked for identity-example-admin-001 only.",
+      "out_of_scope_activity_detected": false
+    },
+    {
+      "action_id": "exec-cloud-iam-0002",
+      "operation": "require_credential_reset",
+      "target_identity_id": "identity-example-admin-001",
+      "target_scope": "customer-example-001/cloud-account-example-001",
+      "tool_id": "cloud-iam-tool-wrapper-example",
+      "tool_version": "1.0.0",
+      "source_system_id": "cloud-security-case-workbench",
+      "destination_system_id": "identity-api-gateway-example",
+      "approved_by": "approval-example-cloud-iam-0001",
+      "policy_decision_id": "policy-decision-example-cloud-iam-0001",
+      "pep_id": "pep-cloud-iam-tool-wrapper-001",
+      "execution_status": "succeeded",
+      "executed_at": "2026-05-31T16:10:30Z",
+      "parameters_enforced": {
+        "credential_reset_scope": "affected_identity_only",
+        "force_change_on_next_sign_in": true,
+        "notify_internal_case_workbench_only": true,
+        "customer_notification_allowed": false
+      },
+      "result_summary": "Credential reset requirement was applied to identity-example-admin-001 only. No customer notification was sent.",
+      "out_of_scope_activity_detected": false
+    },
+    {
+      "action_id": "exec-cloud-iam-0003",
+      "operation": "remove_suspicious_oauth_grant",
+      "target_resource_id": "oauth-app-consent-example-001",
+      "target_scope": "customer-example-001/cloud-account-example-001",
+      "tool_id": "cloud-iam-tool-wrapper-example",
+      "tool_version": "1.0.0",
+      "source_system_id": "cloud-security-case-workbench",
+      "destination_system_id": "identity-api-gateway-example",
+      "approved_by": "approval-example-cloud-iam-0001",
+      "policy_decision_id": "policy-decision-example-cloud-iam-0001",
+      "pep_id": "pep-cloud-iam-tool-wrapper-001",
+      "execution_status": "succeeded",
+      "executed_at": "2026-05-31T16:10:48Z",
+      "parameters_enforced": {
+        "oauth_grant_scope": "specific_oauth_grant_only",
+        "remove_application_registration": false,
+        "remove_consent_grant": true,
+        "exclude_other_applications": true
+      },
+      "result_summary": "Suspicious OAuth consent grant was removed. No unrelated applications or grants were modified.",
+      "out_of_scope_activity_detected": false
+    }
+  ],
+  "denied_or_blocked_activity": [
+    {
+      "operation": "disable_account",
+      "attempted": false,
+      "policy_result": "denied_if_requested",
+      "reason": "Account disablement is outside the approval record and policy decision."
+    },
+    {
+      "operation": "change_iam_policy",
+      "attempted": false,
+      "policy_result": "denied_if_requested",
+      "reason": "Broad IAM policy changes are outside approval scope."
+    },
+    {
+      "operation": "notify_customer",
+      "attempted": false,
+      "policy_result": "denied_if_requested",
+      "reason": "Customer notification is not authorized by this approval or policy decision."
+    },
+    {
+      "operation": "close_incident",
+      "attempted": false,
+      "policy_result": "denied_if_requested",
+      "reason": "Incident closure is not authorized from containment approval."
+    },
+    {
+      "operation": "export_logs_or_evidence",
+      "attempted": false,
+      "policy_result": "denied_if_requested",
+      "reason": "Evidence or log export requires separate authorization and DFIR handling if applicable."
+    },
+    {
+      "operation": "write_persistent_memory",
+      "attempted": false,
+      "policy_result": "denied_if_requested",
+      "reason": "Persistent memory writes are prohibited for this workflow."
+    }
+  ],
+  "pep_enforcement_results": [
+    {
+      "pep_id": "pep-workflow-orchestrator-iam-001",
+      "boundary": "workflow_orchestrator",
+      "decision_enforced": "verify_approval_customer_authorization_and_state_transition",
+      "result": "pass",
+      "details": "Approval record, customer authorization, policy decision, and workflow state were verified before execution."
+    },
+    {
+      "pep_id": "pep-cloud-iam-tool-wrapper-001",
+      "boundary": "cloud_iam_tool_wrapper",
+      "decision_enforced": "execute_only_approved_scoped_iam_actions",
+      "result": "pass",
+      "details": "Only the three approved scoped IAM actions were executed."
+    },
+    {
+      "pep_id": "pep-identity-api-gateway-001",
+      "boundary": "identity_api_gateway",
+      "decision_enforced": "restrict_identity_api_calls_to_approved_targets",
+      "result": "pass",
+      "details": "Identity API calls were limited to identity-example-admin-001 and oauth-app-consent-example-001."
+    },
+    {
+      "pep_id": "pep-retrieval-cloud-iam-001",
+      "boundary": "retrieval_layer",
+      "decision_enforced": "customer_identity_cloud_account_and_incident_scoped_retrieval_only",
+      "result": "pass",
+      "details": "Retrieved context remained in approved customer, identity, cloud account, and incident scope."
+    },
+    {
+      "pep_id": "pep-output-publishing-cloud-iam-001",
+      "boundary": "output_destination",
+      "decision_enforced": "internal_case_workbench_only",
+      "result": "pass",
+      "details": "No customer-facing output, notification, or report was released."
+    },
+    {
+      "pep_id": "pep-model-gateway-cloud-iam-001",
+      "boundary": "model_gateway",
+      "decision_enforced": "validated_model_and_budget_constraints",
+      "result": "pass",
+      "details": "Validated model routing, runtime, iteration, retrieval, and budget constraints were enforced."
+    },
+    {
+      "pep_id": "pep-audit-cloud-iam-001",
+      "boundary": "audit_event_pipeline",
+      "decision_enforced": "correlated_audit_event_required",
+      "result": "pass",
+      "details": "Audit event correlates request, approval record, policy decision, execution results, and final workflow state."
+    }
+  ],
+  "post_action_validation": {
+    "validation_status": "completed",
+    "validated_at": "2026-05-31T16:11:40Z",
+    "validated_by": "workflow-orchestrator-validation",
+    "validation_results": [
+      {
+        "check_id": "post-action-identity-scope-001",
+        "check_name": "Affected identity scope",
+        "result": "pass",
+        "details": "Actions were limited to identity-example-admin-001."
+      },
+      {
+        "check_id": "post-action-oauth-scope-001",
+        "check_name": "OAuth grant scope",
+        "result": "pass",
+        "details": "Only oauth-app-consent-example-001 consent grant was removed."
+      },
+      {
+        "check_id": "post-action-customer-output-001",
+        "check_name": "Customer-facing output",
+        "result": "pass",
+        "details": "No customer-facing notification or report was released."
+      },
+      {
+        "check_id": "post-action-memory-001",
+        "check_name": "Persistent memory write",
+        "result": "pass",
+        "details": "No persistent memory write occurred."
+      },
+      {
+        "check_id": "post-action-dfir-001",
+        "check_name": "DFIR evidence handling",
+        "result": "not_triggered",
+        "details": "No evidence export, transfer, or formal forensic package was created by this workflow."
+      }
+    ]
+  },
+  "case_note": {
+    "case_note_write_performed": true,
+    "case_note_destination": "internal_case_workbench",
+    "case_note_customer_facing": false,
+    "case_note_summary": "Scoped IAM containment actions executed after approval and customer authorization: session revocation, credential reset requirement, and suspicious OAuth grant removal. Customer notification, incident closure, and evidence export remain unauthorized.",
+    "case_note_references": [
+      "approval-example-cloud-iam-0001",
+      "policy-decision-example-cloud-iam-0001",
+      "audit-example-cloud-iam-0001"
+    ],
+    "unsupported_forensic_conclusions_included": false
+  },
+  "human_approval": {
+    "approval_required": true,
+    "approval_record_id": "approval-example-cloud-iam-0001",
+    "approval_status": "approved_with_conditions",
+    "approval_satisfied": true,
+    "approval_conditions_enforced": true,
+    "approval_reuse_allowed": false,
+    "approval_reused": false,
+    "approval_expired_at_execution": false
+  },
+  "customer_authorization": {
+    "required": true,
+    "customer_authorization_reference": "customer-auth-example-cloud-iam-0001",
+    "status": "confirmed",
+    "customer_facing_release_allowed": false,
+    "customer_notification_sent": false
+  },
+  "deny_and_fail_closed_observations": {
+    "deny_paths_triggered": [],
+    "fail_closed_triggered": false,
+    "blocked_operations": [
+      "disable_account",
+      "change_iam_policy",
+      "change_conditional_access_policy",
+      "notify_customer",
+      "publish_customer_report",
+      "close_incident",
+      "export_logs_or_evidence",
+      "write_persistent_memory",
+      "access_other_customer_context"
+    ],
+    "fail_closed_conditions_monitored": [
+      "missing_tenant_id",
+      "missing_customer_id",
+      "missing_cloud_account_or_subscription_id",
+      "missing_incident_id",
+      "missing_workflow_id",
+      "missing_target_identity_id",
+      "policy_unavailable",
+      "approval_record_missing",
+      "approval_record_expired",
+      "approval_scope_mismatch",
+      "customer_authorization_missing",
+      "unapproved_model_profile",
+      "budget_exceeded",
+      "retrieval_scope_mismatch",
+      "unauthorized_output_destination",
+      "cross_customer_context_requested",
+      "requested_action_not_in_approval_record"
+    ]
+  },
+  "audit_integrity": {
+    "audit_event_complete": true,
+    "replay_supported": true,
+    "reconstruction_fields_present": [
+      "request_id",
+      "approval_record_id",
+      "policy_decision_id",
+      "tenant_id",
+      "customer_id",
+      "cloud_account_or_subscription_id",
+      "incident_id",
+      "workflow_id",
+      "agent_id",
+      "affected_identity_id",
+      "policy_decision",
+      "approved_action_execution",
+      "pep_enforcement_results",
+      "output_destination",
+      "correlation_id",
+      "audit_reference_id"
+    ],
+    "tamper_evident_logging_required": true,
+    "log_retention_policy_id": "retention-cloud-security-ops-example-180d"
+  },
+  "final_state": {
+    "workflow_state": "scoped_iam_containment_completed_pending_analyst_review",
+    "incident_state_after_event": "contained_pending_follow_up_review",
+    "customer_facing_status": "not_released",
+    "dfir_escalation_status": "not_triggered",
+    "next_allowed_actions": [
+      "human analyst reviews containment results",
+      "request additional read-only cloud IAM enrichment within approved scope",
+      "prepare customer notification through separate approval and authorization path if needed",
+      "escalate to DFIR if evidence preservation, timeline reconstruction, or forensic investigation is required"
+    ],
+    "next_disallowed_actions_without_separate_approval": [
+      "disable affected identity",
+      "change IAM policy",
+      "change conditional access policy",
+      "publish customer report",
+      "close incident",
+      "export logs or evidence",
+      "write persistent memory"
+    ]
+  }
+}
