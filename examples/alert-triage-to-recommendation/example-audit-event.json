@@ -19,6 +19,8 @@
   "source_artifacts": {
     "request_id": "req-example-alert-triage-0001",
     "request_artifact": "example-request.json",
+    "prompt_ref": "prompt-template-triage-v1.2",
+    "policy_request_ref": "policy-req-example-alert-triage-0001",
     "judge_output_id": "judge-output-example-alert-triage-0001",
     "judge_output_artifact": "example-judge-output.json",
     "policy_decision_id": "policy-decision-example-alert-triage-0001",
@@ -212,7 +214,8 @@
     "policy_decision_id": "policy-decision-example-alert-triage-0001",
     "decision_engine": "pdp-agentic-security-ops-001",
     "policy_evaluation_mode": "deny_by_default",
-    "outcome": "allow_recommendation_only",
+    "decision": "ALLOW",
+    "decision_details": "allow_recommendation_only",
     "decision_status": "approved_with_restrictions",
     "execution_authority_granted": false,
     "customer_facing_release_allowed": false,
@@ -283,6 +286,7 @@
     "reason": "The current output remains internal and does not notify the customer or perform customer-impacting action."
   },
   "execution_and_output": {
+    "tool_action": null,
     "execution_performed": false,
     "execution_result": "no_operational_action_executed",
     "output_created": true,
