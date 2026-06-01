@@ -43,6 +43,14 @@
     "reviewer_independence": "human_reviewer_not_model",
     "reviewed_at": "2026-05-31T17:21:30Z"
   },
+  "cryptographic_binding": {
+    "signature_hash": "sha256-7d9e...[redacted]...f1a4",
+    "signature_method": "fido2_webauthn_hardware_key",
+    "signed_payload_refs": [
+      "evidence-manifest-example-local-llm-timeline-0001",
+      "timeline-output-example-local-llm-0001"
+    ]
+  },
   "review_input_artifacts": {
     "evidence_manifest_artifact": "example-evidence-manifest.json",
     "timeline_output_artifact": "example-timeline-output.json",
