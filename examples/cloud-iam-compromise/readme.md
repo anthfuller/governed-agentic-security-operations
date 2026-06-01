@@ -76,28 +76,31 @@ Before this workflow runs, the system should have:
    The event is normalized into a governed workflow request with tenant, customer, incident, identity, workflow, data classification, output destination, and authorization scope.
 
 3. **Context retrieved**  
-   The workflow retrieves only approved customer-scoped and incident-scoped IAM context, such as sign-in activity, audit logs, role changes, OAuth consent activity, risky sign-in details, and related alerts.
+   The workflow retrieves only approved customer-scoped and incident-scoped IAM context (e.g., sign-in activity, audit logs, role changes, OAuth consent).
 
 4. **Agent investigation support**  
-   The agent summarizes the suspected IAM compromise, identifies supporting signals, states uncertainty, and recommends next steps.
+   The agent summarizes the suspected IAM compromise, identifies supporting signals, states uncertainty, and drafts a recommendation for containment.
 
-5. **Sensitive action classification**  
-   The workflow classifies any proposed IAM action, such as session revocation, credential reset, account disablement, OAuth grant removal, access policy change, or customer notification.
+5. **AI Assurance (Agent Judge) evaluation**  
+   An independent Agent Judge evaluates the agent's draft. It verifies that the recommendation is supported by the retrieved evidence, respects tenant boundaries, and correctly flags the containment recommendation as a "sensitive action."
 
-6. **Policy decision evaluated**  
-   The PDP determines whether the recommendation is allowed, denied, restricted, requires human approval, requires customer authorization, or must be escalated.
+6. **Initial Policy decision evaluated**  
+   The PDP evaluates the validated request and determines that the requested action (e.g., account disablement) triggers a `REQUIRE_APPROVAL` state.
 
-7. **Approval request created**  
-   If a sensitive action is recommended, the workflow creates an approval request with evidence summary, affected identity, proposed action, expected impact, rollback or recovery considerations, scope, and expiration.
+7. **Approval request created & routed**  
+   The workflow creates an approval request detailing the evidence summary, affected identity, proposed action, scope, and expiration, routing it to the authorized Incident Commander.
 
 8. **Human approval recorded**  
-   An authorized reviewer approves, denies, modifies, escalates, or requests clarification. The approval is recorded with reviewer identity, scope, conditions, expiration, and correlation identifiers.
+   The human reviewer approves the action. A cryptographically signed human approval record is generated, binding the reviewer's identity to the specific target and time window.
 
-9. **PEP enforcement applied**  
-   The PEP verifies the approval record before any sensitive tool call or output release. The PEP blocks execution if approval is missing, expired, mismatched, or outside scope.
+9. **Final Policy Authorization & Token Minting**  
+   The PDP consumes the human approval record, validates its cryptographic binding to the original request, and issues a final `ALLOW` decision alongside a time-bounded execution token.
 
-10. **Audit event emitted**  
-   The workflow emits an audit event correlating the request, approval record, policy decision, enforcement result, and final workflow state.
+10. **PEP enforcement applied**  
+   The Tool Gateway (PEP) intercepts the execution request. It strictly validates the execution token's signature, target scope, and `expires_at` claim. If valid, the API call is executed; otherwise, it fails closed.
+
+11. **Audit event emitted**  
+   The workflow emits an immutable audit event correlating the request, judge output, approval record, policy decisions, executed tool action, and final workflow state.
 
 ## Policy and Enforcement Points
 
