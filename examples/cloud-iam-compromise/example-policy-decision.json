@@ -62,7 +62,12 @@
     "approval_record_id": "approval-example-cloud-iam-0001",
     "customer_authorization_reference": "customer-auth-example-cloud-iam-0001"
   },
-  "decision": {
+  "decision": "ALLOW",
+  "reason": "Cryptographically verified human approval and customer authorization records support the requested scoped containment actions.",
+  "required_approver_role": "mdr_incident_lead",
+  "expires_at": "2026-05-31T17:08:45Z",
+  "audit_required": true,
+  "decision_details": {
     "outcome": "allow_scoped_sensitive_iam_actions_with_conditions",
     "decision_status": "approved_with_conditions",
     "execution_authority_granted": true,
