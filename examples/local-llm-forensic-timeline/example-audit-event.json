@@ -1,0 +1,512 @@
+{
+  "schema_version": "1.0.0",
+  "example_name": "local-llm-forensic-timeline",
+  "artifact_type": "example_audit_event",
+  "audit_event_id": "audit-event-example-local-llm-timeline-0001",
+  "audit_reference_id": "audit-example-local-llm-timeline-0001",
+  "correlation_id": "corr-example-local-llm-timeline-0001",
+  "event_type": "local_llm_forensic_timeline_review_audit",
+  "event_category": "private_local_llm_assisted_dfir",
+  "event_outcome": "timeline_approved_for_internal_case_use_only",
+  "event_status": "completed_with_restrictions",
+  "created_at": "2026-05-31T17:30:00Z",
+  "event_producer": {
+    "system_id": "local-dfir-audit-pipeline-example",
+    "system_type": "audit_event_pipeline",
+    "environment": "isolated_local_forensic_workspace",
+    "schema_owner": "security-architecture"
+  },
+  "source_artifacts": {
+    "evidence_manifest_id": "evidence-manifest-example-local-llm-timeline-0001",
+    "evidence_manifest_artifact": "example-evidence-manifest.json",
+    "timeline_output_id": "timeline-output-example-local-llm-0001",
+    "timeline_output_artifact": "example-timeline-output.json",
+    "review_record_id": "review-record-example-local-llm-timeline-0001",
+    "review_record_artifact": "example-review-record.json"
+  },
+  "service_model": {
+    "primary": "Private / Local LLM-assisted DFIR",
+    "also_applicable_to": [
+      "DFIR",
+      "SOC / Incident Response",
+      "MDR"
+    ],
+    "conditional_applicability": [
+      {
+        "service_model": "MSSP",
+        "condition": "Applies only when managed service delivery includes customer-scoped DFIR timeline support or handoff."
+      }
+    ]
+  },
+  "scope": {
+    "tenant_id": "tenant-example-001",
+    "customer_id": "customer-example-001",
+    "customer_name": "Example Customer",
+    "case_id": "case-example-dfir-2026-0001",
+    "incident_id": "incident-example-dfir-0001",
+    "engagement_id": "engagement-example-dfir-0001",
+    "workflow_id": "workflow-local-llm-forensic-timeline-0001",
+    "case_name": "Suspicious Endpoint and Cloud Activity Timeline Reconstruction",
+    "scope_result": "tenant_customer_case_incident_evidence_workflow_scoped",
+    "scope_violations_detected": false,
+    "time_window_utc": {
+      "start": "2026-05-31T09:00:00Z",
+      "end": "2026-05-31T16:30:00Z"
+    }
+  },
+  "actors": {
+    "lead_analyst": {
+      "analyst_id": "analyst-example-dfir-001",
+      "analyst_role": "dfir_lead_analyst",
+      "authorized_for_case": true
+    },
+    "reviewer": {
+      "reviewer_id": "reviewer-example-dfir-001",
+      "reviewer_role": "dfir_lead_analyst",
+      "reviewer_authorization_level": "approve_internal_forensic_timeline_use",
+      "reviewer_independence": "human_reviewer_not_model"
+    },
+    "evidence_custodian": {
+      "custodian_id": "custodian-example-001",
+      "custodian_role": "dfir_evidence_custodian"
+    },
+    "customer_authorizer": {
+      "customer_authorization_reference": "customer-auth-example-dfir-0001",
+      "customer_authorization_status": "confirmed",
+      "authorized_uses": [
+        "local_evidence_analysis",
+        "local_llm_assisted_timeline_drafting",
+        "case_scoped_retrieval",
+        "internal_draft_reporting"
+      ]
+    },
+    "local_model_runtime": {
+      "model_runtime_id": "local-llm-runtime-example-001",
+      "model_id": "local-dfir-timeline-llm-example",
+      "model_version": "validated-2026-05"
+    }
+  },
+  "data_governance": {
+    "data_classification": "restricted",
+    "sensitivity_label": "customer-dfir-evidence",
+    "contains_customer_data": true,
+    "contains_identity_data": true,
+    "contains_endpoint_data": true,
+    "contains_cloud_activity_data": true,
+    "contains_malware_or_suspicious_artifacts": true,
+    "data_residency_requirement": "customer-approved-local-analysis-environment",
+    "retention_policy_id": "retention-dfir-case-example-365d",
+    "legal_hold_reference": "legal-hold-example-dfir-0001",
+    "training_on_customer_data_used": false,
+    "persistent_memory_write_performed": false
+  },
+  "evidence_manifest_summary": {
+    "manifest_status": "active_for_analysis",
+    "evidence_manifest_id": "evidence-manifest-example-local-llm-timeline-0001",
+    "chain_of_custody_required": true,
+    "chain_of_custody_reference": "coc-example-dfir-0001",
+    "evidence_handling_policy_id": "evidence-handling-policy-dfir-example-001",
+    "evidence_object_ids": [
+      "evidence-endpoint-edr-alerts-0001",
+      "evidence-windows-event-logs-0002",
+      "evidence-cloud-signin-audit-0003",
+      "evidence-memory-triage-notes-0004"
+    ],
+    "derived_artifact_ids": [
+      "derived-timeline-events-endpoint-0001",
+      "derived-timeline-events-cloud-0002"
+    ],
+    "evidence_hashes_available": true,
+    "original_evidence_modified": false,
+    "original_evidence_preserved": true,
+    "working_copies_used": true,
+    "derived_artifacts_separated_from_originals": true,
+    "evidence_export_or_transfer_performed": false
+  },
+  "local_analysis_environment": {
+    "analysis_environment_id": "local-dfir-workspace-example-001",
+    "environment_type": "isolated_local_forensic_workspace",
+    "workspace_access_control": "case_authorized_analysts_only",
+    "workspace_encryption": "enabled",
+    "network_egress_allowed": false,
+    "external_llm_api_access_allowed": false,
+    "malware_safe_handling_required": true,
+    "external_network_access_attempted": false,
+    "external_network_access_blocked": false
+  },
+  "model_runtime_and_prompt": {
+    "model_id": "local-dfir-timeline-llm-example",
+    "model_version": "validated-2026-05",
+    "model_runtime_id": "local-llm-runtime-example-001",
+    "approved_local_model_profile_id": "validated-local-dfir-timeline-model-profile-001",
+    "prompt_template_id": "prompt-template-forensic-timeline-draft-001",
+    "temperature": 0.2,
+    "deterministic_output_preferred": true,
+    "approved_model_runtime_used": true,
+    "external_network_access_used": false,
+    "training_on_customer_data_used": false,
+    "prompt_and_response_logging": "metadata_references_and_redacted_prompt_allowed",
+    "full_prompt_logging_restricted": true,
+    "prompt_metadata_logged": true
+  },
+  "retrieval_and_memory": {
+    "rag_used": true,
+    "knowledge_store_id": "local-ks-case-example-dfir-2026-0001",
+    "vector_namespace": "tenant-example-001/customer-example-001/case-example-dfir-2026-0001/timeline",
+    "knowledge_store_or_memory_scope": "tenant-example-001/customer-example-001/case-example-dfir-2026-0001/timeline",
+    "knowledge_memory_scope_result": "case_evidence_scoped_pass",
+    "retrieved_context_ids": [
+      "ctx-evidence-endpoint-edr-alerts-0001",
+      "ctx-evidence-windows-event-logs-0002",
+      "ctx-evidence-cloud-signin-audit-0003",
+      "ctx-evidence-memory-triage-notes-0004",
+      "ctx-derived-timeline-events-endpoint-0001",
+      "ctx-derived-timeline-events-cloud-0002"
+    ],
+    "retrieval_scope_violations_detected": false,
+    "cross_case_retrieval_detected": false,
+    "cross_customer_retrieval_detected": false,
+    "unauthorized_context_detected": false,
+    "stale_context_detected": false,
+    "memory_read_performed": false,
+    "persistent_memory_write_performed": false,
+    "persistent_memory_write_blocked": false,
+    "index_retention_policy": "delete_or_archive_at_case_closure"
+  },
+  "timeline_output_summary": {
+    "timeline_output_id": "timeline-output-example-local-llm-0001",
+    "output_status_before_review": "draft_pending_analyst_review",
+    "timeline_type": "draft_forensic_timeline",
+    "timeline_use": "internal_analysis_only",
+    "timeline_entry_count": 6,
+    "unsupported_or_rejected_inference_count": 3,
+    "timeline_completeness": "partial",
+    "confidence_overall": "medium",
+    "timestamp_quality": "acceptable",
+    "source_timezone_preserved": true,
+    "all_entries_reference_evidence": true,
+    "observed_facts_separated_from_interpretation": true,
+    "model_generated_interpretation_labeled": true,
+    "final_forensic_conclusion_allowed": false,
+    "customer_facing_release_allowed": false
+  },
+  "timeline_entry_audit_summary": [
+    {
+      "timeline_entry_id": "tl-entry-0001",
+      "event_time_utc": "2026-05-31T09:42:18Z",
+      "event_type": "privileged_sign_in",
+      "supporting_evidence_object_ids": [
+        "evidence-cloud-signin-audit-0003"
+      ],
+      "review_decision": "accepted_for_internal_timeline",
+      "final_finding": false
+    },
+    {
+      "timeline_entry_id": "tl-entry-0002",
+      "event_time_utc": "2026-05-31T10:03:42Z",
+      "event_type": "oauth_consent_grant",
+      "supporting_evidence_object_ids": [
+        "evidence-cloud-signin-audit-0003",
+        "evidence-memory-triage-notes-0004"
+      ],
+      "review_decision": "accepted_with_conditions",
+      "final_finding": false
+    },
+    {
+      "timeline_entry_id": "tl-entry-0003",
+      "event_time_utc": "2026-05-31T10:17:09Z",
+      "event_type": "mailbox_access",
+      "supporting_evidence_object_ids": [
+        "evidence-cloud-signin-audit-0003"
+      ],
+      "review_decision": "accepted_with_conditions",
+      "final_finding": false
+    },
+    {
+      "timeline_entry_id": "tl-entry-0004",
+      "event_time_utc": "2026-05-31T11:28:33Z",
+      "event_type": "suspicious_document_process",
+      "supporting_evidence_object_ids": [
+        "evidence-endpoint-edr-alerts-0001",
+        "evidence-windows-event-logs-0002"
+      ],
+      "review_decision": "accepted_with_conditions",
+      "final_finding": false
+    },
+    {
+      "timeline_entry_id": "tl-entry-0005",
+      "event_time_utc": "2026-05-31T11:31:02Z",
+      "event_type": "encoded_powershell_execution",
+      "supporting_evidence_object_ids": [
+        "evidence-endpoint-edr-alerts-0001",
+        "evidence-windows-event-logs-0002"
+      ],
+      "review_decision": "accepted_with_conditions",
+      "final_finding": false
+    },
+    {
+      "timeline_entry_id": "tl-entry-0006",
+      "event_time_utc": "2026-05-31T15:05:00Z",
+      "event_type": "initial_triage_observation",
+      "supporting_evidence_object_ids": [
+        "evidence-memory-triage-notes-0004"
+      ],
+      "review_decision": "accepted_as_analyst_note_summary",
+      "final_finding": false
+    }
+  ],
+  "review_record_summary": {
+    "review_record_id": "review-record-example-local-llm-timeline-0001",
+    "review_status": "review_completed_with_conditions",
+    "review_outcome": "approved_for_internal_case_use_only",
+    "reviewer_id": "reviewer-example-dfir-001",
+    "reviewer_role": "dfir_lead_analyst",
+    "reviewed_at": "2026-05-31T17:21:30Z",
+    "approved_for_internal_case_use": true,
+    "approved_for_follow_up_investigation": true,
+    "approved_for_customer_facing_release": false,
+    "approved_for_final_report": false,
+    "approved_for_case_closure": false,
+    "approved_for_attribution": false,
+    "customer_authorization_required_before_release": true,
+    "separate_release_review_required": true,
+    "analyst_corrections_required": true,
+    "unsupported_inferences_identified": true
+  },
+  "rejected_or_restricted_inferences": [
+    {
+      "inference_id": "unsupported-inference-0001",
+      "review_decision": "rejected",
+      "restriction": "Do not claim cloud IAM activity and endpoint PowerShell activity were performed by the same attacker."
+    },
+    {
+      "inference_id": "unsupported-inference-0002",
+      "review_decision": "rejected",
+      "restriction": "Do not claim mailbox data exfiltration occurred."
+    },
+    {
+      "inference_id": "unsupported-inference-0003",
+      "review_decision": "requires_additional_analysis",
+      "restriction": "Do not classify endpoint script execution as malicious until decoded command and payload review are completed."
+    }
+  ],
+  "required_follow_up_actions": [
+    {
+      "action_id": "followup-0001",
+      "action": "decode_and_review_powershell_command",
+      "priority": "high",
+      "status": "open"
+    },
+    {
+      "action_id": "followup-0002",
+      "action": "validate_oauth_application_legitimacy",
+      "priority": "high",
+      "status": "open"
+    },
+    {
+      "action_id": "followup-0003",
+      "action": "review_mailbox_audit_scope",
+      "priority": "medium",
+      "status": "open"
+    },
+    {
+      "action_id": "followup-0004",
+      "action": "determine_whether_additional_evidence_preservation_is_required",
+      "priority": "medium",
+      "status": "open"
+    }
+  ],
+  "policy_and_enforcement_results": {
+    "pdp_required_for_customer_release": true,
+    "pep_required_for_output_publishing": true,
+    "human_review_completed": true,
+    "case_note_write_allowed": true,
+    "case_note_write_performed": false,
+    "persistent_memory_write_allowed": false,
+    "persistent_memory_write_performed": false,
+    "evidence_export_allowed": false,
+    "evidence_export_performed": false,
+    "customer_facing_output_allowed": false,
+    "customer_facing_output_released": false,
+    "final_forensic_finding_allowed": false,
+    "attribution_statement_allowed": false,
+    "case_closure_allowed": false,
+    "fail_closed_if_customer_release_attempted_without_review": true
+  },
+  "pep_enforcement_results": [
+    {
+      "pep_id": "pep-local-retrieval-dfir-001",
+      "boundary": "local_retrieval_layer",
+      "decision_enforced": "case_evidence_scoped_retrieval_only",
+      "result": "pass",
+      "details": "Retrieval was limited to approved case evidence and derived artifacts."
+    },
+    {
+      "pep_id": "pep-local-model-runtime-001",
+      "boundary": "local_llm_runtime",
+      "decision_enforced": "approved_local_model_runtime_only",
+      "result": "pass",
+      "details": "Timeline was generated using the approved local model runtime with no external network access."
+    },
+    {
+      "pep_id": "pep-memory-dfir-001",
+      "boundary": "memory_control",
+      "decision_enforced": "deny_persistent_memory_write",
+      "result": "pass",
+      "details": "No persistent memory write occurred."
+    },
+    {
+      "pep_id": "pep-evidence-store-dfir-001",
+      "boundary": "evidence_store",
+      "decision_enforced": "protect_original_evidence",
+      "result": "pass",
+      "details": "Original evidence was not modified; working copies and derived artifacts were used."
+    },
+    {
+      "pep_id": "pep-output-release-dfir-001",
+      "boundary": "output_publishing_layer",
+      "decision_enforced": "internal_use_only_no_customer_release",
+      "result": "pass",
+      "details": "Timeline was approved only for internal case use and was not released externally."
+    },
+    {
+      "pep_id": "pep-audit-dfir-001",
+      "boundary": "audit_event_pipeline",
+      "decision_enforced": "correlated_audit_event_required",
+      "result": "pass",
+      "details": "Audit event correlates evidence manifest, timeline output, review record, local model runtime, retrieval context, and final state."
+    }
+  ],
+  "deny_and_fail_closed_observations": {
+    "deny_paths_triggered": [],
+    "fail_closed_triggered": false,
+    "blocked_or_not_performed_operations": [
+      "customer_facing_report_release",
+      "final_forensic_finding",
+      "attribution_statement",
+      "case_closure",
+      "evidence_export",
+      "evidence_transfer",
+      "persistent_memory_write",
+      "external_llm_processing",
+      "source_evidence_modification",
+      "cross_case_retrieval"
+    ],
+    "fail_closed_conditions_monitored": [
+      "missing_case_scope",
+      "missing_evidence_scope",
+      "missing_chain_of_custody_reference",
+      "unapproved_model_runtime",
+      "external_network_access_attempt",
+      "cross_case_retrieval",
+      "cross_customer_retrieval",
+      "persistent_memory_write_attempt",
+      "customer_release_without_review",
+      "timeline_entry_without_evidence_reference",
+      "unsupported_finding_claimed_as_fact"
+    ]
+  },
+  "case_output_state": {
+    "timeline_current_state": "reviewed_internal_working_timeline",
+    "timeline_release_status": "internal_case_use_only",
+    "customer_facing_release_status": "not_released",
+    "final_report_status": "not_ready",
+    "final_forensic_conclusion_status": "not_made",
+    "case_closure_status": "not_authorized_by_this_event",
+    "case_note_status": "allowed_with_conditions_not_yet_written",
+    "next_allowed_actions": [
+      "use reviewed timeline for internal investigation planning",
+      "perform required follow-up analysis",
+      "request additional case-scoped evidence if needed",
+      "prepare internal draft report section after corrections",
+      "create separate release review before customer-facing use"
+    ],
+    "next_disallowed_actions_without_separate_review_or_authorization": [
+      "publish customer-facing report",
+      "state final forensic conclusion",
+      "attribute activity to an actor",
+      "close case",
+      "export evidence",
+      "write persistent memory"
+    ]
+  },
+  "audit_integrity": {
+    "audit_event_complete": true,
+    "replay_supported": true,
+    "reconstruction_fields_present": [
+      "evidence_manifest_id",
+      "timeline_output_id",
+      "review_record_id",
+      "tenant_id",
+      "customer_id",
+      "case_id",
+      "incident_id",
+      "workflow_id",
+      "model_id",
+      "model_version",
+      "evidence_object_ids",
+      "derived_artifact_ids",
+      "retrieved_context_ids",
+      "knowledge_store_or_memory_scope",
+      "review_outcome",
+      "output_release_status",
+      "correlation_id",
+      "audit_reference_id"
+    ],
+    "tamper_evident_logging_required": true,
+    "log_retention_policy_id": "retention-dfir-case-example-365d",
+    "audit_limitations": [
+      "Full prompt logging may be restricted due to evidence sensitivity; prompt metadata and references are retained.",
+      "This audit event does not authorize customer-facing release or final forensic conclusions."
+    ]
+  },
+  "traceability": {
+    "tenant_id": "tenant-example-001",
+    "customer_id": "customer-example-001",
+    "case_id": "case-example-dfir-2026-0001",
+    "incident_id": "incident-example-dfir-0001",
+    "engagement_id": "engagement-example-dfir-0001",
+    "workflow_id": "workflow-local-llm-forensic-timeline-0001",
+    "analyst_id": "analyst-example-dfir-001",
+    "reviewer_id": "reviewer-example-dfir-001",
+    "custodian_id": "custodian-example-001",
+    "model_id": "local-dfir-timeline-llm-example",
+    "model_version": "validated-2026-05",
+    "evidence_manifest_id": "evidence-manifest-example-local-llm-timeline-0001",
+    "timeline_output_id": "timeline-output-example-local-llm-0001",
+    "review_record_id": "review-record-example-local-llm-timeline-0001",
+    "evidence_object_ids": [
+      "evidence-endpoint-edr-alerts-0001",
+      "evidence-windows-event-logs-0002",
+      "evidence-cloud-signin-audit-0003",
+      "evidence-memory-triage-notes-0004"
+    ],
+    "derived_artifact_ids": [
+      "derived-timeline-events-endpoint-0001",
+      "derived-timeline-events-cloud-0002"
+    ],
+    "knowledge_store_or_memory_scope": "tenant-example-001/customer-example-001/case-example-dfir-2026-0001/timeline",
+    "knowledge_memory_scope_result": "case_evidence_scoped_pass",
+    "output_destination": "internal_dfir_case_workspace",
+    "data_classification": "restricted",
+    "sensitivity_label": "customer-dfir-evidence",
+    "audit_reference_id": "audit-example-local-llm-timeline-0001",
+    "correlation_id": "corr-example-local-llm-timeline-0001"
+  },
+  "final_state": {
+    "workflow_state": "reviewed_internal_timeline_pending_follow_up_analysis",
+    "timeline_status": "approved_for_internal_case_use_only",
+    "review_status": "completed_with_conditions",
+    "dfir_case_status": "active_analysis",
+    "customer_release_status": "not_authorized",
+    "evidence_export_status": "not_authorized",
+    "persistent_memory_status": "not_written",
+    "next_required_controls": [
+      "complete required follow-up analysis",
+      "apply analyst corrections to timeline before report drafting",
+      "perform separate report review before customer-facing release",
+      "retain or archive local indexes according to case closure policy",
+      "continue preserving chain-of-custody references"
+    ]
+  }
+}
