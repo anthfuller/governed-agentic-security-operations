@@ -162,6 +162,7 @@
   },
   "cloud_iam_signal": {
     "source_system_id": "cloud-identity-protection-example",
+    "evidence_ref": "evidence://tenant-example-001/incident-example-cloud-iam-0001/alert-001",
     "source_alert_url": "https://example.invalid/cloud/iam/alerts/alert-example-cloud-iam-0001",
     "title": "Suspicious privileged cloud sign-in followed by OAuth consent and mailbox access",
     "severity": "critical",
@@ -187,6 +188,12 @@
       "T1114"
     ],
     "detected_at": "2026-05-31T15:52:10Z",
+    "ingestion_timestamp": "2026-05-31T15:55:00Z",
+    "entity_refs": [
+      "identity-example-admin-001",
+      "mailbox-example-admin-001",
+      "oauth-app-consent-example-001"
+    ],
     "affected_identities": [
       {
         "identity_id": "identity-example-admin-001",
