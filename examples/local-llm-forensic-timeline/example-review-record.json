@@ -1,0 +1,360 @@
+{
+  "schema_version": "1.0.0",
+  "example_name": "local-llm-forensic-timeline",
+  "artifact_type": "example_review_record",
+  "review_record_id": "review-record-example-local-llm-timeline-0001",
+  "timeline_output_id": "timeline-output-example-local-llm-0001",
+  "evidence_manifest_id": "evidence-manifest-example-local-llm-timeline-0001",
+  "correlation_id": "corr-example-local-llm-timeline-0001",
+  "audit_reference_id": "audit-example-local-llm-timeline-0001",
+  "created_at": "2026-05-31T17:22:00Z",
+  "review_status": "review_completed_with_conditions",
+  "review_outcome": "approved_for_internal_case_use_only",
+  "service_model": {
+    "primary": "Private / Local LLM-assisted DFIR",
+    "also_applicable_to": [
+      "DFIR",
+      "SOC / Incident Response",
+      "MDR"
+    ],
+    "conditional_applicability": [
+      {
+        "service_model": "MSSP",
+        "condition": "Applies only when managed service delivery includes customer-scoped DFIR timeline support or handoff."
+      }
+    ]
+  },
+  "case_scope": {
+    "tenant_id": "tenant-example-001",
+    "customer_id": "customer-example-001",
+    "case_id": "case-example-dfir-2026-0001",
+    "incident_id": "incident-example-dfir-0001",
+    "engagement_id": "engagement-example-dfir-0001",
+    "workflow_id": "workflow-local-llm-forensic-timeline-0001",
+    "case_name": "Suspicious Endpoint and Cloud Activity Timeline Reconstruction",
+    "scope_result": "case_evidence_scoped",
+    "scope_violations_detected": false
+  },
+  "reviewer": {
+    "reviewer_id": "reviewer-example-dfir-001",
+    "reviewer_role": "dfir_lead_analyst",
+    "reviewer_team": "digital_forensics_and_incident_response",
+    "reviewer_authorization_level": "approve_internal_forensic_timeline_use",
+    "reviewer_independence": "human_reviewer_not_model",
+    "reviewed_at": "2026-05-31T17:21:30Z"
+  },
+  "review_input_artifacts": {
+    "evidence_manifest_artifact": "example-evidence-manifest.json",
+    "timeline_output_artifact": "example-timeline-output.json",
+    "evidence_manifest_id": "evidence-manifest-example-local-llm-timeline-0001",
+    "timeline_output_id": "timeline-output-example-local-llm-0001",
+    "source_evidence_object_ids": [
+      "evidence-endpoint-edr-alerts-0001",
+      "evidence-windows-event-logs-0002",
+      "evidence-cloud-signin-audit-0003",
+      "evidence-memory-triage-notes-0004"
+    ],
+    "derived_artifact_ids": [
+      "derived-timeline-events-endpoint-0001",
+      "derived-timeline-events-cloud-0002"
+    ]
+  },
+  "review_scope": {
+    "review_purpose": "Validate whether the local LLM-assisted draft timeline is suitable for internal case analysis.",
+    "allowed_use_after_review": [
+      "internal_case_analysis",
+      "analyst_working_timeline",
+      "follow_up_investigation_planning",
+      "internal_draft_report_support_after additional review"
+    ],
+    "not_allowed_use_after_review": [
+      "customer_facing_report_release",
+      "final_forensic_finding",
+      "legal_conclusion",
+      "attribution_statement",
+      "case_closure_decision",
+      "containment_instruction",
+      "evidence_export"
+    ],
+    "review_limitations": [
+      "Review validates the draft timeline for internal use only.",
+      "Review does not establish final forensic conclusions.",
+      "Review does not authorize customer-facing release.",
+      "Review does not authorize evidence export or transfer.",
+      "Review does not authorize persistent memory write."
+    ]
+  },
+  "local_llm_runtime_review": {
+    "model_id": "local-dfir-timeline-llm-example",
+    "model_version": "validated-2026-05",
+    "model_runtime_id": "local-llm-runtime-example-001",
+    "prompt_template_id": "prompt-template-forensic-timeline-draft-001",
+    "approved_model_runtime_used": true,
+    "external_network_access_used": false,
+    "training_on_customer_data_used": false,
+    "persistent_memory_write_performed": false,
+    "tool_execution_performed_by_model": false,
+    "runtime_review_result": "pass"
+  },
+  "retrieval_and_memory_review": {
+    "rag_used": true,
+    "knowledge_store_id": "local-ks-case-example-dfir-2026-0001",
+    "vector_namespace": "tenant-example-001/customer-example-001/case-example-dfir-2026-0001/timeline",
+    "knowledge_store_or_memory_scope": "tenant-example-001/customer-example-001/case-example-dfir-2026-0001/timeline",
+    "knowledge_memory_scope_result": "case_evidence_scoped_pass",
+    "retrieved_context_ids_reviewed": [
+      "ctx-evidence-endpoint-edr-alerts-0001",
+      "ctx-evidence-windows-event-logs-0002",
+      "ctx-evidence-cloud-signin-audit-0003",
+      "ctx-evidence-memory-triage-notes-0004",
+      "ctx-derived-timeline-events-endpoint-0001",
+      "ctx-derived-timeline-events-cloud-0002"
+    ],
+    "cross_case_retrieval_detected": false,
+    "cross_customer_retrieval_detected": false,
+    "unauthorized_context_detected": false,
+    "stale_context_detected": false,
+    "memory_read_performed": false,
+    "persistent_memory_write_performed": false,
+    "review_result": "pass"
+  },
+  "evidence_integrity_review": {
+    "evidence_hashes_available": true,
+    "chain_of_custody_reference": "coc-example-dfir-0001",
+    "legal_hold_reference": "legal-hold-example-dfir-0001",
+    "original_evidence_modified": false,
+    "derived_artifacts_used": true,
+    "derived_artifacts_separated_from_originals": true,
+    "evidence_object_references_present": true,
+    "timeline_entries_reference_evidence": true,
+    "review_result": "pass",
+    "notes": "Timeline entries reference evidence or derived artifacts. Original evidence remains preserved and unmodified."
+  },
+  "timeline_entry_review": [
+    {
+      "timeline_entry_id": "tl-entry-0001",
+      "review_decision": "accepted_for_internal_timeline",
+      "review_confidence": "medium",
+      "analyst_notes": "Privileged sign-in event is supported by cloud identity logs. Suspicion is reasonable, but compromise is not proven by this event alone.",
+      "required_corrections": [],
+      "approved_use": [
+        "internal timeline",
+        "follow-up investigation planning"
+      ],
+      "not_approved_use": [
+        "final compromise finding",
+        "attribution statement"
+      ]
+    },
+    {
+      "timeline_entry_id": "tl-entry-0002",
+      "review_decision": "accepted_with_conditions",
+      "review_confidence": "medium_high",
+      "analyst_notes": "OAuth consent grant is relevant and supported by cloud audit evidence. Customer validation or change record review is still required before final conclusion.",
+      "required_corrections": [
+        "State that OAuth grant is suspicious but not confirmed malicious.",
+        "Preserve uncertainty about application legitimacy."
+      ],
+      "approved_use": [
+        "internal timeline",
+        "approval support",
+        "follow-up customer validation"
+      ],
+      "not_approved_use": [
+        "final persistence finding",
+        "customer-facing claim without validation"
+      ]
+    },
+    {
+      "timeline_entry_id": "tl-entry-0003",
+      "review_decision": "accepted_with_conditions",
+      "review_confidence": "medium",
+      "analyst_notes": "Mailbox access occurred after OAuth consent. Timeline supports concern, but exfiltration is not established.",
+      "required_corrections": [
+        "Do not state data exfiltration occurred.",
+        "Flag mailbox access volume as unresolved."
+      ],
+      "approved_use": [
+        "internal timeline",
+        "follow-up mailbox audit review"
+      ],
+      "not_approved_use": [
+        "confirmed exfiltration finding"
+      ]
+    },
+    {
+      "timeline_entry_id": "tl-entry-0004",
+      "review_decision": "accepted_with_conditions",
+      "review_confidence": "medium",
+      "analyst_notes": "Suspicious document process event is supported by endpoint evidence. Relationship to cloud IAM events remains unproven.",
+      "required_corrections": [
+        "Do not imply causality between endpoint and cloud identity activity.",
+        "Keep relationship listed as unresolved correlation."
+      ],
+      "approved_use": [
+        "internal timeline",
+        "follow-up endpoint investigation"
+      ],
+      "not_approved_use": [
+        "single-actor conclusion",
+        "causal relationship statement"
+      ]
+    },
+    {
+      "timeline_entry_id": "tl-entry-0005",
+      "review_decision": "accepted_with_conditions",
+      "review_confidence": "medium_high",
+      "analyst_notes": "Encoded PowerShell execution is relevant and suspicious. Decoding and artifact review are required before classifying as malicious.",
+      "required_corrections": [
+        "Label maliciousness as unresolved.",
+        "Request decoded command and payload review."
+      ],
+      "approved_use": [
+        "internal timeline",
+        "follow-up endpoint artifact review"
+      ],
+      "not_approved_use": [
+        "confirmed malware execution finding"
+      ]
+    },
+    {
+      "timeline_entry_id": "tl-entry-0006",
+      "review_decision": "accepted_as_analyst_note_summary",
+      "review_confidence": "medium",
+      "analyst_notes": "Analyst note may support investigation direction but must not be treated as primary evidence of causality.",
+      "required_corrections": [
+        "Keep entry categorized as analyst note, not primary event evidence."
+      ],
+      "approved_use": [
+        "internal investigation planning"
+      ],
+      "not_approved_use": [
+        "primary evidence finding"
+      ]
+    }
+  ],
+  "unsupported_or_rejected_inference_review": [
+    {
+      "inference_id": "unsupported-inference-0001",
+      "review_decision": "rejected",
+      "inference": "The cloud IAM activity and endpoint PowerShell activity were performed by the same attacker.",
+      "reason": "Current evidence does not establish shared actor, shared infrastructure, or causal link."
+    },
+    {
+      "inference_id": "unsupported-inference-0002",
+      "review_decision": "rejected",
+      "inference": "Mailbox data was exfiltrated.",
+      "reason": "Mailbox access is observed, but exfiltration volume, content, or transfer path is not established."
+    },
+    {
+      "inference_id": "unsupported-inference-0003",
+      "review_decision": "requires_additional_analysis",
+      "inference": "The endpoint script execution was malicious.",
+      "reason": "Suspicious encoded PowerShell requires decoded command review, payload review, and supporting artifact analysis."
+    }
+  ],
+  "review_findings": {
+    "overall_timeline_quality": "acceptable_for_internal_case_use",
+    "overall_confidence": "medium",
+    "timeline_completeness": "partial",
+    "evidence_reference_coverage": "all_entries_have_evidence_references",
+    "observed_facts_separated_from_interpretation": true,
+    "model_generated_interpretation_labeled": true,
+    "unsupported_inferences_identified": true,
+    "analyst_corrections_required": true,
+    "customer_release_ready": false,
+    "final_forensic_finding_ready": false,
+    "dfir_lead_summary": "The timeline is useful for internal investigation planning and follow-up analysis. It is not ready for customer-facing reporting or final forensic conclusions."
+  },
+  "required_follow_up_actions": [
+    {
+      "action_id": "followup-0001",
+      "action": "decode_and_review_powershell_command",
+      "priority": "high",
+      "reason": "Encoded PowerShell content is necessary to assess maliciousness.",
+      "assigned_to": "dfir_analyst"
+    },
+    {
+      "action_id": "followup-0002",
+      "action": "validate_oauth_application_legitimacy",
+      "priority": "high",
+      "reason": "OAuth consent may be legitimate or malicious; customer validation or change record review is required.",
+      "assigned_to": "dfir_analyst"
+    },
+    {
+      "action_id": "followup-0003",
+      "action": "review_mailbox_audit_scope",
+      "priority": "medium",
+      "reason": "Mailbox access was observed, but access volume and content are unresolved.",
+      "assigned_to": "dfir_analyst"
+    },
+    {
+      "action_id": "followup-0004",
+      "action": "determine_whether_additional_evidence_preservation_is_required",
+      "priority": "medium",
+      "reason": "Additional evidence may be needed before final findings or customer-facing report sections are produced.",
+      "assigned_to": "dfir_lead"
+    }
+  ],
+  "release_and_use_decision": {
+    "approved_for_internal_case_use": true,
+    "approved_for_follow_up_investigation": true,
+    "approved_for_customer_facing_release": false,
+    "approved_for_final_report": false,
+    "approved_for_case_closure": false,
+    "approved_for_attribution": false,
+    "customer_authorization_required_before_release": true,
+    "separate_release_review_required": true,
+    "release_notes": "Timeline may be used internally as a reviewed working timeline. Customer-facing release requires additional validation, customer authorization where required, and separate report review."
+  },
+  "policy_and_enforcement_observations": {
+    "pdp_required_for_customer_release": true,
+    "pep_required_for_output_publishing": true,
+    "human_review_completed": true,
+    "case_note_write_allowed": true,
+    "case_note_write_conditions": [
+      "Case note may reference reviewed internal timeline status.",
+      "Case note must not present rejected inferences as findings.",
+      "Case note must include review_record_id and audit_reference_id."
+    ],
+    "persistent_memory_write_allowed": false,
+    "evidence_export_allowed": false,
+    "customer_facing_output_allowed": false,
+    "fail_closed_if_customer_release_attempted_without_review": true
+  },
+  "traceability": {
+    "tenant_id": "tenant-example-001",
+    "customer_id": "customer-example-001",
+    "case_id": "case-example-dfir-2026-0001",
+    "incident_id": "incident-example-dfir-0001",
+    "engagement_id": "engagement-example-dfir-0001",
+    "workflow_id": "workflow-local-llm-forensic-timeline-0001",
+    "analyst_id": "analyst-example-dfir-001",
+    "reviewer_id": "reviewer-example-dfir-001",
+    "model_id": "local-dfir-timeline-llm-example",
+    "model_version": "validated-2026-05",
+    "evidence_manifest_id": "evidence-manifest-example-local-llm-timeline-0001",
+    "timeline_output_id": "timeline-output-example-local-llm-0001",
+    "evidence_object_ids": [
+      "evidence-endpoint-edr-alerts-0001",
+      "evidence-windows-event-logs-0002",
+      "evidence-cloud-signin-audit-0003",
+      "evidence-memory-triage-notes-0004"
+    ],
+    "derived_artifact_ids": [
+      "derived-timeline-events-endpoint-0001",
+      "derived-timeline-events-cloud-0002"
+    ],
+    "knowledge_store_or_memory_scope": "tenant-example-001/customer-example-001/case-example-dfir-2026-0001/timeline",
+    "knowledge_memory_scope_result": "case_evidence_scoped_pass",
+    "output_destination": "internal_dfir_case_workspace",
+    "data_classification": "restricted",
+    "sensitivity_label": "customer-dfir-evidence",
+    "review_record_id": "review-record-example-local-llm-timeline-0001",
+    "audit_reference_id": "audit-example-local-llm-timeline-0001",
+    "correlation_id": "corr-example-local-llm-timeline-0001"
+  },
+  "next_required_artifacts": [
+    "example-audit-event.json"
+  ]
+}
