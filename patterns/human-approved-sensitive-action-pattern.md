@@ -358,6 +358,7 @@ The approval record should capture:
 - rationale or decision notes;
 - conditions or restrictions;
 - customer authorization reference where required;
+- **cryptographic binding (signature hash, signature method, and signed payload references);**
 - linked policy decision;
 - linked execution result;
 - audit reference and correlation identifiers.
@@ -373,6 +374,7 @@ A valid enforcement implementation should:
 - prevent action execution before approval;
 - prevent approval reuse across tenants, customers, cases, workflows, tools, or time windows;
 - verify that approved parameters match execution parameters;
+- **cryptographically verify the approval signature against the original payload references;**
 - enforce restricted or conditional approvals;
 - prevent direct agent execution of sensitive actions;
 - log approval verification and execution results;
