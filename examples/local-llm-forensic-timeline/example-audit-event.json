@@ -22,7 +22,8 @@
     "timeline_output_id": "timeline-output-example-local-llm-0001",
     "timeline_output_artifact": "example-timeline-output.json",
     "review_record_id": "review-record-example-local-llm-timeline-0001",
-    "review_record_artifact": "example-review-record.json"
+    "review_record_artifact": "example-review-record.json",
+    "prompt_ref": "prompt-template-forensic-timeline-draft-001"
   },
   "service_model": {
     "primary": "Private / Local LLM-assisted DFIR",
@@ -444,6 +445,7 @@
       "workflow_id",
       "model_id",
       "model_version",
+      "prompt_ref",
       "evidence_object_ids",
       "derived_artifact_ids",
       "retrieved_context_ids",
