@@ -99,6 +99,14 @@
     "reviewer_independence": "human_reviewer_not_agent",
     "reviewed_at": "2026-05-31T16:08:45Z"
   },
+  "cryptographic_binding": {
+    "signature_hash": "sha256-4b8f...[redacted]...c7a2",
+    "signature_method": "fido2_webauthn",
+    "signed_payload_refs": [
+      "req-example-cloud-iam-0001",
+      "evidence://tenant-example-001/incident-example-cloud-iam-0001/alert-001"
+    ]
+  },
   "customer_authorization": {
     "customer_authorization_required": true,
     "customer_authorization_status": "confirmed",
