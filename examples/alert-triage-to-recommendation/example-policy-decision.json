@@ -8,6 +8,11 @@
   "correlation_id": "corr-example-alert-triage-0001",
   "audit_reference_id": "audit-example-alert-triage-0001",
   "created_at": "2026-05-31T15:47:15Z",
+  "decision": "ALLOW",
+  "reason": "Drafting an internal recommendation is authorized; all containment or customer-facing actions are strictly denied or require separate approval.",
+  "required_approver_role": "none_for_internal_drafting",
+  "expires_at": "2026-05-31T16:47:15Z",
+  "audit_required": true,
   "decision_engine": {
     "pdp_id": "pdp-agentic-security-ops-001",
     "pdp_name": "Agentic Security Operations Policy Decision Point",
@@ -40,7 +45,7 @@
     "data_classification": "confidential",
     "sensitivity_label": "customer-security-operations"
   },
-  "decision": {
+  "decision_details": {
     "outcome": "allow_recommendation_only",
     "decision_status": "approved_with_restrictions",
     "execution_authority_granted": false,
