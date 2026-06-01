@@ -19,6 +19,8 @@
   "source_artifacts": {
     "request_id": "req-example-cloud-iam-0001",
     "request_artifact": "example-request.json",
+    "prompt_ref": "prompt-template-containment-exec-v2.1",
+    "policy_request_ref": "policy-req-example-cloud-iam-0001",
     "approval_request_id": "approval-request-example-cloud-iam-0001",
     "approval_record_id": "approval-example-cloud-iam-0001",
     "approval_record_artifact": "example-approval-record.json",
@@ -218,7 +220,8 @@
     "decision_engine": "pdp-agentic-security-ops-001",
     "policy_evaluation_mode": "deny_by_default",
     "policy_unavailable_behavior": "fail_closed",
-    "outcome": "allow_scoped_sensitive_iam_actions_with_conditions",
+    "decision": "ALLOW",
+    "decision_details": "allow_scoped_sensitive_iam_actions_with_conditions",
     "decision_status": "approved_with_conditions",
     "execution_authority_granted": true,
     "execution_authority_scope": "limited_to_approved_identity_and_oauth_grant",
