@@ -123,14 +123,19 @@ governed-agentic-security-operations-architecture/
 ├── threat-model/
 │   ├── README.md
 │   ├── agentic-security-operations-threat-model.md
+|   |── mitre-atlas-threats.md
 │   ├── prompt-injection-through-logs.md
 │   ├── rag-memory-contamination.md
+|   ├── rag-poisoning.md
 │   ├── cross-tenant-cross-customer-risk.md
 │   ├── tool-use-and-automation-risk.md
+|   ├── malicious-tool-output.md
 │   ├── human-approval-and-release-risk.md
+|   ├── overreliance-on-ai.md
 │   ├── compromised-agent-identity.md
 │   ├── rogue-agent-risk.md
-│   └── local-llm-dfir-risk.md
+│   ├── local-llm-dfir-risk.md
+|   └── mitigations.md
 │
 ├── templates/
 │   ├── README.md
