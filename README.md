@@ -70,12 +70,15 @@ governed-agentic-security-operations-architecture/
 │   ├── control-loop.md
 │   ├── architecture-principles.md
 │   ├── architecture-assumptions.md
+│   ├── agentic-fleet-architecture.md
+│   ├── agentic-fleet-control-loop.md
 │   └── diagrams/
 │       ├── executive-architecture.png
 │       ├── engineering-architecture.png
 │       ├── layered-architecture.png
-|       ├── f7-las-executive-control-loop-agentic-systems.png
-│       └── control-loop.png
+│       ├── f7-las-executive-control-loop-agentic-systems.png
+│       ├── control-loop.png
+│       └── agentic-fleet-architecture.png
 │
 ├── patterns/
 │   ├── README.md
@@ -83,7 +86,10 @@ governed-agentic-security-operations-architecture/
 │   ├── policy-enforced-tool-use-pattern.md
 │   ├── human-approved-sensitive-action-pattern.md
 │   ├── tenant-safe-rag-memory-pattern.md
-│   └── private-local-llm-dfir-pattern.md
+│   ├── private-local-llm-dfir-pattern.md
+│   ├── governed-agent-fleet-update-pattern.md
+│   ├── tenant-safe-fleet-intelligence-propagation-pattern.md
+│   └── fail-closed-agent-rollout-pattern.md
 │
 ├── examples/
 │   ├── README.md
@@ -101,12 +107,33 @@ governed-agentic-security-operations-architecture/
 │   │   ├── example-policy-decision.json
 │   │   └── example-audit-event.json
 │   │
-│   └── local-llm-forensic-timeline/
+│   ├── local-llm-forensic-timeline/
+│   │   ├── README.md
+│   │   ├── example-evidence-manifest.json
+│   │   ├── example-timeline-output.json
+│   │   ├── example-review-record.json
+│   │   └── example-audit-event.json
+│   │
+│   ├── fleet-update-rollout/
+│   │   ├── README.md
+│   │   ├── example-fleet-update-request.json
+│   │   ├── example-fleet-policy-decision.json
+│   │   ├── example-fleet-approval-record.json
+│   │   └── example-fleet-audit-event.json
+│   │
+│   ├── compromised-agent-recall/
+│   │   ├── README.md
+│   │   ├── example-agent-recall-request.json
+│   │   ├── example-recall-policy-decision.json
+│   │   ├── example-recall-approval-record.json
+│   │   └── example-recall-audit-event.json
+│   │
+│   └── cross-tenant-sanitized-intelligence-propagation/
 │       ├── README.md
-│       ├── example-evidence-manifest.json
-│       ├── example-timeline-output.json
-│       ├── example-review-record.json
-│       └── example-audit-event.json
+│       ├── example-sanitized-intelligence-release-request.json
+│       ├── example-sanitization-review-record.json
+│       ├── example-release-policy-decision.json
+│       └── example-release-audit-event.json
 │
 ├── service-models/
 │   ├── README.md
@@ -114,6 +141,8 @@ governed-agentic-security-operations-architecture/
 │   ├── mdr-operating-model.md
 │   ├── cloud-ir-operating-model.md
 │   ├── private-local-llm-dfir-operating-model.md
+│   ├── mssp-agent-fleet-operating-model.md
+│   ├── mdr-agent-fleet-operating-model.md
 │   └── diagrams/
 │       ├── mssp-operating-model.png
 │       ├── mdr-operating-model.png
@@ -123,19 +152,22 @@ governed-agentic-security-operations-architecture/
 ├── threat-model/
 │   ├── README.md
 │   ├── agentic-security-operations-threat-model.md
-|   |── mitre-atlas-threats.md
+│   ├── mitre-atlas-threats.md
 │   ├── prompt-injection-through-logs.md
 │   ├── rag-memory-contamination.md
-|   ├── rag-poisoning.md
+│   ├── rag-poisoning.md
 │   ├── cross-tenant-cross-customer-risk.md
 │   ├── tool-use-and-automation-risk.md
-|   ├── malicious-tool-output.md
+│   ├── malicious-tool-output.md
 │   ├── human-approval-and-release-risk.md
-|   ├── overreliance-on-ai.md
+│   ├── overreliance-on-ai.md
 │   ├── compromised-agent-identity.md
 │   ├── rogue-agent-risk.md
 │   ├── local-llm-dfir-risk.md
-|   └── mitigations.md
+│   ├── fleet-update-poisoning.md
+│   ├── cross-tenant-fleet-contamination.md
+│   ├── rogue-agent-update-channel.md
+│   └── mitigations.md
 │
 ├── templates/
 │   ├── README.md
@@ -162,6 +194,7 @@ governed-agentic-security-operations-architecture/
     │   ├── unsupported-claim-judge.md
     │   ├── hitl-requirement-check.md
     │   ├── attack-atlas-mapping-judge.md
+    │   ├── fleet-update-evaluation-and-safety-validation.md
     │   └── judge-limitations.md
     │
     ├── policy-enforcement/
@@ -171,6 +204,7 @@ governed-agentic-security-operations-architecture/
     │   ├── policy-contract.md
     │   ├── action-risk-classification.md
     │   ├── approval-policy-requirements.md
+    │   ├── fleet-update-authorization-and-policy-gates.md
     │   └── fail-closed-behavior.md
     │
     ├── agent-governance/
@@ -179,7 +213,9 @@ governed-agentic-security-operations-architecture/
     │   ├── agent-access-scope.md
     │   ├── agent-to-agent-communication.md
     │   ├── agent-monitoring-and-oversight.md
-    │   └── agent-change-management.md
+    │   ├── agent-change-management.md
+    │   ├── agent-fleet-governance.md
+    │   └── agent-version-lifecycle-and-rollbacks.md
     │
     ├── human-oversight/
     │   ├── README.md
@@ -187,14 +223,16 @@ governed-agentic-security-operations-architecture/
     │   ├── approval-boundaries.md
     │   ├── customer-approval-model.md
     │   ├── escalation-paths.md
-    │   └── review-record-requirements.md
+    │   ├── review-record-requirements.md
+    │   └── fleet-change-approval-and-emergency-override.md
     │
     ├── tenant-isolation/
     │   ├── README.md
     │   ├── tenant-boundary-model.md
     │   ├── cross-tenant-failure-modes.md
     │   ├── tenant-scope-validation.md
-    │   └── tenant-isolation-audit-requirements.md
+    │   ├── tenant-isolation-audit-requirements.md
+    │   └── fleet-scope-and-cross-tenant-propagation-boundaries.md
     │
     ├── tool-access/
     │   ├── README.md
@@ -209,6 +247,7 @@ governed-agentic-security-operations-architecture/
     │   ├── source-system-metadata.md
     │   ├── normalization-and-enrichment.md
     │   ├── ingestion-failure-handling.md
+    │   ├── shared-intelligence-sanitization-and-release-controls.md
     │   └── ingestion-audit-replay.md
     │
     ├── evidence-traceability/
@@ -233,6 +272,7 @@ governed-agentic-security-operations-architecture/
         ├── replayability-requirements.md
         ├── audit-correlation-model.md
         ├── exception-and-failure-audit.md
+        ├── fleet-rollout-audit-and-replay-model.md
         └── immutable-audit-guidance.md
 ```
 
