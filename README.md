@@ -1,5 +1,7 @@
 # Governed Agentic Security Operations Architecture
 
+> **Disclaimer:** This is an independent personal conceptual reference architecture. It is not affiliated with, sponsored by, endorsed by, reviewed by, approved by, or maintained by Microsoft or any employer of the author. See [`DISCLAIMER.md`](DISCLAIMER.md).
+
 ## Purpose
 
 This repository is a conceptual reference architecture and pattern library for governed agentic security operations across MSSP, MDR, SOC, cloud incident response, and private/local LLM-assisted DFIR workflows.
