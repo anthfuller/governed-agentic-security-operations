@@ -77,9 +77,6 @@ More detailed engineering-oriented view of the control plane, orchestration laye
 
 [`architecture/engineering-view.md`](architecture/engineering-view.md)
 
-
-[`architecture/layered-architecture.md`](architecture/layered-architecture.md)
-
 ### Cross-Cutting Capability Views
 
 #### Governed Agentic MSSP / MDR Fleet Operations
