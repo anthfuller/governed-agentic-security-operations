@@ -20,25 +20,29 @@ Do not open a public GitHub issue, pull request, discussion, or comment containi
 
 If you identify a concern involving a real system, product, service, customer environment, employer environment, or regulated data, report it through the appropriate authorized security intake process for that organization.
 
-If you identify a repository-specific concern, such as accidental secret exposure, unsafe sample data, or documentation that could create security confusion, report it privately through the repository maintainer's approved contact path when available.
+This repository is not an intake path for third-party product vulnerabilities, customer incidents, employer security issues, or live operational findings.
+
+If you identify a repository-specific concern, such as accidental secret exposure, unsafe sample data, or documentation that could create security confusion, report it privately through GitHub private vulnerability reporting if enabled, or through the maintainer-approved private contact path listed for the repository.
 
 ## Data Handling Requirements
 
-Contributors and users must not commit or submit:
+Contributors and users must not commit, submit, upload, or reference:
 
 - Secrets, API keys, tokens, credentials, certificates, private keys, or connection strings
 - Customer data, tenant data, production logs, incident data, forensic evidence, or regulated data
 - Employer confidential information or non-public implementation details
 - Proprietary detection logic, response procedures, service documentation, or internal operational material
-- Real user, customer, tenant, host, IP, domain, case, alert, or evidence identifiers unless they are clearly synthetic
+- Real user, customer, tenant, host, IP, domain, case, alert, or evidence identifiers
 
-All examples, alerts, logs, decisions, outputs, policies, schemas, workflows, tenants, customers, users, identifiers, and scenarios should be synthetic unless explicitly stated otherwise.
+All examples, alerts, logs, decisions, outputs, policies, schemas, workflows, tenants, customers, users, identifiers, and scenarios must be synthetic or clearly non-sensitive public test data.
 
 ## Responsible Use
 
 Agentic security operations must include explicit human accountability, policy enforcement, auditability, tenant isolation, evidence traceability, and fail-closed behavior for sensitive actions.
 
-The examples in this repository must not be treated as production-ready controls. Any implementation should be reviewed, adapted, tested, and approved by qualified security, legal, privacy, compliance, AI governance, incident response, DFIR, and operational stakeholders before use.
+The examples in this repository must not be treated as production-ready controls.
+
+Any implementation based on these concepts should be reviewed, adapted, tested, and approved by qualified security, legal, privacy, compliance, AI governance, incident response, DFIR, engineering, and operational stakeholders before use.
 
 ## Prohibited Content
 
@@ -51,11 +55,17 @@ Do not use this repository to submit, request, or publish:
 - Confidential employer, vendor, partner, or customer information
 - Material that could bypass tenant, customer, evidence, approval, or policy boundaries
 
+High-level defensive threat modeling and architecture discussion are appropriate. Operational abuse instructions, live-target exploitation details, and confidential security material are not.
+
 ## Independent Project Notice
 
-This repository is an independent personal project. It is not created, sponsored, endorsed, reviewed, approved, or maintained by Microsoft or by any current or former employer of the author.
+This repository is an independent personal project.
+
+It is not created, sponsored, endorsed, reviewed, approved, supported, or maintained by Microsoft or by any current or former employer of the author.
 
 Nothing in this repository represents Microsoft products, Microsoft services, Microsoft architecture guidance, Microsoft security guidance, Microsoft roadmap direction, Microsoft customer guidance, or official statements on behalf of Microsoft.
+
+See [`DISCLAIMER.md`](DISCLAIMER.md) for the full repository disclaimer.
 
 ## No Security Warranty
 
