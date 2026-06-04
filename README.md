@@ -77,11 +77,6 @@ More detailed engineering-oriented view of the control plane, orchestration laye
 
 [`architecture/engineering-view.md`](architecture/engineering-view.md)
 
-#### Layered Architecture View
-
-Layered view of the governed execution path, including prompts, grounding, planning, tools, policy, sandboxing, and monitoring.
-
-![Layered Architecture Diagram](architecture/diagrams/layered-architecture.png)
 
 [`architecture/layered-architecture.md`](architecture/layered-architecture.md)
 
