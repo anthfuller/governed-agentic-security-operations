@@ -55,6 +55,52 @@ Move to `patterns/` for reusable design patterns, then `examples/` for scenario-
 
 Use `governance-library/` when detailed control requirements are needed.
 
+## Architecture Views
+
+The repository contains core architecture views for governed agentic security operations, plus cross-cutting capability views for specific concerns such as agent fleet operations.
+
+### Core Security Operations Architecture
+
+#### Executive View
+
+High-level conceptual view of governed agentic security operations across MSSP, MDR, SOC, cloud incident response, and private/local LLM-assisted DFIR workflows.
+
+![Executive Architecture Diagram](architecture/diagrams/executive-architecture.png)
+
+[`architecture/executive-view.md`](architecture/executive-view.md)
+
+#### Engineering View
+
+More detailed engineering-oriented view of the control plane, orchestration layer, AI assurance layer, tool access, policy enforcement, tenant isolation, and auditability model.
+
+![Engineering Architecture Diagram](architecture/diagrams/engineering-architecture.png)
+
+[`architecture/engineering-view.md`](architecture/engineering-view.md)
+
+#### Layered Architecture View
+
+Layered view of the governed execution path, including prompts, grounding, planning, tools, policy, sandboxing, and monitoring.
+
+![Layered Architecture Diagram](architecture/diagrams/layered-architecture.png)
+
+[`architecture/layered-architecture.md`](architecture/layered-architecture.md)
+
+### Cross-Cutting Capability Views
+
+#### Governed Agentic MSSP / MDR Fleet Operations
+
+Cross-cutting capability view for governing agent lifecycle, fleet updates, signed releases, tenant eligibility, policy-scoped distribution, sanitized intelligence propagation, staged rollout, emergency recall, rollback, and fleet-wide auditability.
+
+![Governed Agentic MSSP / MDR Fleet Operations Architecture](architecture/diagrams/agentic-fleet-architecture.png)
+
+[`architecture/agentic-fleet-architecture.md`](architecture/agentic-fleet-architecture.md)
+
+#### Agentic Fleet Control Loop
+
+Control-loop view for agent fleet update governance, safety validation, release gates, monitoring, rollback, and replayability.
+
+[`architecture/agentic-fleet-control-loop.md`](architecture/agentic-fleet-control-loop.md)
+
 ## Full Repository Structure
 
 ```text
