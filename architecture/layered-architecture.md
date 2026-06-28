@@ -123,6 +123,16 @@ Supported service models include:
 
 The intended outcomes are safer automation, stronger accountability, faster investigation support, better evidence traceability, and consistent governance across service models.
 
+## Cross-Cutting Fleet Governance
+
+Fleet governance applies across the layered architecture when agents, prompts, policy bundles, retrieval configurations, tool contracts, detection packages, playbooks, report templates, or sanitized intelligence are distributed across tenants, customers, service towers, or environments.
+
+Fleet-level changes must be versioned, owned, policy-gated, tenant-eligible, monitored, rollback-capable, recall-capable, and auditable.
+
+Runtime approval for a tenant-scoped workflow does not authorize cross-tenant reuse, shared-memory writes, prompt updates, detection updates, report-template distribution, or fleet package rollout.
+
+Cross-tenant learning must remain sanitized, reviewed, approved, scoped, monitored, and reversible before it can become shared fleet context.
+
 ## Cross-Cutting Operating Boundaries
 
 The following controls apply across the layered architecture:
@@ -139,6 +149,10 @@ The following controls apply across the layered architecture:
 - evidence-backed outputs;
 - continuous assurance;
 - governed change control.
+- fleet versioning and release control;
+- tenant eligibility for shared capabilities;
+- sanitized intelligence propagation controls;
+- rollback and recall for unsafe fleet updates;
 
 These controls should be applied where they are relevant to the workflow. They should not be used as decorative compliance language or forced into areas where they do not apply.
 
