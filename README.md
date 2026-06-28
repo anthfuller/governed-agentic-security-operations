@@ -6,9 +6,9 @@
 
 This repository is a documentation-first reference architecture and pattern library for governed agentic security operations across MSSP, MDR, SOC, cloud incident response, and private/local LLM-assisted DFIR workflows.
 
-The repository defines architecture views, reusable governance patterns, service operating models, threat models, templates, example artifacts, and control-library guidance for designing agent-assisted security operations that remain scoped, policy-mediated, human-accountable, tenant-safe, evidence-aware, and auditable.
+It defines architecture views, governance patterns, service operating models, threat models, templates, example artifacts, and control-library guidance for designing agent-assisted security operations that remain scoped, policy-mediated, human-accountable, tenant-safe, evidence-aware, and auditable.
 
-This repository is not a runnable product or implementation repo. Runtime code, tests, schemas, policy execution files, KQL query packs, infrastructure automation, CI pipelines, Docker files, and implementation-specific control-plane code belong in a separate companion PoC or product implementation.
+This repository is not a runnable product or implementation repo. Runtime code, tests, schemas, policy execution files, KQL query packs, infrastructure automation, CI pipelines, Docker files, and implementation-specific control-plane code belong in a separate companion implementation or proof-of-concept repo.
 
 ## Core Principle
 
@@ -56,15 +56,17 @@ The following boundaries are treated as architecture invariants:
 
 ## How to Use This Repository
 
-Use the repository by the architectural question you are working through, rather than as a fixed implementation sequence.
+Use the repository by the architectural question you are working through:
 
-For architecture framing, use [`architecture/`](architecture/README.md).
-For reusable design patterns, use [`patterns/`](patterns/readme.md).
-For scenario-oriented artifacts, use [`examples/`](examples/readme.md).
-For MSSP, MDR, cloud IR, and private/local LLM-assisted DFIR service boundaries, use [`service-models/`](service-models/readme.md).
-For adversarial and failure-mode analysis, use [`threat-model/`](threat-model/readme.md).
-For agent lifecycle, access scope, fleet governance, rollback, recall, and monitoring, use [`agent-governance/`](agent-governance/readme.md).
-For reusable records, use [`templates/`](templates/readme.md).
+| Question | Start Here |
+|---|---|
+| What is the overall architecture? | [`architecture/`](architecture/README.md) |
+| What reusable design patterns are available? | [`patterns/`](patterns/readme.md) |
+| What do example records and artifacts look like? | [`examples/`](examples/readme.md) |
+| How do MSSP, MDR, cloud IR, and DFIR service boundaries work? | [`service-models/`](service-models/readme.md) |
+| What threats and failure modes should be evaluated? | [`threat-model/`](threat-model/readme.md) |
+| How are agents governed across lifecycle, access, monitoring, and rollback? | [`agent-governance/`](agent-governance/readme.md) |
+| What reusable records and templates are available? | [`templates/`](templates/readme.md) |
 
 ## Architecture Views
 
@@ -86,7 +88,7 @@ Engineering-oriented view of the control plane, orchestration layer, AI assuranc
 
 ### Shared Operating Model
 
-Layered operating model showing how customer/data sources, ingestion, context assembly, agent runtime, policy enforcement, oversight, tool access, auditability, and agent governance fit together.
+Layered operating model showing how customer and data sources, ingestion, context assembly, agent runtime, policy enforcement, oversight, tool access, auditability, and agent governance fit together.
 
 ![Governed Agentic Shared Operating Model](architecture/diagrams/governed-agentic-shared-operating-model.png)
 
@@ -110,7 +112,7 @@ Use this view with the agent governance materials for fleet lifecycle, versionin
 
 ## Repository Map
 
-The root README intentionally avoids a giant full tree. See [`REPO-STRUCTURE.md`](REPO-STRUCTURE.md) for the detailed repository layout.
+The root README provides the high-level map. See [`REPO-STRUCTURE.md`](REPO-STRUCTURE.md) for the detailed repository layout.
 
 | Area | Start Here | Role |
 |---|---|---|
@@ -137,7 +139,7 @@ The JSON files under `examples/` are non-runnable documentation artifacts. They 
 
 They are not executable payloads and are not intended to validate runtime behavior.
 
-Runnable request payloads, executable validation examples, tests, schemas, policy examples, KQL queries, and runtime behavior belong in the companion PoC repository.
+Runnable request payloads, executable validation examples, tests, schemas, policy examples, KQL queries, and runtime behavior belong in a separate companion implementation or proof-of-concept repo.
 
 ## Companion Implementation Repo
 
@@ -165,8 +167,6 @@ This repository is intended for:
 
 ## Final Repository Principle
 
-This structure keeps the repository focused, navigable, and enforceable.
+This structure keeps architecture, patterns, examples, service models, threat models, templates, governance controls, and implementation-specific artifacts separated.
 
-It separates architecture from patterns, patterns from examples, examples from service models, service models from threat models, templates from governance controls, and governance controls from implementation-specific artifacts.
-
-> Agentic assistance can accelerate investigation, response, and reporting only when it is surrounded by identity, policy, approval, audit, tenant-isolation, evidence, and human-accountability controls.
+> Agentic assistance can accelerate investigation, response, and reporting only when it is surrounded by identity, policy, approval, audit, tenant isolation, evidence controls, and human accountability.
