@@ -6,7 +6,7 @@ This document defines how exceptions, denials, failures, failed control checks, 
 
 Exception and failure audit records are required because blocked actions, denied requests, incomplete approvals, missing evidence, tenant-boundary violations, failed tool calls, and unsafe fleet releases are often as important as successful execution records.
 
-The goal is to make failure behavior reviewable, correlated, and operationally useful without weakening tenant isolation, evidence integrity, policy enforcement, human accountability, or audit replay.
+The goal is to make failure behavior reviewable, correlated, and operationally useful without weakening tenant isolation, evidence integrity, policy enforcement, human accountability, or replayability.
 
 ## Scope
 
@@ -83,6 +83,7 @@ Minimum required behavior:
 - preserve tenant, customer, case, agent, tool, evidence, policy, approval, package, and release references where applicable;
 - record whether the workflow stopped, retried, escalated, failed closed, required approval, or entered emergency handling;
 - link the failure record to the same `correlation_id` as the attempted workflow;
+- preserve the attempted action even when execution was denied, blocked, or failed closed;
 - record the actor that attempted the action and the component that blocked or failed it;
 - preserve enough detail to support replay, review, governance, and root-cause analysis;
 - avoid exposing raw customer data, evidence content, or source-tenant context to unauthorized scopes.
