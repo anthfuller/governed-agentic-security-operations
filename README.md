@@ -2,47 +2,56 @@
 
 > **Disclaimer:** This is an independent personal conceptual reference architecture. It is not affiliated with, sponsored by, endorsed by, reviewed by, approved by, or maintained by Microsoft or any employer of the author. See [`DISCLAIMER.md`](DISCLAIMER.md).
 
-## Purpose
+## Overview
 
-This repository is a documentation-first reference architecture and pattern library for governed agentic security operations across MSSP, MDR, SOC, cloud incident response, and private/local LLM-assisted DFIR workflows.
+This repository provides a documentation-first reference architecture and pattern library for governed agentic security operations.
 
-It defines architecture views, governance patterns, service operating models, threat models, templates, example artifacts, and control-library guidance for designing agent-assisted security operations that remain scoped, policy-mediated, human-accountable, tenant-safe, evidence-aware, and auditable.
+It is designed for MSSP, MDR, SOC, cloud incident response, and private/local LLM-assisted DFIR use cases where agent-assisted workflows must remain scoped, policy-mediated, human-accountable, tenant-safe, evidence-aware, and auditable.
 
-This repository is not a runnable product or implementation repo. Runtime code, tests, schemas, policy execution files, KQL query packs, infrastructure automation, CI pipelines, Docker files, and implementation-specific control-plane code belong in a separate companion implementation or proof-of-concept repo.
+The repository includes architecture views, governance patterns, service operating models, threat models, reusable templates, example artifacts, and control-library guidance. It is intended to support architecture review, service design, governance planning, and implementation planning for a separate runnable control plane.
 
 ## Core Principle
 
 Agentic systems may assist security operations, but they do not authorize themselves.
 
-Agents can retrieve, reason, summarize, correlate, classify, draft, recommend, and prepare approval packages. They must not independently grant themselves authority, bypass policy, execute privileged actions, cross tenant or case boundaries, modify evidence, approve customer-facing releases, or replace accountable human decision makers.
+Agents may retrieve, reason, summarize, correlate, classify, draft, recommend, and prepare approval packages. They must not independently grant themselves authority, bypass policy, execute privileged actions, cross tenant or case boundaries, modify evidence, approve customer-facing releases, or replace accountable human decision makers.
 
-## What This Repository Is
+## Repository Scope
 
-This repository is an architecture and governance library for security architects, SOC leaders, MDR/MSSP teams, DFIR practitioners, AI security engineers, platform engineers, and governance stakeholders.
+This repository is an architecture and governance library. It is not a production deployment package.
 
-It is intended to support:
+It does not provide:
 
-- architecture review;
-- service-design discussion;
-- agent governance planning;
-- policy, identity, and oversight alignment;
-- tenant-boundary and evidence-boundary analysis;
-- implementation planning for a separate runnable control plane.
+- a SOC automation product;
+- an autonomous response platform;
+- a production control plane;
+- a SIEM or SOAR deployment package;
+- a legally sufficient DFIR evidence system;
+- a customer-ready managed security service;
+- runtime code, tests, schemas, CI pipelines, Docker files, infrastructure automation, KQL query packs, or implementation-specific policy execution files.
 
-## What This Repository Is Not
+Implementation artifacts belong in a separate proof-of-concept or product implementation repository.
 
-This repository is not production deployment code.
+Product names, where referenced in architecture assumptions or examples, are conceptual placement references unless explicitly stated otherwise. This repository does not claim that any specific vendor product natively provides all controls described here.
 
-It does not provide a SOC automation product, autonomous response platform, production control plane, SIEM/SOAR deployment package, legally sufficient DFIR evidence system, or customer-ready managed security service by itself.
+## Intended Audience
 
-It also does not claim that any specific vendor product natively provides all controls described here. Product names, where referenced in architecture assumptions or examples, are conceptual placement references unless explicitly stated otherwise.
+This repository is intended for:
 
-## Non-Negotiable Governance Invariants
+- MSSP and MDR architects designing governed agentic security operations;
+- SOC transformation leaders evaluating agent-assisted workflows;
+- cloud incident response teams designing controlled response patterns;
+- DFIR teams evaluating private/local LLM-assisted forensic workflows;
+- AI security architects defining assurance, policy, and governance boundaries;
+- governance, risk, compliance, and customer-assurance stakeholders reviewing control models;
+- engineering teams building separate implementations that need architecture and governance alignment.
+
+## Governance Invariants
 
 The following boundaries are treated as architecture invariants:
 
 - Agent outputs do not authorize execution.
-- Agent Judges are assurance components only; they do not grant approval.
+- Agent judges are assurance components only; they do not grant approval.
 - The Policy Decision Point decides whether an action is allowed, denied, escalated, or failed closed.
 - The Policy Enforcement Point enforces the decision before any tool, tenant, evidence store, customer environment, or production system is affected.
 - Human review is not the same as formal approval.
@@ -56,7 +65,7 @@ The following boundaries are treated as architecture invariants:
 
 ## How to Use This Repository
 
-Use the repository by the architectural question you are working through:
+Use the repository by the architectural question you are working through.
 
 | Question | Start Here |
 |---|---|
@@ -66,6 +75,7 @@ Use the repository by the architectural question you are working through:
 | How do MSSP, MDR, cloud IR, and DFIR service boundaries work? | [`service-models/`](service-models/readme.md) |
 | What threats and failure modes should be evaluated? | [`threat-model/`](threat-model/readme.md) |
 | How are agents governed across lifecycle, access, monitoring, and rollback? | [`agent-governance/`](agent-governance/readme.md) |
+| How are policy decisions and enforcement boundaries modeled? | [`policy-enforcement/`](policy-enforcement/readme.md) |
 | What reusable records and templates are available? | [`templates/`](templates/readme.md) |
 
 ## Architecture Views
@@ -118,11 +128,11 @@ The root README provides the high-level map. See [`REPO-STRUCTURE.md`](REPO-STRU
 |---|---|---|
 | `architecture/` | [`architecture/README.md`](architecture/README.md) | Architecture views, principles, assumptions, control loop, and diagrams. |
 | `patterns/` | [`patterns/readme.md`](patterns/readme.md) | Reusable architecture patterns for governed agentic security operations. |
-| `examples/` | [`examples/readme.md`](examples/readme.md) | Scenario artifacts showing requests, approvals, decisions, judge outputs, and audit events. |
-| `service-models/` | [`service-models/readme.md`](service-models/readme.md) | Operating models for MSSP, MDR, cloud IR, and private/local LLM-assisted DFIR. |
+| `examples/` | [`examples/readme.md`](examples/readme.md) | Scenario artifacts showing requests, approvals, decisions, judge outputs, evidence, timelines, review records, and audit events. |
+| `service-models/` | [`service-models/readme.md`](service-models/readme.md) | Operating models for MSSP, MDR, cloud incident response, private/local LLM-assisted DFIR, and fleet operations. |
 | `threat-model/` | [`threat-model/readme.md`](threat-model/readme.md) | Threat scenarios and risk models for agentic security operations. |
 | `agent-governance/` | [`agent-governance/readme.md`](agent-governance/readme.md) | Agent identity, lifecycle, access scope, communication, monitoring, change control, fleet governance, and rollback. |
-| `policy-enforcement/` | [`policy-enforcement/readme.md`](policy-enforcement/readme.md) | PEP/PDP model, policy contract, risk classification, approval policy, and fail-closed behavior. |
+| `policy-enforcement/` | [`policy-enforcement/readme.md`](policy-enforcement/readme.md) | Policy decision and enforcement model, risk classification, approval policy, and fail-closed behavior. |
 | `human-oversight/` | [`human-oversight/readme.md`](human-oversight/readme.md) | Human review, approval boundaries, customer approval, escalation, and review records. |
 | `tenant-isolation/` | [`tenant-isolation/readme.md`](tenant-isolation/readme.md) | Tenant boundary model, scope validation, cross-tenant failure modes, and audit requirements. |
 | `tool-access/` | [`tool-access/readme.md`](tool-access/readme.md) | Tool registration, restricted tool patterns, scoped execution, and tool audit. |
@@ -139,9 +149,9 @@ The JSON files under `examples/` are non-runnable documentation artifacts. They 
 
 They are not executable payloads and are not intended to validate runtime behavior.
 
-Runnable request payloads, executable validation examples, tests, schemas, policy examples, KQL queries, and runtime behavior belong in a separate companion implementation or proof-of-concept repo.
+Runnable request payloads, executable validation examples, tests, schemas, policy examples, KQL queries, and runtime behavior belong in a separate companion implementation or proof-of-concept repository.
 
-## Companion Implementation Repo
+## Companion Implementation Repository
 
 This architecture can be paired with a separate runnable reference implementation:
 
@@ -149,24 +159,18 @@ This architecture can be paired with a separate runnable reference implementatio
 agentic-security-operations-control-plane-poc/
 ```
 
-The companion repo should demonstrate selected control-plane concepts using sample code, including schema validation, policy-gated agent actions, PDP/PEP flow, approval checks, audit event generation, and replay-oriented telemetry.
+A companion implementation can demonstrate selected control-plane concepts using sample code, including schema validation, policy-gated agent actions, PDP/PEP flow, approval checks, audit event generation, and replay-oriented telemetry.
 
-The companion repo is a PoC. It does not replace enterprise identity, SIEM, SOAR, approval, audit, DFIR evidence, customer governance, or production enforcement systems.
+A companion proof of concept does not replace enterprise identity, SIEM, SOAR, approval, audit, DFIR evidence, customer governance, or production enforcement systems.
 
-## Intended Audience
+## Public Repository Positioning
 
-This repository is intended for:
+This repository is intended to be useful as a public architecture reference while avoiding claims that would imply product readiness, official guidance, vendor endorsement, or production deployment status.
 
-- MSSP and MDR architects designing governed agentic security operations;
-- SOC transformation leaders evaluating agent-assisted workflows;
-- cloud incident response teams designing controlled response patterns;
-- DFIR teams evaluating private/local LLM-assisted forensic workflows;
-- AI security architects defining assurance, policy, and governance boundaries;
-- governance, risk, compliance, and customer-assurance stakeholders reviewing control models;
-- engineering teams building separate implementations that need architecture and governance alignment.
+The emphasis is on architecture clarity, governance boundaries, tenant isolation, evidence traceability, human accountability, and auditability.
 
 ## Final Repository Principle
 
-This structure keeps architecture, patterns, examples, service models, threat models, templates, governance controls, and implementation-specific artifacts separated.
+Architecture, patterns, examples, service models, threat models, templates, governance controls, and implementation-specific artifacts should remain separated.
 
 > Agentic assistance can accelerate investigation, response, and reporting only when it is surrounded by identity, policy, approval, audit, tenant isolation, evidence controls, and human accountability.
