@@ -78,6 +78,24 @@ Use the repository by the architectural question you are working through.
 | How are policy decisions and enforcement boundaries modeled? | [`policy-enforcement/`](policy-enforcement/readme.md) |
 | What reusable records and templates are available? | [`templates/`](templates/readme.md) |
 
+## Quick Start
+
+New readers can use the role-based quick-start guides to navigate the repository by objective:
+
+| Role or Objective | Start Here | Goal |
+|---|---|---|
+| MSSP / MDR architect | [`quick-start/for-mssp-mdr.md`](quick-start/for-mssp-mdr.md) | Review tenant-safe, policy-mediated agentic security operations. |
+| DFIR practitioner | [`quick-start/for-dfir.md`](quick-start/for-dfir.md) | Review local/private LLM-assisted DFIR boundaries, evidence handling, and audit replay. |
+| PoC builder | [`quick-start/for-poc-builders.md`](quick-start/for-poc-builders.md) | Identify the minimum artifacts needed for a separate runnable control-plane demonstration. |
+
+## Scenario Walkthroughs
+
+Scenario walkthroughs show how the architecture applies to concrete governed security operations workflows.
+
+| Walkthrough | Focus |
+|---|---|
+| [`walkthroughs/mssp-endpoint-isolation.md`](walkthroughs/mssp-endpoint-isolation.md) | Agent recommendation, evidence support, policy decision, human approval, scoped tool execution, and audit replay. |
+
 ## Architecture Views
 
 ### Executive View
@@ -126,6 +144,8 @@ The root README provides the high-level map. See [`REPO-STRUCTURE.md`](REPO-STRU
 
 | Area | Start Here | Role |
 |---|---|---|
+| `quick-start/` | [`quick-start/README.md`](quick-start/README.md) | Role-based navigation paths for MSSP/MDR, DFIR, and PoC-builder readers. |
+| `walkthroughs/` | [`walkthroughs/README.md`](walkthroughs/README.md) | Concrete scenario walkthroughs that connect recommendations, policy decisions, approval, execution, and audit replay. |
 | `architecture/` | [`architecture/README.md`](architecture/README.md) | Architecture views, principles, assumptions, control loop, and diagrams. |
 | `patterns/` | [`patterns/readme.md`](patterns/readme.md) | Reusable architecture patterns for governed agentic security operations. |
 | `examples/` | [`examples/readme.md`](examples/readme.md) | Scenario artifacts showing requests, approvals, decisions, judge outputs, evidence, timelines, review records, and audit events. |
