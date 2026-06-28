@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document defines how audit records are correlated across the **Agentic MSSP / MDR / DFIR Security Operations Architecture**.
+This document defines how audit records are correlated across governed agentic MSSP, MDR, SOC, cloud incident response, and private/local LLM-assisted DFIR workflows.
 
 The model ensures that a governed workflow can be reconstructed across telemetry ingestion, context assembly, agent invocation, AI assurance, policy evaluation, human approval, tool execution, evidence handling, reporting, fleet rollout, rollback, recall, and exception handling.
 
@@ -34,6 +34,7 @@ This file defines the correlation model. It does not define the complete audit e
 ## Core Principle
 
 Every governed workflow must have a replayable audit chain.
+Audit correlation must preserve enough context to reconstruct decisions, approvals, evidence references, and outcomes without exposing data outside the authorized tenant, case, or evidence boundary.
 
 Correlation must connect records across components without weakening tenant isolation, evidence integrity, or approval boundaries. A correlation identifier links records for review. It does not authorize data sharing, cross-tenant access, tool execution, or evidence disclosure.
 
@@ -110,7 +111,7 @@ Correlation uses stable identifiers. Identifiers should be opaque, durable, and 
 14. Cross-tenant sanitized intelligence releases must use release records and authorized internal references. Destination tenants must not receive source tenant identifiers, source case identifiers, raw evidence references, or source-specific case context.
 15. Correlation identifiers must not be treated as authorization tokens.
 
-## Runtime Workflow Correlation
+## Operational Workflow Correlation
 
 A standard agent-assisted investigation should produce a linked chain of audit records.
 
