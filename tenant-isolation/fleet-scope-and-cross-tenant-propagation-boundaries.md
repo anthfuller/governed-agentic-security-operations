@@ -4,7 +4,7 @@
 
 This document defines how an agentic MSSP, MDR, SOC, cloud incident response, or private/local LLM-assisted DFIR architecture controls fleet scope and cross-tenant propagation of shared intelligence.
 
-The goal is to allow useful security learning to improve operations across customers without allowing raw customer data, case context, forensic evidence, privileged information, tenant identifiers, or customer-specific conclusions to leak into another tenant, shared memory, prompt package, detection package, model context, report, or agent workflow.
+The goal is to let security learning improve operations across customers without allowing raw customer data, case context, forensic evidence, privileged information, tenant identifiers, or customer-specific conclusions to leak into another tenant, shared memory, prompt package, detection package, report, or agent workflow.
 
 This is a tenant-isolation control document. It defines boundary requirements for sanitized intelligence propagation, not detection engineering quality standards or runtime implementation code.
 
