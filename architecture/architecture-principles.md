@@ -162,7 +162,29 @@ Auditability is required for accountability, incident review, customer trust, ex
 
 ---
 
-## Principle 9: Keep Governance Alignment Distinct from Compliance Claims
+## Principle 9: Govern Fleet Changes as Operational Releases
+
+Agent packages, prompts, retrieval configurations, tool contracts, policy bundles, detection packages, playbooks, report templates, and sanitized intelligence updates MUST be treated as governed operational releases.
+
+Fleet changes MUST have:
+
+- an accountable owner
+- versioning
+- validation evidence
+- tenant eligibility checks
+- policy approval
+- rollout scope
+- monitoring
+- rollback or recall path
+- replayable audit records
+
+Cross-tenant learning MUST only be distributed as sanitized, approved, policy-scoped intelligence.
+
+Raw customer data, case context, forensic evidence, tenant identifiers, privileged information, or customer-specific conclusions MUST NOT become shared fleet context, shared memory, prompt content, detection packages, playbooks, report templates, or agent workflows.
+
+---
+
+## Principle 10: Keep Governance Alignment Distinct from Compliance Claims
 
 Frameworks may inform control design. They do not automatically make the architecture compliant.
 
@@ -185,7 +207,7 @@ Framework alignment should support governance, assurance, threat modeling, and c
 
 ---
 
-## Principle 10: Use AI to Scale Analysts, Not Replace Accountability
+## Principle 11: Use AI to Scale Analysts, Not Replace Accountability
 
 The architecture should improve analyst productivity and consistency while preserving human accountability.
 
