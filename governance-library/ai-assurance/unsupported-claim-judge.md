@@ -188,7 +188,7 @@ Minimum output fields:
 | `weakly_supported_claim_count` | Count of weakly supported claims. |
 | `contradicted_claim_count` | Count of contradicted claims. |
 | `out_of_scope_claim_count` | Count of out-of-scope claims. |
-| `required_action` | Continue, revise, remove, review, approve, deny, or fail closed. |
+| `required_action` | Continue, revise, remove, qualify, route for review, deny release, or fail closed. |
 | `routing` | Analyst review, forensic review, policy evaluation, customer approval, service-owner review, or remediation. |
 | `audit_refs` | References needed for audit replay. |
 
@@ -215,7 +215,7 @@ Minimum output fields:
       "support_status": "unsupported",
       "supporting_refs": [],
       "reason": "No supplied evidence or tool result establishes data-access scope.",
-      "required_action": "remove_or_qualify_claim",
+      "required_action": "remove_claim",
       "routing": "analyst_review"
     },
     {
@@ -229,7 +229,7 @@ Minimum output fields:
         "judge-result://customer-a/inc-10422/tenant-boundary-check-0003"
       ],
       "reason": "Suspicious execution is supported, but containment requires policy decision and approval before action.",
-      "required_action": "route_to_policy_and_human_review",
+      "required_action": "route_to_policy_evaluation",
       "routing": "policy_evaluation"
     }
   ],
