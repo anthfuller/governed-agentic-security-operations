@@ -4,17 +4,30 @@
 
 ## Purpose
 
-This repository is a conceptual reference architecture and pattern library for governed agentic security operations across MSSP, MDR, SOC, cloud incident response, and private/local LLM-assisted DFIR workflows.
+This repository is a documentation-first reference architecture and pattern library for governed agentic security operations across MSSP, MDR, SOC, cloud incident response, and private/local LLM-assisted DFIR workflows.
 
-The purpose is to define architecture views, reusable patterns, scenario documentation, service operating models, threat models, templates, and governance-library control references for designing agentic security operations that are controlled rather than blindly trusted.
+The repository defines architecture views, reusable governance patterns, service operating models, threat models, templates, example artifacts, and control-library guidance for designing agent-assisted security operations that remain scoped, policy-mediated, human-accountable, tenant-safe, evidence-aware, and auditable.
 
-This repository is not a runnable implementation repository. Runtime code, tests, schemas, policy execution files, KQL query packs, infrastructure automation, Docker files, CI pipelines, and implementation-specific control-plane code belong in the separate companion PoC repository.
+This repository is not a runnable product or implementation repo. Runtime code, tests, schemas, policy execution files, KQL query packs, infrastructure automation, CI pipelines, Docker files, and implementation-specific control-plane code belong in a separate companion PoC or product implementation.
+
+## Core Principle
+
+Agentic systems may assist security operations, but they do not authorize themselves.
+
+Agents can retrieve, reason, summarize, correlate, classify, draft, recommend, and prepare approval packages. They must not independently grant themselves authority, bypass policy, execute privileged actions, cross tenant or case boundaries, modify evidence, approve customer-facing releases, or replace accountable human decision makers.
 
 ## What This Repository Is
 
-This repository is a documentation-first architecture library. It helps security architects, SOC leaders, MDR and MSSP teams, DFIR practitioners, and AI security engineers reason about how agentic systems can assist security operations while remaining bounded by policy, oversight, evidence, tenant isolation, and audit requirements.
+This repository is an architecture and governance library for security architects, SOC leaders, MDR/MSSP teams, DFIR practitioners, AI security engineers, platform engineers, and governance stakeholders.
 
-It is intended to support architecture review, design discussion, governance planning, service-model alignment, and implementation alignment.
+It is intended to support:
+
+- architecture review;
+- service-design discussion;
+- agent governance planning;
+- policy, identity, and oversight alignment;
+- tenant-boundary and evidence-boundary analysis;
+- implementation planning for a separate runnable control plane.
 
 ## What This Repository Is Not
 
@@ -22,18 +35,16 @@ This repository is not production deployment code.
 
 It does not provide a SOC automation product, autonomous response platform, production control plane, SIEM/SOAR deployment package, legally sufficient DFIR evidence system, or customer-ready managed security service by itself.
 
-It does not contain a runnable application, tests, schemas, policy execution files, KQL query packs, infrastructure automation, Docker files, CI pipelines, runtime source code, or implementation-specific control-plane code.
+It also does not claim that any specific vendor product natively provides all controls described here. Product names, where referenced in architecture assumptions or examples, are conceptual placement references unless explicitly stated otherwise.
 
-## Core Governance Invariants
+## Non-Negotiable Governance Invariants
 
-This architecture is built around one principle: agentic systems may assist security operations, but they do not authorize themselves.
-
-The following boundaries are non-negotiable:
+The following boundaries are treated as architecture invariants:
 
 - Agent outputs do not authorize execution.
 - Agent Judges are assurance components only; they do not grant approval.
 - The Policy Decision Point decides whether an action is allowed, denied, escalated, or failed closed.
-- The Policy Enforcement Point enforces the decision before any tool, tenant, evidence store, or production system is affected.
+- The Policy Enforcement Point enforces the decision before any tool, tenant, evidence store, customer environment, or production system is affected.
 - Human review is not the same as formal approval.
 - Customer approval is separate from internal MSSP, MDR, SOC, or DFIR review.
 - Tool registration and tool availability are not authorization.
@@ -43,27 +54,21 @@ The following boundaries are non-negotiable:
 - RAG, memory, retrieval, vector search, customer context, case memory, shared context, evidence retrieval, and retrieved context must preserve tenant, customer, case, evidence, retention, and data-sovereignty boundaries.
 - Missing, ambiguous, stale, unauthorized, cross-tenant, cross-customer, cross-case, retention-inconsistent, or unauditable context must fail closed where governed workflow behavior depends on it.
 
-## Reader Path
+## How to Use This Repository
 
-Use the repository in this order:
+Use the repository by the architectural question you are working through, rather than as a fixed implementation sequence.
 
-```text
-architecture → patterns → examples → service-models → threat-model → templates → governance-library
-```
-
-Start with `architecture/` to understand the operating model, architecture views, control loop, assumptions, and principles.
-
-Move to `patterns/` for reusable design patterns, then `examples/` for scenario-oriented documentation artifacts. Use `service-models/` to reason about MSSP, MDR, cloud incident response, and private/local LLM-assisted DFIR operating boundaries. Review `threat-model/` before adapting the records in `templates/`.
-
-Use `governance-library/` when detailed control requirements are needed.
+For architecture framing, use [`architecture/`](architecture/README.md).
+For reusable design patterns, use [`patterns/`](patterns/readme.md).
+For scenario-oriented artifacts, use [`examples/`](examples/readme.md).
+For MSSP, MDR, cloud IR, and private/local LLM-assisted DFIR service boundaries, use [`service-models/`](service-models/readme.md).
+For adversarial and failure-mode analysis, use [`threat-model/`](threat-model/readme.md).
+For agent lifecycle, access scope, fleet governance, rollback, recall, and monitoring, use [`agent-governance/`](agent-governance/readme.md).
+For reusable records, use [`templates/`](templates/readme.md).
 
 ## Architecture Views
 
-The repository contains core architecture views for governed agentic security operations, plus cross-cutting capability views for specific concerns such as agent fleet operations.
-
-### Core Security Operations Architecture
-
-#### Executive View
+### Executive View
 
 High-level conceptual view of governed agentic security operations across MSSP, MDR, SOC, cloud incident response, and private/local LLM-assisted DFIR workflows.
 
@@ -71,279 +76,62 @@ High-level conceptual view of governed agentic security operations across MSSP, 
 
 [`architecture/executive-view.md`](architecture/executive-view.md)
 
-#### Engineering View
+### Engineering View
 
-More detailed engineering-oriented view of the control plane, orchestration layer, AI assurance layer, tool access, policy enforcement, tenant isolation, and auditability model.
+Engineering-oriented view of the control plane, orchestration layer, AI assurance layer, tool access, policy enforcement, tenant isolation, and auditability model.
 
 ![Engineering Architecture Diagram](architecture/diagrams/engineering-architecture.png)
 
 [`architecture/engineering-view.md`](architecture/engineering-view.md)
 
-### Cross-Cutting Capability Views
+### Shared Operating Model
 
-#### Governed Agentic MSSP / MDR Fleet Operations
+Layered operating model showing how customer/data sources, ingestion, context assembly, agent runtime, policy enforcement, oversight, tool access, auditability, and agent governance fit together.
 
-Cross-cutting capability view for governing agent lifecycle, fleet updates, signed releases, tenant eligibility, policy-scoped distribution, sanitized intelligence propagation, staged rollout, emergency recall, rollback, and fleet-wide auditability.
+![Governed Agentic Shared Operating Model](architecture/diagrams/governed-agentic-shared-operating-model.png)
+
+[`architecture/layered-architecture.md`](architecture/layered-architecture.md)
+
+### Runtime Control Loop
+
+Control-loop view for policy-gated agentic execution, human oversight, PEP-enforced tool access, validation, monitoring, and continuous assurance.
+
+![Agentic Control Loop](architecture/diagrams/control-Loop.png)
+
+[`architecture/control-loop.md`](architecture/control-loop.md)
+
+### Agentic Fleet Operations
+
+Cross-cutting capability view for governing agent lifecycle, fleet updates, signed releases, tenant eligibility, policy-scoped distribution, staged rollout, emergency recall, rollback, and fleet-wide auditability.
 
 ![Governed Agentic MSSP / MDR Fleet Operations Architecture](architecture/diagrams/agentic-fleet-architecture.png)
 
-[`architecture/agentic-fleet-architecture.md`](architecture/agentic-fleet-architecture.md)
+Use this view with the agent governance materials for fleet lifecycle, versioning, rollback, recall, tenant eligibility, and change-control design.
 
-#### Agentic Fleet Control Loop
+## Repository Map
 
-Control-loop view for agent fleet update governance, safety validation, release gates, monitoring, rollback, and replayability.
+The root README intentionally avoids a giant full tree. See [`REPO-STRUCTURE.md`](REPO-STRUCTURE.md) for the detailed repository layout.
 
-[`architecture/agentic-fleet-control-loop.md`](architecture/agentic-fleet-control-loop.md)
+| Area | Start Here | Role |
+|---|---|---|
+| `architecture/` | [`architecture/README.md`](architecture/README.md) | Architecture views, principles, assumptions, control loop, and diagrams. |
+| `patterns/` | [`patterns/readme.md`](patterns/readme.md) | Reusable architecture patterns for governed agentic security operations. |
+| `examples/` | [`examples/readme.md`](examples/readme.md) | Scenario artifacts showing requests, approvals, decisions, judge outputs, and audit events. |
+| `service-models/` | [`service-models/readme.md`](service-models/readme.md) | Operating models for MSSP, MDR, cloud IR, and private/local LLM-assisted DFIR. |
+| `threat-model/` | [`threat-model/readme.md`](threat-model/readme.md) | Threat scenarios and risk models for agentic security operations. |
+| `agent-governance/` | [`agent-governance/readme.md`](agent-governance/readme.md) | Agent identity, lifecycle, access scope, communication, monitoring, change control, fleet governance, and rollback. |
+| `policy-enforcement/` | [`policy-enforcement/readme.md`](policy-enforcement/readme.md) | PEP/PDP model, policy contract, risk classification, approval policy, and fail-closed behavior. |
+| `human-oversight/` | [`human-oversight/readme.md`](human-oversight/readme.md) | Human review, approval boundaries, customer approval, escalation, and review records. |
+| `tenant-isolation/` | [`tenant-isolation/readme.md`](tenant-isolation/readme.md) | Tenant boundary model, scope validation, cross-tenant failure modes, and audit requirements. |
+| `tool-access/` | [`tool-access/readme.md`](tool-access/readme.md) | Tool registration, restricted tool patterns, scoped execution, and tool audit. |
+| `data-ingestion/` | [`data-ingestion/readme.md`](data-ingestion/readme.md) | Source metadata, normalization, enrichment, failure handling, and ingestion replay. |
+| `evidence-traceability/` | [`evidence-traceability/readme.md`](evidence-traceability/readme.md) | Evidence references, finding support, DFIR evidence handling, and evidence audit replay. |
+| `local-llm-dfir/` | [`local-llm-dfir/readme.md`](local-llm-dfir/readme.md) | Local/private LLM DFIR boundaries, evidence handling, review, and audit replay. |
+| `audit-replay/` | [`audit-replay/readme.md`](audit-replay/readme.md) | Audit event model, replayability, correlation, failure audit, and immutable audit guidance. |
+| `templates/` | [`templates/readme.md`](templates/readme.md) | Standard records and reusable documentation templates. |
+| `governance-library/ai-assurance/` | [`governance-library/ai-assurance/readme.md`](governance-library/ai-assurance/readme.md) | Agent judge contracts, output quality checks, unsupported-claim checks, tenant-boundary checks, and limitations. |
 
-## Full Repository Structure
-
-```text
-governed-agentic-security-operations-architecture/
-│
-├── README.md
-│
-├── architecture/
-│   ├── README.md
-│   ├── executive-view.md
-│   ├── engineering-view.md
-│   ├── layered-architecture.md
-│   ├── control-loop.md
-│   ├── architecture-principles.md
-│   ├── architecture-assumptions.md
-│   ├── agentic-fleet-architecture.md
-│   ├── agentic-fleet-control-loop.md
-│   └── diagrams/
-│       ├── executive-architecture.png
-│       ├── engineering-architecture.png
-│       ├── layered-architecture.png
-│       ├── f7-las-executive-control-loop-agentic-systems.png
-│       ├── control-loop.png
-│       └── agentic-fleet-architecture.png
-│
-├── patterns/
-│   ├── README.md
-│   ├── governed-agentic-security-operations-pattern.md
-│   ├── policy-enforced-tool-use-pattern.md
-│   ├── human-approved-sensitive-action-pattern.md
-│   ├── tenant-safe-rag-memory-pattern.md
-│   ├── private-local-llm-dfir-pattern.md
-│   ├── governed-agent-fleet-update-pattern.md
-│   ├── tenant-safe-fleet-intelligence-propagation-pattern.md
-│   └── fail-closed-agent-rollout-pattern.md
-│
-├── examples/
-│   ├── README.md
-│   ├── alert-triage-to-recommendation/
-│   │   ├── README.md
-│   │   ├── example-request.json
-│   │   ├── example-judge-output.json
-│   │   ├── example-policy-decision.json
-│   │   └── example-audit-event.json
-│   │
-│   ├── cloud-iam-compromise/
-│   │   ├── README.md
-│   │   ├── example-request.json
-│   │   ├── example-approval-record.json
-│   │   ├── example-policy-decision.json
-│   │   └── example-audit-event.json
-│   │
-│   ├── local-llm-forensic-timeline/
-│   │   ├── README.md
-│   │   ├── example-evidence-manifest.json
-│   │   ├── example-timeline-output.json
-│   │   ├── example-review-record.json
-│   │   └── example-audit-event.json
-│   │
-│   ├── fleet-update-rollout/
-│   │   ├── README.md
-│   │   ├── example-fleet-update-request.json
-│   │   ├── example-fleet-policy-decision.json
-│   │   ├── example-fleet-approval-record.json
-│   │   └── example-fleet-audit-event.json
-│   │
-│   ├── compromised-agent-recall/
-│   │   ├── README.md
-│   │   ├── example-agent-recall-request.json
-│   │   ├── example-recall-policy-decision.json
-│   │   ├── example-recall-approval-record.json
-│   │   └── example-recall-audit-event.json
-│   │
-│   └── cross-tenant-sanitized-intelligence-propagation/
-│       ├── README.md
-│       ├── example-sanitized-intelligence-release-request.json
-│       ├── example-sanitization-review-record.json
-│       ├── example-release-policy-decision.json
-│       └── example-release-audit-event.json
-│
-├── service-models/
-│   ├── README.md
-│   ├── mssp-operating-model.md
-│   ├── mdr-operating-model.md
-│   ├── cloud-ir-operating-model.md
-│   ├── private-local-llm-dfir-operating-model.md
-│   ├── mssp-agent-fleet-operating-model.md
-│   ├── mdr-agent-fleet-operating-model.md
-│   └── diagrams/
-│       ├── mssp-operating-model.png
-│       ├── mdr-operating-model.png
-│       ├── dfir-operating-model.png
-│       └── shared-operating-boundaries.png
-│
-├── threat-model/
-│   ├── README.md
-│   ├── agentic-security-operations-threat-model.md
-│   ├── mitre-atlas-threats.md
-│   ├── prompt-injection-through-logs.md
-│   ├── rag-memory-contamination.md
-│   ├── rag-poisoning.md
-│   ├── cross-tenant-cross-customer-risk.md
-│   ├── tool-use-and-automation-risk.md
-│   ├── malicious-tool-output.md
-│   ├── human-approval-and-release-risk.md
-│   ├── overreliance-on-ai.md
-│   ├── compromised-agent-identity.md
-│   ├── rogue-agent-risk.md
-│   ├── local-llm-dfir-risk.md
-│   ├── fleet-update-poisoning.md
-│   ├── cross-tenant-fleet-contamination.md
-│   ├── rogue-agent-update-channel.md
-│   └── mitigations.md
-│
-├── templates/
-│   ├── README.md
-│   ├── agent-card-template.md
-│   ├── tool-contract-template.md
-│   ├── policy-decision-record-template.md
-│   ├── judge-output-template.md
-│   ├── human-approval-record-template.md
-│   ├── customer-approval-record-template.md
-│   ├── audit-event-template.md
-│   ├── evidence-manifest-template.md
-│   └── adr-template.md
-│
-└── governance-library/
-    ├── README.md
-    │
-    ├── ai-assurance/
-    │   ├── README.md
-    │   ├── agent-judges-overview.md
-    │   ├── judge-evaluation-contract.md
-    │   ├── evidence-support-judge.md
-    │   ├── output-quality-judge.md
-    │   ├── tenant-boundary-judge.md
-    │   ├── unsupported-claim-judge.md
-    │   ├── hitl-requirement-check.md
-    │   ├── attack-atlas-mapping-judge.md
-    │   ├── fleet-update-evaluation-and-safety-validation.md
-    │   └── judge-limitations.md
-    │
-    ├── policy-enforcement/
-    │   ├── README.md
-    │   ├── pep-pdp-model.md
-    │   ├── policy-decision-flow.md
-    │   ├── policy-contract.md
-    │   ├── action-risk-classification.md
-    │   ├── approval-policy-requirements.md
-    │   ├── fleet-update-authorization-and-policy-gates.md
-    │   └── fail-closed-behavior.md
-    │
-    ├── agent-governance/
-    │   ├── README.md
-    │   ├── agent-identity-lifecycle.md
-    │   ├── agent-access-scope.md
-    │   ├── agent-to-agent-communication.md
-    │   ├── agent-monitoring-and-oversight.md
-    │   ├── agent-change-management.md
-    │   ├── agent-fleet-governance.md
-    │   └── agent-version-lifecycle-and-rollbacks.md
-    │
-    ├── human-oversight/
-    │   ├── README.md
-    │   ├── human-review-model.md
-    │   ├── approval-boundaries.md
-    │   ├── customer-approval-model.md
-    │   ├── escalation-paths.md
-    │   ├── review-record-requirements.md
-    │   └── fleet-change-approval-and-emergency-override.md
-    │
-    ├── tenant-isolation/
-    │   ├── README.md
-    │   ├── tenant-boundary-model.md
-    │   ├── cross-tenant-failure-modes.md
-    │   ├── tenant-scope-validation.md
-    │   ├── tenant-isolation-audit-requirements.md
-    │   └── fleet-scope-and-cross-tenant-propagation-boundaries.md
-    │
-    ├── tool-access/
-    │   ├── README.md
-    │   ├── tool-access-model.md
-    │   ├── tool-registration-requirements.md
-    │   ├── restricted-tool-patterns.md
-    │   └── tool-execution-audit.md
-    │
-    ├── data-ingestion/
-    │   ├── README.md
-    │   ├── data-ingestion-model.md
-    │   ├── source-system-metadata.md
-    │   ├── normalization-and-enrichment.md
-    │   ├── ingestion-failure-handling.md
-    │   ├── shared-intelligence-sanitization-and-release-controls.md
-    │   └── ingestion-audit-replay.md
-    │
-    ├── evidence-traceability/
-    │   ├── README.md
-    │   ├── evidence-traceability-model.md
-    │   ├── evidence-reference-requirements.md
-    │   ├── finding-support-requirements.md
-    │   ├── dfir-evidence-handling.md
-    │   └── evidence-audit-replay.md
-    │
-    ├── local-llm-dfir/
-    │   ├── README.md
-    │   ├── local-llm-dfir-model.md
-    │   ├── evidence-handling-requirements.md
-    │   ├── local-model-output-boundaries.md
-    │   ├── dfir-review-approval-requirements.md
-    │   └── local-llm-dfir-audit-replay.md
-    │
-    └── audit-replay/
-        ├── README.md
-        ├── audit-event-model.md
-        ├── replayability-requirements.md
-        ├── audit-correlation-model.md
-        ├── exception-and-failure-audit.md
-        ├── fleet-rollout-audit-and-replay-model.md
-        └── immutable-audit-guidance.md
-```
-
-## Directory Role Summary
-
-| Directory | Role |
-|---|---|
-| `architecture/` | Architecture views, principles, assumptions, control loops, and diagrams |
-| `patterns/` | Reusable architecture patterns for governed agentic security operations |
-| `examples/` | Concrete workflow examples with request, decision, approval, and audit artifacts |
-| `service-models/` | Operating models for MSSP, MDR, cloud IR, and private/local LLM-assisted DFIR |
-| `threat-model/` | Threat scenarios and risk models for agentic security operations |
-| `templates/` | Standard records and reusable documentation templates |
-| `governance-library/` | Deep control library for assurance, policy enforcement, identity, oversight, isolation, tooling, ingestion, evidence, local LLM DFIR, and audit replay |
-
-## Governance Library Summary
-
-| Subdirectory | Control Focus |
-|---|---|
-| `ai-assurance/` | Agent judges, evidence support, output quality, unsupported claims, tenant boundaries, HITL checks, and ATLAS mapping |
-| `policy-enforcement/` | PEP/PDP model, policy contracts, risk classification, approval requirements, and fail-closed behavior |
-| `agent-governance/` | Agent identity, lifecycle, access scope, communication, monitoring, oversight, and change management |
-| `human-oversight/` | Human review model, approval boundaries, customer approval, escalation, and review records |
-| `tenant-isolation/` | Tenant boundary model, cross-tenant failure modes, validation, and audit requirements |
-| `tool-access/` | Tool access model, registration, restricted tool patterns, and execution audit |
-| `data-ingestion/` | Source metadata, normalization, enrichment, failure handling, and ingestion audit replay |
-| `evidence-traceability/` | Evidence references, finding support, DFIR evidence handling, and evidence audit replay |
-| `local-llm-dfir/` | Local LLM DFIR model, evidence handling, output boundaries, review approval, and audit replay |
-| `audit-replay/` | Audit event model, replayability, correlation, exception audit, and immutable audit guidance |
-
-## Examples and Documentation Artifacts
+## Documentation Artifacts
 
 The JSON files under `examples/` are non-runnable documentation artifacts. They show representative shapes of requests, judge outputs, approval records, policy decisions, evidence manifests, timeline outputs, review records, and audit events for architecture discussion.
 
@@ -359,7 +147,7 @@ This architecture can be paired with a separate runnable reference implementatio
 agentic-security-operations-control-plane-poc/
 ```
 
-The companion repo demonstrates selected control-plane concepts using sample code, including schema validation, policy-gated agent actions, PDP/PEP flow, approval checks, audit event generation, and replay-oriented telemetry.
+The companion repo should demonstrate selected control-plane concepts using sample code, including schema validation, policy-gated agent actions, PDP/PEP flow, approval checks, audit event generation, and replay-oriented telemetry.
 
 The companion repo is a PoC. It does not replace enterprise identity, SIEM, SOAR, approval, audit, DFIR evidence, customer governance, or production enforcement systems.
 
@@ -367,16 +155,18 @@ The companion repo is a PoC. It does not replace enterprise identity, SIEM, SOAR
 
 This repository is intended for:
 
-- MSSP and MDR architects designing governed agentic security operations.
-- SOC transformation leaders evaluating agent-assisted workflows.
-- Cloud incident response teams designing controlled response patterns.
-- DFIR teams evaluating private/local LLM-assisted forensic workflows.
-- AI security architects defining assurance, policy, and governance boundaries.
-- Governance, risk, compliance, and customer-assurance stakeholders reviewing control models.
-- Engineering teams building separate implementations that need architecture and governance alignment.
+- MSSP and MDR architects designing governed agentic security operations;
+- SOC transformation leaders evaluating agent-assisted workflows;
+- cloud incident response teams designing controlled response patterns;
+- DFIR teams evaluating private/local LLM-assisted forensic workflows;
+- AI security architects defining assurance, policy, and governance boundaries;
+- governance, risk, compliance, and customer-assurance stakeholders reviewing control models;
+- engineering teams building separate implementations that need architecture and governance alignment.
 
 ## Final Repository Principle
 
 This structure keeps the repository focused, navigable, and enforceable.
 
 It separates architecture from patterns, patterns from examples, examples from service models, service models from threat models, templates from governance controls, and governance controls from implementation-specific artifacts.
+
+> Agentic assistance can accelerate investigation, response, and reporting only when it is surrounded by identity, policy, approval, audit, tenant-isolation, evidence, and human-accountability controls.
