@@ -49,6 +49,7 @@ The architecture separates five critical responsibilities:
 | Policy enforcement | Runtime controls determine whether actions are allowed, denied, or require approval |
 | Human oversight | Humans approve sensitive actions and own final accountability |
 | Audit and evidence traceability | Decisions and outputs can be reconstructed and reviewed |
+| Fleet governance | Shared agent packages, prompts, detections, playbooks, and sanitized intelligence are versioned, scoped, monitored, rollback-capable, and tenant-eligible |
 
 This separation is the core of the architecture.
 
@@ -141,6 +142,16 @@ Executive relevance:
 > Agentic security operations depend on trusted, normalized, tenant-scoped data.
 
 If telemetry is incomplete, poorly normalized, or not tenant-scoped, agentic workflows can produce misleading or unsafe results.
+
+---
+
+### Fleet Governance and Safe Propagation
+
+The architecture treats shared agent packages, prompt packages, detection updates, playbooks, report templates, and sanitized intelligence as governed operational releases.
+
+Executive relevance:
+
+> A fleet update can affect many customers, tenants, workflows, and service outcomes. It must be versioned, approved, monitored, rollback-capable, and tenant-eligible before broad use.
 
 ---
 
@@ -342,6 +353,8 @@ These references may be used for architecture alignment and risk analysis. They 
 | Shadow agents | Unregistered agents operate outside governance | Agent registry, lifecycle management, monitoring |
 | Evidence integrity failure | DFIR outputs cannot be defended | evidence references, chain-of-custody support, analyst validation |
 | Compliance overclaim | Architecture is presented as certified | disclaimer, alignment language, no compliance claims |
+| Unsafe fleet update | Bad agent, prompt, detection, or playbook update affects many tenants | Versioning, approval gates, staged rollout, monitoring, rollback, recall |
+| Cross-tenant intelligence leakage | Customer-derived learning exposes source tenant context | Sanitization, human review, policy approval, tenant eligibility, audit |
 
 ---
 
@@ -361,6 +374,8 @@ Leadership teams can use the following questions when evaluating this architectu
 10. What audit trail is required to reconstruct a decision?
 11. What metrics will prove operational value?
 12. What must be excluded from automation entirely?
+13. 13. How will agent, prompt, detection, playbook, and report-template updates be approved, rolled out, monitored, rolled back, or recalled?
+14. How will cross-tenant learning be sanitized, approved, scoped, and audited before reuse?
 
 ---
 
