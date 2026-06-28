@@ -128,6 +128,16 @@ Ambiguous tenant context MUST trigger fail-closed handling or authorized human r
 
 ---
 
+## Fleet and Cross-Tenant Propagation Assumptions
+
+The architecture assumes centrally managed agents, prompts, tool contracts, policy bundles, retrieval configurations, detection packages, playbooks, and report templates may be distributed across multiple tenants, customers, service towers, or environments.
+
+Fleet updates must be treated as governed operational changes. They require ownership, versioning, validation, tenant eligibility checks, policy approval, staged rollout where appropriate, monitoring, rollback, recall, and replayable audit records.
+
+The architecture assumes cross-tenant learning is allowed only when transformed into sanitized intelligence. Raw customer data, case context, forensic evidence, tenant identifiers, privileged information, or customer-specific conclusions must not become shared fleet context, shared memory, prompt content, detection packages, playbooks, report templates, or agent workflows without explicit authorization and control enforcement.
+
+---
+
 ## Auditability and Evidence Traceability Assumptions
 
 The architecture assumes audit records must be able to connect the responsible agent, owner, analyst, tenant or customer context, case or investigation context, evidence references, policy decision, enforcement result, tool request, review or approval decision, model output, and released output where applicable.
