@@ -218,27 +218,17 @@ Minimum requirements:
 
 ## Sanitized Intelligence Propagation
 
-Fleet-level learning may improve operations across customers, but raw customer data must not become shared fleet memory or shared prompt content.
+Fleet-level learning may improve service consistency across customers, but only after sanitization, approval, and tenant-eligibility checks.
 
-Allowed examples after review:
+At the fleet layer, this capability should define only the control requirements:
 
-- generic detection logic improvements;
-- de-identified indicators or behavior patterns;
-- generalized playbook refinements;
-- improved investigation checklists;
-- sanitized tool-use lessons;
-- generalized model or prompt safety improvements.
+- raw customer data must not become shared fleet memory or shared prompt content;
+- sanitized intelligence must remove customer, tenant, user, asset, case, evidence, contractual, legal, and privileged identifiers;
+- release must be policy-gated and auditable;
+- destination scope must be explicit;
+- rollback or removal must be possible if released intelligence is later found to be unsafe or incorrectly sanitized.
 
-Prohibited without explicit authorization:
-
-- raw logs, alerts, evidence, or forensic artifacts;
-- customer names, tenant IDs, account IDs, hostnames, user names, secrets, tokens, or private identifiers;
-- customer-specific incident narratives;
-- case notes copied into shared memory;
-- contractual, legal, regulatory, or privileged information;
-- unreviewed agent conclusions from a single customer case.
-
-Sanitized intelligence release should record source classification, sanitization method, reviewer, release approval, destination scope, retention label, and rollback or removal path.
+Detailed handling belongs in the dedicated repository areas for tenant isolation, data ingestion, and evidence traceability.
 
 ## Human Oversight Points
 
