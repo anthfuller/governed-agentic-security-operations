@@ -110,6 +110,7 @@ The Agent Governance & Identity Control Plane is not a downstream runtime layer.
 | Tool Gateway | Execute authorized actions only |
 | Audit and Traceability | Record replayable evidence, decisions, approvals, and outcomes |
 | Agent Governance | Govern agent identity, lifecycle, ownership, and visibility |
+| Fleet Governance | Govern package versioning, tenant eligibility, rollout, monitoring, rollback, recall, and release audit |
 
 ---
 
@@ -525,6 +526,16 @@ Microsoft Agent 365 and Microsoft Entra Agent ID are represented as agent govern
 
 They MUST NOT be represented as ordinary SOC investigation agents, and the architecture MUST NOT imply they replace runtime PEP/PDP enforcement.
 
+### Fleet Governance and Cross-Tenant Propagation Boundary
+
+Fleet updates are governed operational changes, not normal runtime agent actions.
+
+Agent packages, prompts, retrieval configurations, policy bundles, tool contracts, detection packages, playbooks, report templates, and sanitized intelligence releases must have versioning, ownership, validation evidence, tenant eligibility checks, rollout scope, monitoring, rollback or recall support, and replayable audit records.
+
+Runtime approval to use tenant-scoped context does not authorize cross-tenant reuse, shared-memory writes, package rollout, prompt updates, detection updates, or report-template distribution.
+
+Cross-tenant propagation requires sanitization, human review, policy approval, destination-scope control, tenant eligibility checks, monitoring, audit, and rollback or recall support.
+
 ---
 
 ## Layer 7: Service Delivery Towers
@@ -850,6 +861,8 @@ Before implementing a proof of concept, confirm:
 13. Customer-facing outputs require review.
 14. Sensitive actions require approval.
 15. Evidence references are preserved.
+16. Fleet rollout, rollback, and recall process is defined where shared agent packages are used.
+17. Sanitized intelligence release controls are defined where cross-tenant learning is used.
 
 ---
 
@@ -900,6 +913,8 @@ Avoid:
 - no fail-closed behavior
 - treating local LLM output as forensic truth
 - treating Agent Judge output as policy authorization
+- treating runtime approval as approval for fleet-wide distribution
+- writing tenant-scoped case content into shared memory, prompts, detections, or report templates
 
 ---
 
