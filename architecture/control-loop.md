@@ -8,6 +8,8 @@ Its purpose is to ensure that agentic systems do not act on implicit trust, but 
 
 ## Where It Applies
 
+This file defines the runtime action-control loop; fleet package rollout, rollback, recall, and cross-tenant intelligence distribution are handled by the fleet control-loop and tenant-isolation documents.
+
 This control loop supports governed security operations across **MSSP**, **MDR**, **SOC / Incident Response**, **DFIR**, and **Private / Local LLM-assisted DFIR** where applicable.
 
 The loop can be used anywhere an agent, automation, workflow, or AI-assisted security process may propose or execute an action that affects tools, data, evidence, tenants, cases, customers, or operational outcomes.
@@ -50,6 +52,14 @@ Not every workflow requires every branch in the loop. For example, read-only enr
 
 9. **Feedback & Continuous Assurance**  
    Monitoring and evaluation results feed back into prompts, policies, test cases, process improvements, assurance controls, and operating procedures through governed change control.
+
+## Fleet and Propagation Boundary
+
+If a runtime workflow produces a proposed prompt update, detection update, playbook change, report-template change, sanitized intelligence item, or agent package change, that output must leave the runtime execution loop and enter governed fleet change control.
+
+Runtime approval to use tenant-scoped context does not authorize cross-tenant reuse, fleet distribution, shared-memory writes, or package rollout.
+
+Cross-tenant propagation requires sanitization, human review, policy approval, tenant eligibility checks, monitoring, audit, and rollback or recall support.
 
 ## Required Decision Outcomes
 
