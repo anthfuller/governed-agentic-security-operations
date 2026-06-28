@@ -4,7 +4,7 @@
 
 This document defines the audit and replay model for governed fleet rollout, rollback, recall, and emergency containment across agentic MSSP, MDR, SOC, cloud incident response, and private/local LLM-assisted DFIR workflows.
 
-Fleet changes can affect many tenants, customers, cases, service towers, analysts, agents, detections, playbooks, prompts, report templates, retrieval sources, policy bundles, and tool paths. The audit model must make each rollout decision reconstructable without relying on chat history, model output, release notes, or informal operational memory.
+Fleet changes can affect many tenants, customers, cases, service towers, analysts, agents, detections, playbooks, prompts, report templates, retrieval sources, policy bundles, and tool paths. The audit model must make each rollout decision reconstructable without relying on chat history, model output, informal release notes, or operational memory.
 
 The model answers these questions:
 
@@ -49,7 +49,7 @@ Out of scope:
 
 ## Core Principle
 
-Fleet rollout is a governed operational release, not a normal runtime agent action.
+Fleet rollout is a governed operational release, not a routine runtime agent action.
 
 Every material fleet change must have a replayable audit chain that connects request, ownership, package contents, validation evidence, policy decision, approval, tenant eligibility, rollout scope, monitoring, rollback target, recall path, and final state.
 
