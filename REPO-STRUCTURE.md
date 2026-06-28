@@ -4,14 +4,14 @@
 
 This file provides a detailed inventory of the repository layout for the Governed Agentic Security Operations Architecture project.
 
-The root `README.md` explains the project at a high level. This file provides the deeper structural map for readers who want to understand how the architecture, governance patterns, service models, examples, threat models, and reusable templates are organized.
+The root `README.md` explains the project at a high level. This file provides the deeper structural map for readers who want to understand how the quick-start guides, walkthroughs, architecture, governance patterns, service models, examples, threat models, and reusable templates are organized.
 
 ## Repository Summary
 
 | Metric | Count |
 |---|---:|
-| Total files | 173 |
-| Markdown files | 137 |
+| Total files | 179 |
+| Markdown files | 143 |
 | JSON example files | 24 |
 | Diagram/image files | 10 |
 
@@ -27,6 +27,8 @@ governed-agentic-security-operations-architecture/
 ├── DISCLAIMER.md
 ├── LICENSE
 ├── SECURITY.md
+├── quick-start/
+├── walkthroughs/
 ├── architecture/
 ├── patterns/
 ├── examples/
@@ -50,6 +52,8 @@ governed-agentic-security-operations-architecture/
 | Directory | Files | Purpose |
 |---|---:|---|
 | root docs | 7 | Repository-level documentation, contribution guidance, security policy, disclaimer, and license. |
+| `quick-start/` | 4 | Role-based navigation guides for MSSP/MDR, DFIR, and PoC-builder readers. |
+| `walkthroughs/` | 2 | Concrete scenario walkthroughs showing governed agentic security operations flows from recommendation through audit replay. |
 | `architecture/` | 15 | Core architecture views, diagrams, assumptions, principles, layered model, control loop, and fleet architecture materials. |
 | `patterns/` | 9 | Reusable architecture patterns for governed agentic security operations. |
 | `examples/` | 31 | Scenario-oriented request, approval, policy-decision, judge-output, evidence, review, timeline, and audit artifacts. |
@@ -71,6 +75,8 @@ governed-agentic-security-operations-architecture/
 
 The repository separates architecture concerns from implementation concerns:
 
+- `quick-start/` provides role-based navigation paths for different readers.
+- `walkthroughs/` connects the architecture to concrete governed security operations scenarios.
 - `architecture/` defines the conceptual and engineering views.
 - `patterns/` captures reusable design patterns.
 - `examples/` provides non-runnable example artifacts for architecture discussion.
@@ -118,7 +124,7 @@ Links in this repository should match the actual filename casing used in the tar
 
 ## Public Repository Scope
 
-This repository is intended to remain documentation-first.
+This repository is intended to remain documentation-first. The `quick-start/` and `walkthroughs/` directories are documentation aids, not runtime implementation artifacts.
 
 It does not contain production implementation code, customer data, tenant data, employer confidential information, non-public product information, runnable control-plane code, KQL query packs, infrastructure automation, CI/CD pipelines, or deployment artifacts.
 
