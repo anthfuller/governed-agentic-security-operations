@@ -64,6 +64,7 @@ Judge results should use a consistent envelope so they can be correlated, audite
 | Result | Meaning |
 |---|---|
 | `PASS` | No material issue was detected for the evaluation type and supplied context. |
+| `PASS_WITH_CONDITIONS` | Evaluation passed only for the recorded conditions; release, propagation, or rollout must still follow policy and approval gates. |
 | `WARNING` | Issue detected that requires qualification, review, monitoring, or limited use. |
 | `FAIL` | Material issue detected. Output, action, release, or rollout should not proceed without remediation or review. |
 | `INCONCLUSIVE` | The judge could not complete evaluation because required context, evidence, references, or scope were insufficient. |
@@ -74,10 +75,14 @@ Judge results should use a consistent envelope so they can be correlated, audite
 | Action | Meaning |
 |---|---|
 | `continue` | Proceed to the next governed workflow step. |
-| `revise_before_release` | Correct output before release or use. |
+| `revise_before_release` | Correct output before release or customer-facing use. |
+| `revise_before_use` | Correct output before internal operational use. |
 | `remove_claim` | Remove unsupported or out-of-scope claim. |
 | `qualify_claim` | Restate as hypothesis, limitation, or uncertainty. |
 | `add_evidence_reference` | Add valid evidence or source reference before use. |
+| `add_limitation` | Add a limitation, uncertainty statement, or scope caveat before use. |
+| `remove_or_generalize_identifier` | Remove or generalize direct or indirect identifiers before release or propagation. |
+| `quarantine_context_package` | Quarantine a context package that violates tenant, case, evidence, or destination scope. |
 | `route_to_analyst_review` | Human analyst review is required. |
 | `route_to_forensic_review` | DFIR or forensic reviewer validation is required. |
 | `route_to_policy_evaluation` | Policy decision is required before action, release, propagation, or rollout. |
@@ -112,7 +117,7 @@ This sample shows a customer-facing draft that claims there was no data access w
       "support_status": "unsupported",
       "supporting_refs": [],
       "reason": "No supplied evidence, tool result, or reviewer record establishes data-access scope.",
-      "required_action": "remove_claim_or_qualify_as_unconfirmed",
+      "required_action": "qualify_claim",
       "routing": "analyst_review"
     }
   ],
@@ -286,9 +291,9 @@ This sample shows an assurance result that recommends human review but does not 
 ```json
 {
   "judge_result_id": "judge-result-2026-0046",
-  "judge_id": "hitl-routing-judge",
-  "judge_version": "hitl-routing-judge@1.0.0",
-  "evaluation_type": "human_review_recommendation",
+  "judge_id": "hitl-requirement-check",
+  "judge_version": "hitl-requirement-check@1.0.0",
+  "evaluation_type": "hitl_requirement_check",
   "evaluation_time": "2026-05-22T12:09:37Z",
   "correlation_id": "corr-2026-05-22-10422",
   "tenant_id": "customer-a",
@@ -341,7 +346,7 @@ This sample shows a local/private LLM-assisted DFIR output where a timeline conc
       "support_status": "unsupported",
       "supporting_refs": [],
       "reason": "The supplied artifact references do not establish credential theft or lateral movement sequence.",
-      "required_action": "remove_or_restate_as_hypothesis",
+      "required_action": "qualify_claim",
       "routing": "forensic_review"
     }
   ],
@@ -460,8 +465,10 @@ This sample shows how a judge result can be referenced by policy without becomin
 ```json
 {
   "policy_request_id": "policy-req-2026-0055",
+  "correlation_id": "corr-2026-05-22-10422",
   "requested_action": "customer_report_release",
   "tenant_id": "customer-a",
+  "customer_id": "cust-a",
   "case_id": "inc-10422",
   "input_refs": {
     "agent_output_ref": "agent-output://customer-a/inc-10422/report-draft-002",
@@ -475,9 +482,10 @@ This sample shows how a judge result can be referenced by policy without becomin
     ]
   },
   "policy_decision": {
-    "decision": "REQUIRE_REVIEW",
-    "decision_reason": "One judge result found unsupported customer-facing impact language.",
-    "required_role": "incident_commander",
+    "decision": "REQUIRE_APPROVAL",
+    "decision_reason": "Unsupported customer-facing impact language requires incident commander review and approval before release.",
+    "required_approver_role": "incident_commander",
+    "approval_required": true,
     "release_allowed": false
   }
 }
@@ -502,8 +510,10 @@ This sample shows a judge result that cannot complete because required evidence 
   "evaluation_time": "2026-05-22T16:22:39Z",
   "correlation_id": "corr-2026-05-22-10422",
   "tenant_id": "customer-a",
+  "customer_id": "cust-a",
   "case_id": "inc-10422",
   "agent_output_ref": "agent-output://customer-a/inc-10422/out-0015",
+  "output_destination": "customer_facing_report_draft",
   "context_package_id": "ctx-10422-0008",
   "overall_result": "INCONCLUSIVE",
   "reason": "The agent output contains evidence-backed claims, but the referenced evidence objects were not available to the judge.",
@@ -534,6 +544,7 @@ Avoid the following:
 - treating a judge result as authorization;
 - using a judge `PASS` as approval for tool execution;
 - ignoring `WARNING`, `FAIL`, `INCONCLUSIVE`, or `FAIL_CLOSED` results;
+- treating `PASS_WITH_CONDITIONS` as release approval without satisfying the recorded conditions;
 - allowing judge results without correlation identifiers;
 - storing judge results without agent output references;
 - allowing judge output to rewrite evidence history;
@@ -550,18 +561,21 @@ Sample judge results are useful when they demonstrate that:
 - judge identity and version are recorded;
 - evaluated output, context package, tenant, case, and correlation identifiers are present;
 - findings distinguish supported, weakly supported, unsupported, contradicted, out-of-scope, and inconclusive results where applicable;
-- required actions route to review, policy, approval, remediation, or fail-closed handling;
+- required actions route to review, policy, approval, remediation, quarantine, or fail-closed handling;
+- conditional pass results record the exact scope and conditions that must be satisfied;
 - judge results inform policy but do not replace policy decisions;
 - sensitive outputs, DFIR conclusions, customer-facing releases, cross-tenant propagation, and fleet rollout remain governed by policy and approval paths.
 
 ## Related Repository Areas
 
-- [`ai-assurance/agent-judge-contract.md`](ai-assurance/agent-judge-contract.md) for Agent Judge responsibilities and limits.
-- [`ai-assurance/unsupported-claim-judge.md`](ai-assurance/unsupported-claim-judge.md) for unsupported claim judge behavior.
-- [`ai-assurance/unsupported-claim-checks.md`](ai-assurance/unsupported-claim-checks.md) for reusable unsupported-claim check patterns.
-- [`ai-assurance/tenant-boundary-checks.md`](ai-assurance/tenant-boundary-checks.md) for tenant and destination-scope assurance checks.
-- [`ai-assurance/fleet-update-evaluation-and-safety-validation.md`](ai-assurance/fleet-update-evaluation-and-safety-validation.md) for fleet update safety validation.
-- [`../audit-replay/audit-event-model.md`](../audit-replay/audit-event-model.md) for audit event structure.
-- [`../audit-replay/audit-correlation-model.md`](../audit-replay/audit-correlation-model.md) for correlation and replay chains.
-- [`../policy-enforcement/readme.md`](../policy-enforcement/readme.md) for PDP/PEP behavior and policy decisions.
-- [`../human-oversight/readme.md`](../human-oversight/readme.md) for review, approval, customer approval, and escalation.
+- [`judge-evaluation-contract.md`](judge-evaluation-contract.md) for Agent Judge responsibilities, limits, and result structure.
+- [`unsupported-claim-judge.md`](unsupported-claim-judge.md) for unsupported-claim judge behavior.
+- [`evidence-support-judge.md`](evidence-support-judge.md) for evidence-support evaluation.
+- [`output-quality-judge.md`](output-quality-judge.md) for output-quality evaluation.
+- [`tenant-boundary-judge.md`](tenant-boundary-judge.md) for tenant and destination-scope assurance checks.
+- [`hitl-requirement-check.md`](hitl-requirement-check.md) for human-review routing checks.
+- [`fleet-update-evaluation-and-safety-validation.md`](fleet-update-evaluation-and-safety-validation.md) for fleet update safety validation.
+- [`../../audit-replay/audit-event-model.md`](../../audit-replay/audit-event-model.md) for audit event structure.
+- [`../../audit-replay/audit-correlation-model.md`](../../audit-replay/audit-correlation-model.md) for correlation and replay chains.
+- [`../../policy-enforcement/readme.md`](../../policy-enforcement/readme.md) for PDP/PEP behavior and policy decisions.
+- [`../../human-oversight/readme.md`](../../human-oversight/readme.md) for review, approval, customer approval, and escalation.
