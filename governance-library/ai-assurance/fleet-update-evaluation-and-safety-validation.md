@@ -50,13 +50,14 @@ Fleet update evaluation should answer the following questions:
 1. What changed?
 2. Why is the change needed?
 3. Which tenants, customers, service towers, workflows, tools, reports, evidence paths, or agent behaviors could be affected?
-4. Does the update preserve tenant, customer, case, evidence, retention, and destination-scope boundaries?
-5. Does the update preserve policy-gated tool execution and approval requirements?
-6. Does the update reduce unsupported claims rather than creating new ones?
-7. Does the update preserve evidence references for findings, recommendations, DFIR conclusions, and customer-facing outputs?
-8. Does the update behave safely when context, approval, policy, evidence, tools, retrieval, or audit logging are missing?
-9. Can the update be monitored, rolled back, recalled, and replayed?
-10. Is the update ready for the proposed rollout scope?
+4. What is the expected blast radius if the update behaves incorrectly?
+5. Does the update preserve tenant, customer, case, evidence, retention, and destination-scope boundaries?
+6. Does the update preserve policy-gated tool execution and approval requirements?
+7. Does the update reduce unsupported claims rather than creating new ones?
+8. Does the update preserve evidence references for findings, recommendations, DFIR conclusions, and customer-facing outputs?
+9. Does the update behave safely when context, approval, policy, evidence, tools, retrieval, or audit logging are missing?
+10. Can the update be monitored, rolled back, recalled, and replayed?
+11. Is the update ready for the proposed rollout scope?
 
 ## Update Types
 
@@ -85,6 +86,7 @@ Minimum required inputs:
 |---|---|
 | Change request | Defines the reason for the update, owner, affected scope, expected behavior, and risk tier. |
 | Package manifest | Identifies package contents, versions, dependencies, policy bindings, monitoring profile, and rollback target. |
+| Package provenance | Identifies signature, checksum, source repository, build record, or approved package origin. |
 | Diff or change summary | Explains what changed from the prior approved version. |
 | Intended destination scope | Defines tenants, customer groups, service towers, workflows, regions, or environments eligible for rollout. |
 | Exclusions | Identifies tenants, customers, regions, cases, service tiers, or environments that must not receive the update. |
@@ -279,7 +281,7 @@ Evaluation should produce one of the following outcomes:
 | Outcome | Meaning |
 |---|---|
 | `PASS` | Required checks passed for the proposed rollout scope. |
-| `PASS_WITH_CONDITIONS` | Release may proceed only if recorded conditions are satisfied. |
+| `PASS_WITH_CONDITIONS` | Evaluation passed only for the recorded conditions; release must still follow policy and approval gates. |
 | `REQUIRE_REMEDIATION` | Defects must be fixed before release. |
 | `REQUIRE_REVIEW` | Human review is required before release can continue. |
 | `REQUIRE_APPROVAL` | Accountable approval is required before release, activation, rollout, or propagation. |
@@ -487,13 +489,13 @@ Fleet update evaluation and safety validation is acceptable when all of the foll
 
 ## Related Repository Areas
 
-- [`agent-judge-contract.md`](agent-judge-contract.md) for Agent Judge responsibilities and limits.
-- [`agent-output-quality-checks.md`](agent-output-quality-checks.md) for output-quality evaluation.
-- [`unsupported-claim-checks.md`](unsupported-claim-checks.md) for unsupported-claim detection.
-- [`tenant-boundary-checks.md`](tenant-boundary-checks.md) for tenant and destination-scope assurance checks.
-- [`human-in-the-loop-limitations.md`](human-in-the-loop-limitations.md) for review and approval limitations.
+- [`judge-evaluation-contract.md`](judge-evaluation-contract.md) for Agent Judge responsibilities and limits.
+- [`output-quality-judge.md`](output-quality-judge.md) for output-quality evaluation.
+- [`unsupported-claim-judge.md`](unsupported-claim-judge.md) for unsupported-claim detection.
+- [`tenant-boundary-judge.md`](tenant-boundary-judge.md) for tenant and destination-scope assurance checks.
+- [`hitl-requirement-check.md`](hitl-requirement-check.md) for review and approval limitations.
 - [`../../architecture/agentic-fleet-control-loop.md`](../../architecture/agentic-fleet-control-loop.md) for fleet update control flow.
-- [`../../agent-governance/fleet-governance-and-rollout.md`](../../agent-governance/fleet-governance-and-rollout.md) for fleet governance, rollout, and recall.
+- [`../../agent-governance/agent-fleet-governance.md`](../../agent-governance/agent-fleet-governance.md) for fleet governance, rollout, and recall.
 - [`../../audit-replay/fleet-rollout-audit-and-replay-model.md`](../../audit-replay/fleet-rollout-audit-and-replay-model.md) for rollout audit and replay.
 - [`../../tenant-isolation/fleet-scope-and-cross-tenant-propagation-boundaries.md`](../../tenant-isolation/fleet-scope-and-cross-tenant-propagation-boundaries.md) for sanitized intelligence and cross-tenant propagation boundaries.
 - [`../../policy-enforcement/readme.md`](../../policy-enforcement/readme.md) for PDP/PEP behavior and fail-closed policy enforcement.
