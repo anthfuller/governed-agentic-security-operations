@@ -62,7 +62,7 @@ Conceptually, this layer sits between:
 
 AI assurance may consume identity, registration, ownership, policy, tenant, and case metadata, but it does not own those control planes.
 
-Microsoft Agent 365 and Microsoft Entra Agent ID belong in the **Agent Governance & Identity Control Plane**, not in the operational SOC agent layer. AI assurance may evaluate signals associated with registered agents or identity-governed agents, but it MUST NOT treat identity registration as proof that an output is correct, safe, evidence-supported, or approved for release.
+Agent registry and agent identity capabilities belong in the **Agent Governance & Identity Control Plane**, not in the operational SOC agent layer. AI assurance may evaluate signals associated with registered or identity-governed agents, but it must not treat identity registration as proof that an output is correct, safe, evidence-supported, or approved for release. AI assurance may evaluate signals associated with registered agents or identity-governed agents, but it MUST NOT treat identity registration as proof that an output is correct, safe, evidence-supported, or approved for release.
 
 ---
 
@@ -281,13 +281,14 @@ Escalation alone is not sufficient when an unsafe output, cross-tenant exposure,
 | `agent-judges-overview.md` | Defines the role, limits, and operating model for Agent Judges |
 | `judge-evaluation-contract.md` | Defines structured judge inputs, outputs, findings, evidence references, and routing signals |
 | `evidence-support-judge.md` | Defines how operational claims are checked against approved evidence |
-| `hallucination-unsupported-claim-judge.md` | Defines checks for unsupported conclusions, fabricated details, and overclaims |
+| `unsupported-claim-judge.md` | Defines checks for unsupported conclusions, fabricated details, overclaims, unsupported impact statements, and evidence gaps |
 | `tenant-boundary-judge.md` | Defines checks for tenant, customer, workspace, subscription, account, and case boundaries |
-| `hitl-compliance-judge.md` | Defines checks for required human review, approval scope, reviewer identity, and approval evidence |
+| `hitl-requirement-check.md` | Defines checks for required human review, approval scope, reviewer identity, approval evidence, and escalation routing |
 | `output-quality-judge.md` | Defines output-quality and release-readiness checks |
 | `attack-atlas-mapping-judge.md` | Defines ATT&CK / ATLAS mapping validation boundaries |
 | `judge-human-review-model.md` | Defines when assurance findings require human review or escalation |
 | `judge-limitations.md` | Defines known limitations, non-goals, and prohibited uses of Agent Judges |
+| `fleet-update-evaluation-and-safety-validation.md` | Defines safety validation for fleet updates before rollout, rollback, recall, or broad release |
 
 Additional files may define sensitive-data leakage checks, model evaluation telemetry, forensic assurance, analytics monitoring, and assurance-event schemas where needed.
 
