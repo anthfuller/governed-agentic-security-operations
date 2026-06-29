@@ -2,7 +2,7 @@
 
 ## Purpose
 
-The governance library defines reusable governance and assurance controls for agent-assisted security operations.
+The governance library defines reusable governance and AI assurance controls for agent-assisted security operations.
 
 It supports governed agentic MSSP, MDR, SOC, cloud incident response, and private/local LLM-assisted DFIR workflows where agent outputs may influence investigation, reporting, escalation, containment recommendations, evidence interpretation, cross-tenant learning, or fleet updates.
 
@@ -50,9 +50,9 @@ Authorization remains with the appropriate policy decision, enforcement point, h
 |---|---|---|
 | Agent output generation | Agentic workflow | Agents may propose, summarize, recommend, or draft. |
 | AI assurance | `governance-library/ai-assurance/` | Judges evaluate quality, evidence support, scope, and risk. |
-| Policy decision | `policy-enforcement/` | PDP decides whether an action or release is allowed, denied, or requires approval. |
+| Policy decision | `policy-enforcement/` | PDP decides whether an action or release is allowed, denied, requires review, requires approval, or must fail closed. |
 | Enforcement | `policy-enforcement/` and `tool-access/` | PEP and tool gateways enforce decisions before execution. |
-| Human accountability | `human-oversight/` | Review and approval are recorded by accountable roles. |
+| Human accountability | `human-oversight/` | Review and formal approval are separate accountable controls. |
 | Tenant boundaries | `tenant-isolation/` | Tenant, customer, case, destination, and cross-tenant propagation boundaries are enforced. |
 | Evidence support | `evidence-traceability/` | Findings, recommendations, DFIR conclusions, and customer-facing claims remain evidence-linked. |
 | Audit and replay | `audit-replay/` | Decisions, approvals, outputs, evidence references, tool actions, and outcomes are reconstructable. |
