@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This directory defines the governed data-ingestion model for agentic security operations across MSSP, MDR, SOC, cloud incident response, and private/local LLM-assisted DFIR workflows.
+This directory defines the governed data-ingestion model for agentic security operations across Managed SOC / MSSP, MDR, cloud incident response, and private/local LLM-assisted DFIR workflows.
 
 Data ingestion includes source-system metadata, collection context, parsing, normalization, enrichment, routing, failure handling, audit replay, and shared intelligence release controls.
 
