@@ -6,7 +6,7 @@ This directory defines audit and replay requirements for governed agentic securi
 
 Audit replay provides a structured way to reconstruct what happened, why it was permitted or blocked, who or what participated, which tenant, customer, case, evidence, and workflow scope applied, which policy and approval records controlled the workflow, and what final state was reached.
 
-Audit replay does not prove that a finding, recommendation, or response decision was correct. It proves that the decision path can be inspected, correlated, challenged, and reconstructed.
+Audit replay does not prove that a finding or response decision was correct. It proves that the decision path can be reconstructed, inspected, challenged, and correlated.
 
 ## Scope
 
@@ -15,7 +15,7 @@ This directory applies to audit records created by governed workflows, including
 - agent invocation and task execution;
 - context assembly, retrieval, grounding, and enrichment;
 - evidence reference use and evidence-derived outputs;
-- AI assurance and Agent Judge evaluation;
+- AI assurance checks and Agent Judge evaluation;
 - policy request and policy decision events;
 - Policy Enforcement Point checks before tool use, release, or tenant-impacting action;
 - human review, formal approval, rejection, escalation, and expiration;
