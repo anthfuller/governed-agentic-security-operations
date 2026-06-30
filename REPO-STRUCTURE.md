@@ -10,8 +10,8 @@ The root `README.md` explains the project at a high level. This file provides th
 
 | Metric | Count |
 |---|---:|
-| Total files | 179 |
-| Markdown files | 143 |
+| Total files | 185 |
+| Markdown files | 149 |
 | JSON example files | 24 |
 | Diagram/image files | 10 |
 
@@ -61,7 +61,7 @@ governed-agentic-security-operations-architecture/
 | `threat-model/` | 18 | Threat-model overview and scenario-specific risk topics for agentic security operations. |
 | `agent-governance/` | 8 | Agent identity, lifecycle, access scope, communication, monitoring, change management, fleet governance, and rollback. |
 | `policy-enforcement/` | 8 | Policy decision and enforcement model, risk classification, approval policy, and fail-closed behavior. |
-| `human-oversight/` | 7 | Human review, formal approval, customer approval, escalation, and review records. |
+| `human-oversight/` | 13 | Human review, formal approval, analyst checkpoints, HITL/HOTL, accountability, sensitive-action approval, customer approval, escalation, fleet-change approval, and review records. |
 | `tenant-isolation/` | 6 | Tenant boundary model, scope validation, cross-tenant failure modes, and tenant-aware audit requirements. |
 | `tool-access/` | 5 | Tool registration, scoped execution, restricted tool patterns, and tool-access audit. |
 | `data-ingestion/` | 7 | Source metadata, normalization, enrichment, failure handling, and ingestion replay. |
