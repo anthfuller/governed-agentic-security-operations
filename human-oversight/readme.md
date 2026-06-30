@@ -275,16 +275,22 @@ F7-LAS should support the architecture’s accountability model. It should not r
 
 ## Recommended Directory Content
 
-This directory should contain human-oversight artifacts such as:
+This directory contains human-oversight artifacts such as:
 
-| File type | Purpose |
+| File | Purpose |
 |---|---|
-| Human accountability model | Defines accountable roles and decision ownership. |
-| HITL / HOTL operating model | Defines when humans must approve versus supervise. |
-| Approval workflow model | Defines approval routing, approval outcomes, expiration, and scope. |
-| Customer approval model | Defines when customer approval is required before release or action. |
-| Escalation and break-glass model | Defines emergency handling, exception governance, and post-event review. |
-| Human review checklist | Provides reusable reviewer validation criteria. |
+| `human-review-model.md` | Defines human review requirements and review boundaries. |
+| `hitl-hotl-model.md` | Defines human-in-the-loop and human-on-the-loop operating models. |
+| `analyst-review-checkpoints.md` | Defines analyst validation checkpoints for agent-assisted workflows. |
+| `tiered-soc-review-model.md` | Defines review escalation across SOC, MDR, MSSP, DFIR, and service-owner roles. |
+| `human-accountability.md` | Defines accountable roles, ownership, and decision responsibility. |
+| `approval-boundaries.md` | Defines where review ends and formal approval begins. |
+| `approval-workflows.md` | Defines approval routing, approval outcomes, expiration, and scope. |
+| `sensitive-action-approval.md` | Defines approval requirements for containment, privileged, customer-impacting, and evidence-sensitive actions. |
+| `customer-approval-model.md` | Defines when customer approval is required before release or action. |
+| `escalation-paths.md` | Defines escalation, exception, and break-glass oversight paths. |
+| `fleet-change-approval-and-emergency-override.md` | Defines approval and emergency override controls for fleet-level changes. |
+| `review-record-requirements.md` | Defines required fields for review, approval, escalation, and exception records. |
 
 Files in this directory SHOULD remain focused on human accountability and approval workflow boundaries. Detailed PDP logic, Agent Judge evaluation design, evidence processing, or agent lifecycle controls belong in their respective directories.
 
