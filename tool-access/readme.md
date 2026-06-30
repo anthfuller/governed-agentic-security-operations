@@ -4,11 +4,11 @@
 
 This directory defines the governance model for tool access in governed agentic security operations.
 
-It covers how agents, orchestrators, MCP clients, workflows, and human-reviewed processes request, mediate, approve, execute, deny, and audit tool use across Managed SOC / MSSP, MDR, SOC, cloud incident response, detection engineering, threat hunting, and private/local LLM-assisted DFIR workflows.
+It covers how agents, orchestrators, MCP clients, workflows, and human-reviewed processes request, mediate, approve, execute, deny, and audit tool use across Managed SOC / MSSP, MDR, cloud incident response, detection engineering, threat hunting, and private/local LLM-assisted DFIR workflows.
 
 Tools include connectors, APIs, SIEM and XDR queries, SOAR actions, cloud APIs, SaaS APIs, ticketing systems, case stores, evidence stores, knowledge stores, vector indexes, local forensic utilities, workflow-update mechanisms, report stores, MCP servers, and MCP-exposed tools.
 
-Tool access is a controlled execution boundary. Tool registration, tool availability, MCP exposure, successful execution, or low-risk classification does not authorize tool use.
+Tool access is a controlled execution boundary. Tool registration, tool availability, MCP exposure, successful execution, or low-risk evaluation does not authorize tool use.
 
 ## Scope
 
@@ -30,7 +30,7 @@ This directory does not define production adapter code, vendor configuration, ru
 - Agents may request tool use only through governed workflow mediation.
 - Tool availability is not authorization.
 - Tool registration is not authorization.
-- Tool risk classification is not authorization.
+- Tool risk evaluation is not authorization.
 - MCP exposure is not authorization.
 - Successful tool execution does not prove that the output is correct, complete, approved, or safe for downstream use.
 - Policy Decision Point (PDP), Policy Enforcement Point (PEP), human review, formal approval, Agent Judge assurance, and tool execution remain separate responsibilities.
@@ -44,13 +44,11 @@ This directory does not define production adapter code, vendor configuration, ru
 
 | File | Purpose |
 |---|---|
-| [`tool-registry.md`](tool-registry.md) | Defines required registration metadata for governed tools, including owner, version, allowed operations, prohibited operations, data sources, destinations, scope, and audit expectations. |
-| [`tool-permissioning.md`](tool-permissioning.md) | Defines how tool requests are evaluated against identity, tenant, customer, case, workflow, evidence, policy, approval, and least-privilege constraints. |
-| [`tool-risk-categories.md`](tool-risk-categories.md) | Defines tool risk categories and required handling for read, ingestion, evidence, retrieval, customer-scoped, privileged, external-sharing, and private/local DFIR tool use. |
-| [`approved-tool-patterns.md`](approved-tool-patterns.md) | Defines approved patterns for scoped read, retrieval, enrichment, summarization, case update, report drafting, and policy-mediated execution. |
-| [`restricted-tool-patterns.md`](restricted-tool-patterns.md) | Defines restricted or prohibited tool-use patterns that require denial, escalation, approval, quarantine, or fail-closed handling. |
-| [`tool-call-logging.md`](tool-call-logging.md) | Defines logging requirements for tool requests, permission checks, policy decisions, approvals, execution results, errors, outputs, and downstream consumption. |
-| [`security-model.md`](security-model.md) | Defines the MCP and tool-access security model for mediated tool exposure, request validation, response validation, auditability, and fail-closed behavior. |
+| [`tool-access-model.md`](tool-access-model.md) | Defines the governed tool access model, mediation flow, scope requirements, and enforcement boundaries. |
+| [`tool-registration-requirements.md`](tool-registration-requirements.md) | Defines required registration metadata for governed tools. |
+| [`restricted-tool-patterns.md`](restricted-tool-patterns.md) | Defines restricted or prohibited tool-use patterns. |
+| [`mcp-security-model.md`](mcp-security-model.md) | Defines MCP server, client, and MCP-exposed tool security expectations. |
+| [`tool-execution-audit.md`](tool-execution-audit.md) | Defines logging, audit, replay, and downstream-use requirements for tool execution. |
 
 ## Tool Access Model
 
@@ -58,8 +56,8 @@ Governed tool access follows this model:
 
 1. A workflow or agent requests a tool operation.
 2. The request is bound to identity, tenant, customer, case, workflow, source, destination, evidence, and output context.
-3. The tool registry confirms the tool identity, owner, version, allowed operations, prohibited operations, and approved scope.
-4. The tool risk category determines required handling, review, approval, policy checks, and audit expectations.
+3. Registered tool metadata confirms the tool identity, owner, version, allowed operations, prohibited operations, and approved scope.
+4. The requested operation, registered tool metadata, and workflow context determine required handling, review, approval, policy checks, and audit expectations.
 5. The PDP evaluates whether the requested operation is allowed, denied, requires approval, or must fail closed.
 6. The PEP enforces the PDP decision and obligations before the tool runs or output is released.
 7. Required human review, formal approval, or customer approval occurs through separate approval paths.
@@ -123,7 +121,7 @@ Restricted patterns must be denied, escalated, routed for approval, quarantined,
 Restricted patterns include:
 
 - agents directly selecting and executing tools outside governed workflow mediation;
-- treating tool registration, tool availability, MCP exposure, or low-risk classification as authorization;
+- treating tool registration, tool availability, MCP exposure, or low-risk evaluation as authorization;
 - using tools across tenants, customers, cases, workspaces, subscriptions, accounts, evidence sets, or memory scopes without explicit authorization;
 - exposing credentials, tokens, service principals, managed identities, delegated grants, or scoped secrets to prompts or uncontrolled agent context;
 - allowing tool output to imply approval, containment success, remediation completion, legal conclusion, forensic proof, customer notification, or case closure;
@@ -160,7 +158,7 @@ Tool access must preserve separation of responsibilities.
 |---|---|
 | Agent | May request tool use and consume governed tool output through approved workflow mediation. |
 | Tool Registry | Identifies registered tools, owners, versions, operations, prohibited operations, and scope. |
-| Risk Classification | Determines required handling and review expectations; it does not authorize execution. |
+| Risk Evaluation | Determines required handling and review expectations; it does not authorize execution. |
 | PDP | Produces governed authorization decisions according to the policy contract. |
 | PEP | Enforces PDP decisions and obligations before tool execution or output release. |
 | Agent Judge | Evaluates output quality, evidence support, retrieval scope, or boundary handling as assurance only. |
@@ -176,7 +174,7 @@ Governed tool access must be replayable.
 Tool-access audit records should capture:
 
 - tool request, permission, policy decision, approval, execution, response, and downstream-use identifiers;
-- tool identity, version, owner, category, risk category, and requested operation;
+- tool identity, version, owner, category, requested operation, and risk evaluation where applicable;
 - requesting identity, agent identity, workflow, session, run, and correlation identifiers where applicable;
 - tenant, customer, case, workspace, subscription, account, source, destination, and output-destination context;
 - evidence object identifiers and evidence tenant/customer attribution where evidence is accessed or referenced;
@@ -226,12 +224,12 @@ Tool access is acceptable when:
 
 - all governed tools have registration records with owner, version, allowed operations, prohibited operations, scope, and audit expectations;
 - tool access requests are mediated through governed workflows and do not rely on agent self-authorization;
-- tool availability, MCP exposure, tool registration, successful execution, and low-risk classification are not treated as authorization;
+- tool availability, MCP exposure, tool registration, successful execution, and low-risk evaluation are not treated as authorization;
 - tenant, customer, case, workflow, evidence, source, destination, retrieval, memory, data-handling, and output-destination scope are preserved where applicable;
-- risk classification remains separate from PDP authorization, PEP enforcement, Agent Judge assurance, human review, formal approval, customer approval, and tool execution;
+- tool risk evaluation remains separate from PDP authorization, PEP enforcement, Agent Judge assurance, human review, formal approval, customer approval, and tool execution;
 - sensitive actions require PDP authorization, PEP enforcement, required approval, scoped credentials, and audit readiness before execution;
 - MCP-mediated tool use is registered, scoped, validated, policy-mediated, and auditable;
 - credentials and privileged identities are isolated from prompts, uncontrolled model context, and uncontrolled outputs;
 - tool outputs are validated before they influence actions, approvals, reports, customer communications, or case closure;
 - fail-closed handling exists for missing, ambiguous, unauthorized, stale, cross-tenant, cross-customer, cross-case, retention-inconsistent, unauditable, or out-of-scope context;
-- audit replay can reconstruct tool request, risk category, policy decision, approval record, PEP enforcement, execution result, output reference, downstream use, exception path, and final state.
+- audit replay can reconstruct tool request, risk evaluation, policy decision, approval record, PEP enforcement, execution result, output reference, downstream use, exception path, and final state.
