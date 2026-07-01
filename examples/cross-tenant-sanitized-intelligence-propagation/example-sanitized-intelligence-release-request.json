@@ -448,6 +448,7 @@
     "memory_boundary_refs_expected": [
       "memory-boundary-source-case-0031-0001",
       "memory-boundary-recipient-bravo-0001",
+      "memory-boundary-recipient-charlie-0001",
       "memory-boundary-recipient-delta-0001"
     ]
   },
