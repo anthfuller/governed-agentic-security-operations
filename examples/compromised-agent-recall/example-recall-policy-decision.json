@@ -1,1 +1,581 @@
-Placeholder
+{
+  "artifact_type": "agent_recall_policy_decision",
+  "schema_version": "1.0.0",
+  "example_name": "compromised-agent-recall",
+  "policy_decision_id": "recall-policy-decision-0001",
+  "correlation_id": "corr-compromised-agent-recall-0001",
+  "request_id": "recall-req-0001",
+  "decision_recorded_at_utc": "2025-02-14T16:39:10Z",
+  "decision_recorded_by": {
+    "recording_identity_type": "service_workload",
+    "recording_identity_id": "policy-decision-service",
+    "recording_component": "agent_recall_policy_decision_point",
+    "recording_role": "policy_decision_controller"
+  },
+  "source_artifacts": {
+    "recall_request_artifact": "example-agent-recall-request.json",
+    "approval_record_artifact": "example-recall-approval-record.json",
+    "audit_event_artifact": "example-recall-audit-event.json"
+  },
+  "decision_subject": {
+    "scenario": {
+      "name": "compromised_agent_recall",
+      "severity": "critical",
+      "urgency": "immediate",
+      "trigger_type": "suspected_agent_compromise",
+      "trigger_source": "fleet_health_monitoring",
+      "trigger_signal_ids": [
+        "fleet-signal-unauthorized-tool-request-0001",
+        "fleet-signal-policy-scope-mismatch-0002",
+        "fleet-signal-agent-output-drift-0003"
+      ]
+    },
+    "affected_agent": {
+      "agent_id": "soc-triage-agent",
+      "agent_name": "SOC Triage Agent",
+      "agent_package_id": "pkg-soc-triage-agent",
+      "agent_package_version": "2.7.3",
+      "agent_registry_id": "agent-registry-prod",
+      "model_route_id": "model-route-security-ops-standard",
+      "prompt_package_id": "prompt-package-soc-triage-2.7.3",
+      "policy_bundle_id": "policy-bundle-agent-actions-2025-02",
+      "tool_contract_id": "tool-contract-soc-triage-2.7.3"
+    }
+  },
+  "request_context": {
+    "requested_at_utc": "2025-02-14T16:35:20Z",
+    "requesting_identity": {
+      "requesting_identity_type": "service_workload",
+      "requesting_identity_id": "agent-fleet-monitoring-service",
+      "requesting_component": "agent_fleet_monitoring",
+      "requesting_role": "fleet_health_and_safety_monitor"
+    },
+    "request_state_at_evaluation": "pending_policy_decision",
+    "request_is_authorization": false,
+    "requested_policy_decision_artifact": "example-recall-policy-decision.json",
+    "required_approval_artifact": "example-recall-approval-record.json",
+    "required_audit_artifact": "example-recall-audit-event.json"
+  },
+  "policy_inputs": {
+    "agent_registry_id": "agent-registry-prod",
+    "agent_package_id": "pkg-soc-triage-agent",
+    "agent_package_version": "2.7.3",
+    "model_route_id": "model-route-security-ops-standard",
+    "prompt_package_id": "prompt-package-soc-triage-2.7.3",
+    "policy_bundle_id": "policy-bundle-agent-actions-2025-02",
+    "tool_contract_id": "tool-contract-soc-triage-2.7.3",
+    "requested_action_ids": [
+      "recall-action-001",
+      "recall-action-002",
+      "recall-action-003",
+      "recall-action-004",
+      "recall-action-005",
+      "recall-action-006"
+    ],
+    "evidence_ref_ids": [
+      "evidence-ref-agent-runtime-log-0001",
+      "evidence-ref-policy-eval-0002",
+      "evidence-ref-tool-request-0003"
+    ],
+    "fleet_inventory_reference": "fleet-inventory-prod-agent-registry-2025-02-14T16:38:00Z",
+    "tenant_inventory_reference": "tenant-inventory-agent-recall-scope-2025-02-14T16:38:20Z",
+    "case_inventory_reference": "case-inventory-active-agent-version-2025-02-14T16:38:35Z"
+  },
+  "input_validation_results": {
+    "request_id_present": true,
+    "correlation_id_present": true,
+    "affected_agent_identity_verified": true,
+    "agent_package_id_verified": true,
+    "agent_package_version_verified": true,
+    "agent_manifest_reference_verified": true,
+    "policy_bundle_reference_verified": true,
+    "tool_contract_reference_verified": true,
+    "environment_scope_verified": true,
+    "tenant_scope_verified_against_fleet_inventory": true,
+    "customer_scope_verified_against_service_inventory": true,
+    "case_scope_verified_against_active_case_inventory": true,
+    "evidence_reference_integrity_check_required": true,
+    "requested_actions_recognized_by_policy": true,
+    "requested_actions_within_recall_scope": true,
+    "audit_logging_available": true,
+    "validation_result": "passed"
+  },
+  "decision": {
+    "decision": "allow_with_conditions",
+    "authorization_effect": "recall_actions_allowed_only_within_decision_scope_and_required_approvals",
+    "valid_from_utc": "2025-02-14T16:39:10Z",
+    "valid_until_utc": "2025-02-14T17:09:10Z",
+    "decision_valid_for_request_id": "recall-req-0001",
+    "decision_scope_matches_request_scope": true,
+    "approval_required_before_sensitive_enforcement": true,
+    "customer_approval_required_for_recall": false,
+    "customer_notification_release_authorized": false,
+    "fail_closed_on_condition_failure": true
+  },
+  "decision_scope": {
+    "scope_type": "policy_scoped_fleet_recall",
+    "environment_scope": [
+      "production"
+    ],
+    "tenant_selection": {
+      "mode": "affected_tenants_only",
+      "tenant_ids": [
+        "tenant-alpha-prod",
+        "tenant-bravo-prod"
+      ]
+    },
+    "customer_selection": {
+      "mode": "affected_customers_only",
+      "customer_ids": [
+        "customer-alpha",
+        "customer-bravo"
+      ]
+    },
+    "case_selection": {
+      "mode": "active_cases_using_affected_agent_version",
+      "case_ids": [
+        "case-iam-0007",
+        "case-endpoint-0019"
+      ]
+    },
+    "session_scope": "active_and_scheduled_sessions",
+    "tool_access_scope": "all_tools_registered_to_affected_agent_version",
+    "memory_scope": "case_memory_and_agent_runtime_context_for_affected_sessions",
+    "include_downstream_outputs": true
+  },
+  "risk_assessment": {
+    "policy_risk_level": "critical",
+    "risk_basis": [
+      "suspected_agent_compromise",
+      "out_of_scope_tool_request",
+      "policy_bundle_mismatch",
+      "unusual_cross_case_context_request"
+    ],
+    "emergency_recall_policy_threshold_met": true,
+    "action_proportionality": "agent_fleet_containment_only",
+    "customer_environment_change_allowed": false,
+    "scope_expansion_allowed": false
+  },
+  "policy_rule_evaluations": [
+    {
+      "rule_id": "agent-recall.compromise-signal.critical",
+      "rule_result": "matched",
+      "decision_impact": "critical suspected compromise permits emergency recall review",
+      "supporting_signals": [
+        "fleet-signal-unauthorized-tool-request-0001",
+        "fleet-signal-policy-scope-mismatch-0002",
+        "fleet-signal-agent-output-drift-0003"
+      ]
+    },
+    {
+      "rule_id": "agent-recall.scope.affected-production-only",
+      "rule_result": "satisfied",
+      "decision_impact": "recall may target affected production tenants customers cases sessions tools memory and downstream outputs only",
+      "tenant_ids": [
+        "tenant-alpha-prod",
+        "tenant-bravo-prod"
+      ],
+      "customer_ids": [
+        "customer-alpha",
+        "customer-bravo"
+      ],
+      "case_ids": [
+        "case-iam-0007",
+        "case-endpoint-0019"
+      ]
+    },
+    {
+      "rule_id": "agent-recall.agent-package-version.verified",
+      "rule_result": "satisfied",
+      "decision_impact": "policy decision may bind to the specific affected package version",
+      "agent_package_target": "pkg-soc-triage-agent:2.7.3"
+    },
+    {
+      "rule_id": "agent-recall.tool-contract.boundary",
+      "rule_result": "satisfied",
+      "decision_impact": "tool access may be blocked for the affected agent version without changing unrelated tool contracts",
+      "tool_contract_id": "tool-contract-soc-triage-2.7.3"
+    },
+    {
+      "rule_id": "agent-recall.memory.quarantine-no-reuse",
+      "rule_result": "satisfied",
+      "decision_impact": "affected memory and runtime context must be quarantined and blocked from reuse",
+      "memory_scope": "case_memory_and_agent_runtime_context_for_affected_sessions"
+    },
+    {
+      "rule_id": "agent-recall.evidence.reference-only-preservation",
+      "rule_result": "satisfied",
+      "decision_impact": "evidence and audit records may be preserved by immutable reference only",
+      "evidence_handling": "reference_only",
+      "raw_evidence_embedded": false
+    },
+    {
+      "rule_id": "agent-recall.approval.sensitive-actions",
+      "rule_result": "satisfied",
+      "decision_impact": "sensitive recall actions require human approval before enforcement",
+      "approval_required_action_ids": [
+        "recall-action-001",
+        "recall-action-002",
+        "recall-action-003",
+        "recall-action-004",
+        "recall-action-005"
+      ],
+      "approval_not_required_action_ids": [
+        "recall-action-006"
+      ]
+    },
+    {
+      "rule_id": "agent-recall.customer-boundary.no-release",
+      "rule_result": "satisfied",
+      "decision_impact": "customer notification release and cross-customer data sharing are not authorized by this decision",
+      "customer_notification_review_required": true
+    },
+    {
+      "rule_id": "agent-recall.fail-closed.required",
+      "rule_result": "satisfied",
+      "decision_impact": "missing identity scope evidence approval or audit controls must deny unexecuted actions",
+      "fail_closed_enabled": true
+    }
+  ],
+  "evidence_evaluation": {
+    "evidence_handling": "reference_only",
+    "raw_evidence_embedded": false,
+    "minimum_evidence_threshold_met": true,
+    "evidence_result": "sufficient_for_emergency_agent_recall_policy_decision",
+    "evidence_refs_reviewed": [
+      {
+        "evidence_ref_id": "evidence-ref-agent-runtime-log-0001",
+        "evidence_type": "agent_runtime_log",
+        "source_system_id": "agent-fleet-monitoring",
+        "time_range_utc": {
+          "start": "2025-02-14T16:12:00Z",
+          "end": "2025-02-14T16:34:00Z"
+        },
+        "hash_reference": "sha256:7b5e6f0c8f7b0a0d5f6b3c6e9a2d1c4f0e8a9b1c2d3e4f506172839405a6b7c8",
+        "policy_evaluation_result": "accepted",
+        "integrity_check_required_before_enforcement": true
+      },
+      {
+        "evidence_ref_id": "evidence-ref-policy-eval-0002",
+        "evidence_type": "policy_evaluation_record",
+        "source_system_id": "policy-enforcement-service",
+        "time_range_utc": {
+          "start": "2025-02-14T16:20:00Z",
+          "end": "2025-02-14T16:33:00Z"
+        },
+        "hash_reference": "sha256:59f4c1d2e3a6b7c8d9e0f11223344556677889900aabbccddeeff0011223344",
+        "policy_evaluation_result": "accepted",
+        "integrity_check_required_before_enforcement": true
+      },
+      {
+        "evidence_ref_id": "evidence-ref-tool-request-0003",
+        "evidence_type": "tool_request_audit_record",
+        "source_system_id": "tool-access-audit",
+        "time_range_utc": {
+          "start": "2025-02-14T16:25:00Z",
+          "end": "2025-02-14T16:34:00Z"
+        },
+        "hash_reference": "sha256:a1b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0",
+        "policy_evaluation_result": "accepted",
+        "integrity_check_required_before_enforcement": true
+      }
+    ]
+  },
+  "action_decisions": [
+    {
+      "action_id": "recall-action-001",
+      "action_type": "suspend_agent_package_version",
+      "target": "pkg-soc-triage-agent:2.7.3",
+      "priority": "immediate",
+      "policy_decision": "allowed_with_conditions",
+      "policy_decision_required": true,
+      "human_approval_required_before_enforcement": true,
+      "authorization_state_at_policy_decision_time": "pending_required_approval",
+      "required_approval_artifact": "example-recall-approval-record.json",
+      "enforcement_component": "agent-package-registry-control",
+      "authorization_limits": [
+        "Limit suspension to pkg-soc-triage-agent version 2.7.3 in the affected production scope.",
+        "Do not delete package metadata, manifest records, evidence references, or audit records.",
+        "Do not deploy or promote a replacement agent under this decision."
+      ],
+      "execution_time_checks": [
+        "request_id_and_correlation_id_match_policy_decision",
+        "affected_agent_package_version_matches_fleet_inventory",
+        "tenant_customer_and_case_scope_match_decision_scope",
+        "evidence_references_pass_integrity_check",
+        "audit_logging_is_available",
+        "no_scope_expansion_requested",
+        "approval_record_is_present_unexpired_and_matches_policy_decision"
+      ],
+      "failure_action": "deny_action_and_emit_policy_denial_audit_event"
+    },
+    {
+      "action_id": "recall-action-002",
+      "action_type": "stop_active_agent_sessions",
+      "target": "active_sessions_for_affected_scope",
+      "priority": "immediate",
+      "policy_decision": "allowed_with_conditions",
+      "policy_decision_required": true,
+      "human_approval_required_before_enforcement": true,
+      "authorization_state_at_policy_decision_time": "pending_required_approval",
+      "required_approval_artifact": "example-recall-approval-record.json",
+      "enforcement_component": "agent-session-control",
+      "authorization_limits": [
+        "Stop active sessions and cancel scheduled sessions only for the affected tenants, customers, and cases.",
+        "Preserve session identifiers, runtime state references, and enforcement audit records.",
+        "Do not close incident cases or alter customer-owned environment state."
+      ],
+      "execution_time_checks": [
+        "request_id_and_correlation_id_match_policy_decision",
+        "affected_agent_package_version_matches_fleet_inventory",
+        "tenant_customer_and_case_scope_match_decision_scope",
+        "evidence_references_pass_integrity_check",
+        "audit_logging_is_available",
+        "no_scope_expansion_requested",
+        "approval_record_is_present_unexpired_and_matches_policy_decision"
+      ],
+      "failure_action": "deny_action_and_emit_policy_denial_audit_event"
+    },
+    {
+      "action_id": "recall-action-003",
+      "action_type": "revoke_agent_scoped_credentials",
+      "target": "credentials_bound_to_affected_agent_version",
+      "priority": "immediate",
+      "policy_decision": "allowed_with_conditions",
+      "policy_decision_required": true,
+      "human_approval_required_before_enforcement": true,
+      "authorization_state_at_policy_decision_time": "pending_required_approval",
+      "required_approval_artifact": "example-recall-approval-record.json",
+      "enforcement_component": "agent-credential-control",
+      "authorization_limits": [
+        "Revoke only credentials bound to pkg-soc-triage-agent version 2.7.3 in the affected production scope.",
+        "Do not rotate or disable unrelated service identities.",
+        "Do not change customer-owned credentials."
+      ],
+      "execution_time_checks": [
+        "request_id_and_correlation_id_match_policy_decision",
+        "affected_agent_package_version_matches_fleet_inventory",
+        "tenant_customer_and_case_scope_match_decision_scope",
+        "evidence_references_pass_integrity_check",
+        "audit_logging_is_available",
+        "no_scope_expansion_requested",
+        "approval_record_is_present_unexpired_and_matches_policy_decision"
+      ],
+      "failure_action": "deny_action_and_emit_policy_denial_audit_event"
+    },
+    {
+      "action_id": "recall-action-004",
+      "action_type": "block_registered_tool_access",
+      "target": "tools_registered_to_affected_agent_version",
+      "priority": "immediate",
+      "policy_decision": "allowed_with_conditions",
+      "policy_decision_required": true,
+      "human_approval_required_before_enforcement": true,
+      "authorization_state_at_policy_decision_time": "pending_required_approval",
+      "required_approval_artifact": "example-recall-approval-record.json",
+      "enforcement_component": "tool-access-policy-enforcement-point",
+      "authorization_limits": [
+        "Block tool access registered to the affected agent package version through the policy enforcement point.",
+        "Retain denied tool request telemetry for replay and investigation.",
+        "Do not modify tool contracts for unaffected agent versions."
+      ],
+      "execution_time_checks": [
+        "request_id_and_correlation_id_match_policy_decision",
+        "affected_agent_package_version_matches_fleet_inventory",
+        "tenant_customer_and_case_scope_match_decision_scope",
+        "evidence_references_pass_integrity_check",
+        "audit_logging_is_available",
+        "no_scope_expansion_requested",
+        "approval_record_is_present_unexpired_and_matches_policy_decision"
+      ],
+      "failure_action": "deny_action_and_emit_policy_denial_audit_event"
+    },
+    {
+      "action_id": "recall-action-005",
+      "action_type": "quarantine_agent_runtime_context",
+      "target": "case_memory_and_runtime_context_for_affected_sessions",
+      "priority": "immediate",
+      "policy_decision": "allowed_with_conditions",
+      "policy_decision_required": true,
+      "human_approval_required_before_enforcement": true,
+      "authorization_state_at_policy_decision_time": "pending_required_approval",
+      "required_approval_artifact": "example-recall-approval-record.json",
+      "enforcement_component": "agent-memory-quarantine-control",
+      "authorization_limits": [
+        "Quarantine case memory and agent runtime context for affected sessions only.",
+        "Block quarantined context from generation, recommendations, automation, redeployment, and training use.",
+        "Maintain tenant and customer separation for all quarantine references."
+      ],
+      "execution_time_checks": [
+        "request_id_and_correlation_id_match_policy_decision",
+        "affected_agent_package_version_matches_fleet_inventory",
+        "tenant_customer_and_case_scope_match_decision_scope",
+        "evidence_references_pass_integrity_check",
+        "audit_logging_is_available",
+        "no_scope_expansion_requested",
+        "approval_record_is_present_unexpired_and_matches_policy_decision"
+      ],
+      "failure_action": "deny_action_and_emit_policy_denial_audit_event"
+    },
+    {
+      "action_id": "recall-action-006",
+      "action_type": "preserve_recall_evidence_and_audit_records",
+      "target": "supporting_evidence_and_related_audit_records",
+      "priority": "immediate",
+      "policy_decision": "allowed_with_conditions",
+      "policy_decision_required": true,
+      "human_approval_required_before_enforcement": false,
+      "authorization_state_at_policy_decision_time": "allowed_without_human_approval",
+      "required_approval_artifact": null,
+      "enforcement_component": "evidence-preservation-service",
+      "authorization_limits": [
+        "Preserve supporting evidence and related audit records as immutable references.",
+        "Do not modify raw evidence or replace source audit records.",
+        "Record preservation references before sensitive recall actions are executed."
+      ],
+      "execution_time_checks": [
+        "request_id_and_correlation_id_match_policy_decision",
+        "affected_agent_package_version_matches_fleet_inventory",
+        "tenant_customer_and_case_scope_match_decision_scope",
+        "evidence_references_pass_integrity_check",
+        "audit_logging_is_available",
+        "no_scope_expansion_requested"
+      ],
+      "failure_action": "deny_action_and_emit_policy_denial_audit_event"
+    }
+  ],
+  "approval_requirements": {
+    "human_approval_required_for_sensitive_recall_actions": true,
+    "required_approval_artifact": "example-recall-approval-record.json",
+    "required_approval_action_ids": [
+      "recall-action-001",
+      "recall-action-002",
+      "recall-action-003",
+      "recall-action-004",
+      "recall-action-005"
+    ],
+    "approval_not_required_action_ids": [
+      "recall-action-006"
+    ],
+    "required_review_roles": [
+      "agent_fleet_owner",
+      "security_operations_lead",
+      "policy_enforcement_owner",
+      "tenant_boundary_reviewer"
+    ],
+    "review_queue": "agent-fleet-emergency-review",
+    "escalation_path": "emergency-agent-recall",
+    "target_decision_sla": "15m",
+    "customer_approval_required_for_recall": false,
+    "customer_notification_review_required": true
+  },
+  "enforcement_requirements": {
+    "policy_enforcement_point_required": true,
+    "required_enforcement_sequence": [
+      "preserve_recall_evidence_and_audit_records",
+      "suspend_agent_package_version",
+      "stop_active_agent_sessions",
+      "revoke_agent_scoped_credentials",
+      "block_registered_tool_access",
+      "quarantine_agent_runtime_context",
+      "record_recall_enforcement_audit_events"
+    ],
+    "condition_checks_required_at_execution_time": true,
+    "approval_record_required_before_sensitive_actions": true,
+    "scope_validation_required_before_each_action": true,
+    "audit_event_required_for_each_action": true,
+    "deny_unexecuted_actions_on_failed_check": true
+  },
+  "tenant_and_customer_boundaries": {
+    "tenant_customer_separation_required": true,
+    "cross_tenant_generalization_allowed": false,
+    "cross_customer_release_allowed": false,
+    "boundary_validation_required_before_action": true,
+    "affected_scope_must_match_fleet_inventory": true
+  },
+  "knowledge_and_memory_controls": {
+    "memory_access_allowed_for_investigation": true,
+    "memory_reuse_allowed": false,
+    "memory_quarantine_required": true,
+    "knowledge_store_or_memory_scope": "affected_agent_sessions_only",
+    "retrieved_context_release_allowed": false,
+    "downstream_outputs_included_in_recall_scope": true,
+    "downstream_outputs_release_allowed": false,
+    "quarantined_context_training_use_allowed": false
+  },
+  "not_authorized_by_this_decision": [
+    "customer_environment_containment",
+    "customer_environment_remediation",
+    "customer_notification_release",
+    "case_closure",
+    "evidence_modification",
+    "agent_redeployment",
+    "replacement_agent_deployment",
+    "cross_customer_data_sharing",
+    "policy_exception",
+    "scope_expansion_to_unaffected_tenants_customers_or_cases",
+    "permanent_deletion_of_agent_package_or_runtime_evidence",
+    "training_use_of_quarantined_context"
+  ],
+  "fail_closed_conditions": [
+    "affected_agent_identity_cannot_be_verified",
+    "agent_package_version_cannot_be_verified",
+    "agent_manifest_reference_cannot_be_verified",
+    "tenant_or_customer_scope_is_missing_or_ambiguous",
+    "case_scope_is_missing_or_ambiguous",
+    "policy_bundle_reference_is_missing_or_mismatched",
+    "tool_contract_reference_cannot_be_verified",
+    "required_policy_decision_is_unavailable",
+    "required_approval_is_missing_expired_or_mismatched",
+    "evidence_reference_validation_fails",
+    "audit_logging_is_unavailable",
+    "requested_action_exceeds_recall_scope",
+    "enforcement_target_does_not_match_fleet_inventory",
+    "memory_scope_exceeds_affected_sessions",
+    "customer_notification_release_is_requested_without_separate_review"
+  ],
+  "audit_requirements": {
+    "audit_event_type": "agent_recall_policy_decision_recorded",
+    "audit_reference_id": "audit-ref-agent-recall-policy-decision-0001",
+    "required_correlation_fields": [
+      "policy_decision_id",
+      "request_id",
+      "correlation_id",
+      "agent_id",
+      "agent_package_id",
+      "agent_package_version",
+      "tenant_ids",
+      "customer_ids",
+      "case_ids",
+      "policy_bundle_id",
+      "tool_contract_id",
+      "evidence_ref_ids",
+      "allowed_action_ids",
+      "approval_required_action_ids",
+      "not_authorized_actions"
+    ],
+    "replay_must_reconstruct": [
+      "which recall request was evaluated",
+      "why emergency recall policy threshold was met",
+      "which agent package version was affected",
+      "which tenants customers and cases were in scope",
+      "which evidence references supported the decision",
+      "which requested actions were allowed with conditions",
+      "which actions required approval before enforcement",
+      "which actions were not authorized",
+      "which fail closed conditions constrained enforcement",
+      "whether enforcement stayed inside the policy decision scope"
+    ]
+  },
+  "retention_and_integrity": {
+    "retention_class": "security_incident_policy_decision_record",
+    "retention_minimum": "7y",
+    "immutability_required": true,
+    "append_only_record": true,
+    "hash_algorithm": "sha256",
+    "canonicalization": "json_sorted_keys_compact",
+    "hash_scope": "artifact_content_excluding_record_hash_reference",
+    "record_hash_reference": "sha256:d9a254921ce4c44b900abde80c6cec7b07eb765054e298e6cd177e442a5a76c0"
+  },
+  "record_state": "allow_with_conditions_pending_required_approval"
+}
