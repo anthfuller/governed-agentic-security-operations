@@ -1,1 +1,702 @@
-Placeholder
+{
+  "artifact_type": "sanitized_intelligence_release_sanitization_review_record",
+  "schema_version": "1.0.0",
+  "example_name": "cross-tenant-sanitized-intelligence-propagation",
+  "sanitization_review_record_id": "sanitization-review-record-0001",
+  "sanitization_report_ref_id": "sanitization-report-cloud-iam-oauth-abuse-0001",
+  "review_reference_id": "review-ref-sanitized-intel-sanitization-0001",
+  "review_result": "passed",
+  "review_recorded_at_utc": "2025-03-04T11:36:15Z",
+  "record_finalized_at_utc": "2025-03-04T11:43:15Z",
+  "review_time_range_utc": {
+    "start": "2025-03-04T11:32:00Z",
+    "end": "2025-03-04T11:43:15Z"
+  },
+  "review_lifecycle": {
+    "candidate_package_received_at_utc": "2025-03-04T11:32:00Z",
+    "automated_sanitization_validation_completed_at_utc": "2025-03-04T11:35:50Z",
+    "policy_input_snapshot_locked_at_utc": "2025-03-04T11:36:15Z",
+    "policy_decision_completed_at_utc": "2025-03-04T11:38:40Z",
+    "human_release_review_completed_at_utc": "2025-03-04T11:43:15Z",
+    "sanitization_review_alone_does_not_authorize_release": true
+  },
+  "review_authority": {
+    "review_service_id": "intelligence-sanitization-validator",
+    "review_component": "intelligence_sanitization_validator",
+    "review_component_role": "sanitization_validation_and_boundary_control_review",
+    "agent_package_reviewed": "pkg-intel-sanitization-agent",
+    "agent_package_version": "1.4.0",
+    "model_route_id": "model-route-security-ops-local-sensitive",
+    "prompt_package_id": "prompt-package-intel-sanitization-1.4.0",
+    "tool_contract_id": "tool-contract-intel-sanitization-1.4.0",
+    "sanitization_policy_id": "policy-sanitized-intel-release-2025-03",
+    "policy_bundle_id": "policy-bundle-cross-tenant-intel-release-2025-03",
+    "policy_bundle_version": "2025.03.0",
+    "review_mode": "automated_validation_with_required_human_release_review",
+    "agent_allowed_to_self_approve_release": false,
+    "review_service_allowed_to_release_without_policy_decision": false,
+    "operator_allowed_to_override_failed_sanitization": false
+  },
+  "correlation": {
+    "release_request_id": "release-req-sanitized-intel-0001",
+    "correlation_id": "corr-cross-tenant-sanitized-intel-0001",
+    "sanitization_review_record_id": "sanitization-review-record-0001",
+    "sanitization_report_ref_id": "sanitization-report-cloud-iam-oauth-abuse-0001",
+    "policy_decision_id": "release-policy-decision-0001",
+    "human_release_review_id": "release-approval-0001",
+    "release_package_id": "sanitized-intel-package-cloud-iam-oauth-abuse-0001",
+    "source_case_id": "case-cloud-iam-0031",
+    "source_workflow_id": "workflow-cloud-iam-investigation-0031",
+    "source_detection_id": "detection-cloud-iam-oauth-abuse-0007",
+    "request_audit_reference_id": "audit-ref-sanitized-intel-request-0001",
+    "review_audit_reference_id": "audit-ref-sanitized-intel-sanitization-review-0001",
+    "policy_audit_reference_id": "audit-ref-sanitized-intel-policy-0001",
+    "human_release_review_audit_reference_id": "audit-ref-sanitized-intel-approval-0001"
+  },
+  "source_artifacts": {
+    "release_request_artifact": "example-sanitized-intelligence-release-request.json",
+    "this_review_artifact": "example-sanitization-review-record.json"
+  },
+  "related_artifacts": {
+    "policy_decision_artifact": "example-release-policy-decision.json",
+    "release_audit_event_artifact": "example-release-audit-event.json"
+  },
+  "scenario": {
+    "name": "cross_tenant_sanitized_intelligence_propagation",
+    "review_subject": "sanitize_cloud_identity_threat_intelligence_for_cross_tenant_defensive_use",
+    "description": "Sanitization review for a candidate defensive intelligence package derived from a tenant-bound cloud identity investigation. The review verifies that the release package carries generalized defensive content only and excludes raw evidence, source customer identifiers, source case context, secrets, tenant-specific values, and model or agent memory.",
+    "severity": "high",
+    "urgency": "time_bound",
+    "trigger_type": "validated_cross_tenant_defensive_value",
+    "trigger_source": "threat_intelligence_synthesis_workflow",
+    "trigger_signal_ids": [
+      "intel-signal-cloud-iam-oauth-abuse-0001",
+      "intel-signal-token-replay-sequence-0002",
+      "intel-signal-directory-enumeration-pattern-0003"
+    ]
+  },
+  "request_context": {
+    "release_request_state_at_review": "approved_for_sanitization_review",
+    "requested_release_type": "sanitized_defensive_intelligence",
+    "requested_release_classification": "restricted_security_operations",
+    "requester_identity_type": "service_workload",
+    "requester_identity_id": "threat-intelligence-synthesis-workflow",
+    "requesting_component": "threat_intelligence_synthesis_workflow",
+    "release_request_is_authorization": false,
+    "sanitization_review_is_authorization": false,
+    "requested_downstream_action_execution": false,
+    "requested_customer_notification": false,
+    "requested_model_training_or_fine_tuning": false,
+    "requested_raw_evidence_release": false,
+    "requested_source_context_release": false
+  },
+  "originating_investigation_scope": {
+    "source_scope_visibility": "internal_audit_only",
+    "source_tenant_id": "tenant-alpha-prod",
+    "source_customer_id": "customer-alpha",
+    "source_case_id": "case-cloud-iam-0031",
+    "source_case_type": "cloud_iam_compromise",
+    "source_environment": "production",
+    "source_workflow_id": "workflow-cloud-iam-investigation-0031",
+    "source_detection_id": "detection-cloud-iam-oauth-abuse-0007",
+    "source_incident_time_range_utc": {
+      "start": "2025-03-04T08:10:00Z",
+      "end": "2025-03-04T10:42:00Z"
+    },
+    "source_context_release_to_recipients_allowed": false,
+    "source_identifiers_release_to_recipients_allowed": false,
+    "source_evidence_release_to_recipients_allowed": false,
+    "source_case_memory_release_to_recipients_allowed": false
+  },
+  "candidate_release_scope": {
+    "scope_type": "sanitized_cross_tenant_intelligence_release",
+    "environment_scope": [
+      "production"
+    ],
+    "originating_tenant_id": "tenant-alpha-prod",
+    "originating_customer_id": "customer-alpha",
+    "originating_case_id": "case-cloud-iam-0031",
+    "requested_recipient_tenant_ids": [
+      "tenant-bravo-prod",
+      "tenant-charlie-prod",
+      "tenant-delta-prod"
+    ],
+    "requested_recipient_customer_ids": [
+      "customer-bravo",
+      "customer-charlie",
+      "customer-delta"
+    ],
+    "requested_release_channels": [
+      "tenant_scoped_intelligence_feed",
+      "tenant_scoped_detection_content_queue",
+      "soc_triage_context_enrichment_feed"
+    ],
+    "recipient_visibility": "tenant_scoped_security_operations",
+    "release_duration": "until_replaced_or_revoked",
+    "recipient_specific_payload_variants_requested": false,
+    "scope_eligibility_decision_out_of_scope_for_this_record": true
+  },
+  "candidate_release_package": {
+    "release_package_id": "sanitized-intel-package-cloud-iam-oauth-abuse-0001",
+    "release_title": "Cloud IAM OAuth consent and token replay behavior pattern",
+    "release_type": "sanitized_defensive_intelligence",
+    "release_classification": "restricted_security_operations",
+    "confidence": "high",
+    "payload_hash_reference": "sha256:b02c86079e21cceb65f73bad048d4c2fdd3b05d0cbccb2b07db2175b977c5b2d",
+    "package_manifest_hash_reference": "sha256:04deeac51b897e097d80b6174cdf7bb918c257015154ee19cd4e83b0d1551a2a",
+    "raw_evidence_embedded": false,
+    "source_case_content_embedded": false,
+    "customer_identifiers_embedded": false,
+    "tenant_specific_values_embedded": false,
+    "secret_or_token_material_embedded": false,
+    "model_prompt_or_agent_memory_embedded": false,
+    "recipient_adaptation_required": true,
+    "recipient_adaptation_allows_source_data_reintroduction": false,
+    "payload_refs": [
+      {
+        "payload_ref_id": "sanitized-payload-summary-0001",
+        "payload_type": "behavioral_summary",
+        "content_class": "sanitized_text_summary",
+        "hash_reference": "sha256:b7044b364d9b41c833e75e845c9d66dd6b43cdda60e84f0ee1ba0159838f5127"
+      },
+      {
+        "payload_ref_id": "sanitized-payload-detection-logic-0002",
+        "payload_type": "detection_logic_reference",
+        "content_class": "tenant_adaptable_detection_reference",
+        "hash_reference": "sha256:37aaa18bbdd66ebd55def1fe492abca97035f5745978288f3d71c556b77d7340"
+      },
+      {
+        "payload_ref_id": "sanitized-payload-response-guidance-0003",
+        "payload_type": "response_guidance",
+        "content_class": "generalized_defensive_guidance",
+        "hash_reference": "sha256:802908225ee15242235a853f435e1845ba3ebc192e81d8c70d0bbc2f4f29f6b1"
+      }
+    ]
+  },
+  "sanitized_payload_summary_review": {
+    "threat_activity_class": "cloud_identity_abuse",
+    "generalized_behavior_sequence": [
+      "Unusual OAuth consent grant for a newly observed application registration.",
+      "Token use from an unmanaged network path shortly after consent approval.",
+      "Directory and role enumeration activity inconsistent with the user's recent baseline.",
+      "Attempted addition of a service principal credential after enumeration completed."
+    ],
+    "released_signal_definitions_reviewed": [
+      {
+        "signal_id": "released-signal-oauth-consent-0001",
+        "signal_type": "identity_event_sequence",
+        "contains_source_customer_values": false,
+        "requires_recipient_tenant_adaptation": true,
+        "review_result": "passed"
+      },
+      {
+        "signal_id": "released-signal-service-principal-credential-0002",
+        "signal_type": "cloud_control_plane_change",
+        "contains_source_customer_values": false,
+        "requires_recipient_tenant_adaptation": true,
+        "review_result": "passed"
+      },
+      {
+        "signal_id": "released-signal-directory-enumeration-0003",
+        "signal_type": "directory_enumeration_pattern",
+        "contains_source_customer_values": false,
+        "requires_recipient_tenant_adaptation": true,
+        "review_result": "passed"
+      }
+    ],
+    "recommended_recipient_actions_reviewed": [
+      "Evaluate tenant-local OAuth consent events against the released behavior sequence.",
+      "Review tenant-local service principal credential changes for preceding anomalous identity activity.",
+      "Escalate matching results through each tenant's normal SOC triage workflow."
+    ],
+    "recommended_actions_require_customer_environment_change": false,
+    "recommended_actions_authorize_automation": false
+  },
+  "sanitization_review_inputs": {
+    "input_records": [
+      {
+        "input_id": "sanitization-input-release-request-0001",
+        "input_type": "release_request",
+        "required": true,
+        "present": true,
+        "artifact": "example-sanitized-intelligence-release-request.json",
+        "integrity_check_passed": true
+      },
+      {
+        "input_id": "sanitization-input-source-case-summary-0002",
+        "input_type": "source_case_summary_reference",
+        "required": true,
+        "present": true,
+        "source_system": "case-management-system",
+        "evidence_ref_id": "evidence-ref-source-case-summary-0001",
+        "hash_reference": "sha256:5409d7a7597f9adf4d04f3fb06eac3223742877bd786718b601c200b7e871671",
+        "handling": "reference_only"
+      },
+      {
+        "input_id": "sanitization-input-candidate-package-0003",
+        "input_type": "candidate_sanitized_release_package",
+        "required": true,
+        "present": true,
+        "source_system": "threat-intelligence-synthesis-workflow",
+        "release_package_id": "sanitized-intel-package-cloud-iam-oauth-abuse-0001",
+        "integrity_check_passed": true
+      },
+      {
+        "input_id": "sanitization-input-boundary-map-0004",
+        "input_type": "tenant_customer_boundary_map",
+        "required": true,
+        "present": true,
+        "source_system": "tenant-boundary-registry",
+        "integrity_check_passed": true
+      },
+      {
+        "input_id": "sanitization-input-sensitive-value-index-0005",
+        "input_type": "source_case_sensitive_value_index",
+        "required": true,
+        "present": true,
+        "source_system": "sensitive-value-index-service",
+        "handling": "reference_only",
+        "integrity_check_passed": true
+      }
+    ],
+    "all_required_inputs_present": true,
+    "input_tamper_check_passed": true,
+    "input_time_window_consistent": true,
+    "correlation_fields_consistent": true,
+    "source_evidence_copied_into_review_record": false
+  },
+  "automated_validation": {
+    "validated_at_utc": "2025-03-04T11:35:50Z",
+    "validated_by_component": "intelligence-sanitization-validator",
+    "validation_result": "passed",
+    "scanner_policy_id": "policy-sanitized-intel-release-2025-03",
+    "checks": {
+      "customer_identifier_scan_passed": true,
+      "tenant_identifier_scan_passed": true,
+      "case_identifier_scan_passed": true,
+      "user_and_device_identifier_scan_passed": true,
+      "pii_scan_passed": true,
+      "secret_scan_passed": true,
+      "raw_log_pattern_scan_passed": true,
+      "hostname_and_ip_literal_scan_passed": true,
+      "source_application_name_scan_passed": true,
+      "model_prompt_scan_passed": true,
+      "agent_memory_scan_passed": true,
+      "tool_argument_scan_passed": true,
+      "hash_and_url_literal_review_required": true,
+      "hash_and_url_literal_review_passed": true,
+      "approved_manifest_hash_matched": true
+    },
+    "detected_disallowed_content": {
+      "raw_evidence_detected": false,
+      "source_context_detected": false,
+      "customer_identifiers_detected": false,
+      "tenant_specific_values_detected": false,
+      "case_specific_values_detected": false,
+      "user_or_device_identifiers_detected": false,
+      "source_ip_address_or_hostname_detected": false,
+      "source_application_name_detected": false,
+      "secret_or_token_material_detected": false,
+      "personally_identifying_values_detected": false,
+      "model_prompt_or_agent_memory_detected": false,
+      "tool_call_arguments_detected": false
+    },
+    "validation_artifacts": [
+      {
+        "artifact_ref_id": "scan-output-sensitive-values-0001",
+        "artifact_type": "sensitive_value_scan_result",
+        "result": "passed",
+        "hash_reference": "sha256:166a57f1642584221c5788d8cdbd098f97db8f59cc9d13d318f7fb20b5181a5c"
+      },
+      {
+        "artifact_ref_id": "scan-output-secret-detection-0002",
+        "artifact_type": "secret_and_token_scan_result",
+        "result": "passed",
+        "hash_reference": "sha256:c4c1c31bd89c92fd2ebcf1571d5d80eb4e56a7be3b6a20be54d9df3d5c22d599"
+      },
+      {
+        "artifact_ref_id": "scan-output-manifest-match-0003",
+        "artifact_type": "manifest_hash_match_result",
+        "result": "passed",
+        "hash_reference": "sha256:ec9ac7f1165aa9b502d4bfc8965d257fe6b8eab51d19d0857afacdb42d3e43a2"
+      }
+    ]
+  },
+  "sanitization_transform_results": {
+    "transformation_result": "passed",
+    "source_values_removed_or_generalized": true,
+    "raw_evidence_removed": true,
+    "source_case_notes_removed": true,
+    "model_and_agent_memory_removed": true,
+    "tenant_local_parameters_required": true,
+    "recipient_adaptation_requires_local_values_only": true,
+    "removed_or_generalized_fields": [
+      "tenant_ids",
+      "customer_ids",
+      "case_ids",
+      "user_principal_names",
+      "email_addresses",
+      "hostnames",
+      "ip_addresses",
+      "application_display_names",
+      "subscription_or_account_ids",
+      "ticket_text",
+      "raw_log_payloads",
+      "model_prompts",
+      "agent_runtime_memory",
+      "tool_call_arguments",
+      "access_tokens",
+      "secrets"
+    ],
+    "retained_fields": [
+      "generalized_behavior_sequence",
+      "detection_logic_reference_ids",
+      "control_plane_event_categories",
+      "recipient_local_query_parameters",
+      "confidence_level",
+      "severity_level",
+      "general_response_guidance"
+    ],
+    "not_included_in_payload": [
+      "source_tenant_id",
+      "source_customer_id",
+      "source_case_id",
+      "source_user_principal_names",
+      "source_ip_addresses",
+      "source_hostnames",
+      "source_application_names",
+      "raw_log_events",
+      "raw_agent_messages",
+      "case_notes",
+      "access_tokens_or_secret_material"
+    ]
+  },
+  "payload_review_results": [
+    {
+      "payload_ref_id": "sanitized-payload-summary-0001",
+      "payload_type": "behavioral_summary",
+      "content_class": "sanitized_text_summary",
+      "hash_reference": "sha256:b7044b364d9b41c833e75e845c9d66dd6b43cdda60e84f0ee1ba0159838f5127",
+      "review_result": "passed",
+      "raw_evidence_detected": false,
+      "source_identifiers_detected": false,
+      "tenant_specific_values_detected": false,
+      "secret_or_token_material_detected": false,
+      "model_prompt_or_agent_memory_detected": false,
+      "requires_recipient_local_adaptation": false,
+      "eligible_for_policy_evaluation": true
+    },
+    {
+      "payload_ref_id": "sanitized-payload-detection-logic-0002",
+      "payload_type": "detection_logic_reference",
+      "content_class": "tenant_adaptable_detection_reference",
+      "hash_reference": "sha256:37aaa18bbdd66ebd55def1fe492abca97035f5745978288f3d71c556b77d7340",
+      "review_result": "passed_with_adaptation_constraints",
+      "raw_evidence_detected": false,
+      "source_identifiers_detected": false,
+      "tenant_specific_values_detected": false,
+      "secret_or_token_material_detected": false,
+      "model_prompt_or_agent_memory_detected": false,
+      "requires_recipient_local_adaptation": true,
+      "recipient_adaptation_must_use_source_values": false,
+      "eligible_for_policy_evaluation": true
+    },
+    {
+      "payload_ref_id": "sanitized-payload-response-guidance-0003",
+      "payload_type": "response_guidance",
+      "content_class": "generalized_defensive_guidance",
+      "hash_reference": "sha256:802908225ee15242235a853f435e1845ba3ebc192e81d8c70d0bbc2f4f29f6b1",
+      "review_result": "passed",
+      "raw_evidence_detected": false,
+      "source_identifiers_detected": false,
+      "tenant_specific_values_detected": false,
+      "secret_or_token_material_detected": false,
+      "model_prompt_or_agent_memory_detected": false,
+      "requires_recipient_local_adaptation": false,
+      "eligible_for_policy_evaluation": true
+    }
+  ],
+  "manifest_and_hash_validation": {
+    "reviewed_release_package_id": "sanitized-intel-package-cloud-iam-oauth-abuse-0001",
+    "reviewed_payload_hash_reference": "sha256:b02c86079e21cceb65f73bad048d4c2fdd3b05d0cbccb2b07db2175b977c5b2d",
+    "reviewed_manifest_hash_reference": "sha256:04deeac51b897e097d80b6174cdf7bb918c257015154ee19cd4e83b0d1551a2a",
+    "payload_hash_matched_manifest": true,
+    "manifest_hash_locked_for_policy_evaluation": true,
+    "manifest_changes_after_review_allowed": false,
+    "payload_changes_after_review_allowed": false,
+    "hash_mismatch_handling": "fail_closed_and_require_new_sanitization_review"
+  },
+  "boundary_and_memory_controls": {
+    "originating_tenant_customer_separation_required": true,
+    "recipient_tenant_customer_separation_required_before_release": true,
+    "recipient_tenant_to_tenant_isolation_required_before_release": true,
+    "source_tenant_visible_to_recipients": false,
+    "source_customer_visible_to_recipients": false,
+    "source_case_visible_to_recipients": false,
+    "source_case_memory_accessed_for_sanitization": true,
+    "source_case_memory_released": false,
+    "source_case_memory_reuse_allowed": false,
+    "recipient_agent_context_can_retrieve_source_case": false,
+    "model_training_use_allowed": false,
+    "model_fine_tuning_use_allowed": false,
+    "memory_boundary_refs": [
+      "memory-boundary-source-case-0031-0001",
+      "memory-boundary-recipient-bravo-0001",
+      "memory-boundary-recipient-charlie-0001"
+    ]
+  },
+  "recipient_adaptation_controls": {
+    "recipient_adaptation_required": true,
+    "recipient_adaptation_allowed": true,
+    "recipient_adaptation_scope": "recipient_tenant_local_values_only",
+    "recipient_adaptation_allows_source_data_reintroduction": false,
+    "source_values_available_to_recipient_parameterization": false,
+    "tenant_local_query_parameters_must_be_bound_at_recipient": true,
+    "adapted_detection_content_must_remain_tenant_scoped": true,
+    "adaptation_output_requires_delivery_scope_check": true,
+    "adaptation_output_requires_audit_logging": true
+  },
+  "human_release_review": {
+    "human_review_required_before_release": true,
+    "human_review_completed": true,
+    "human_release_review_id": "release-approval-0001",
+    "human_release_review_result": "approved_with_conditions",
+    "human_review_completed_at_utc": "2025-03-04T11:43:15Z",
+    "valid_from_utc": "2025-03-04T11:43:15Z",
+    "valid_until_utc": "2025-03-04T12:43:15Z",
+    "customer_approval_required": false,
+    "source_customer_notification_authorized": false,
+    "recipient_customer_notification_authorized": false,
+    "review_results": [
+      {
+        "review_id": "human-review-threat-intel-lead-0001",
+        "reviewer_role": "threat_intelligence_lead",
+        "decision": "accepted",
+        "reviewed_at_utc": "2025-03-04T11:39:30Z",
+        "attested_controls": [
+          "defensive_value_confirmed",
+          "indicator_generalization_accepted",
+          "release_content_matches_sanitized_manifest"
+        ]
+      },
+      {
+        "review_id": "human-review-tenant-boundary-0001",
+        "reviewer_role": "tenant_boundary_reviewer",
+        "decision": "accepted",
+        "reviewed_at_utc": "2025-03-04T11:41:05Z",
+        "attested_controls": [
+          "source_identifiers_removed",
+          "recipient_scope_verified",
+          "recipient_access_cannot_reach_source_case"
+        ]
+      },
+      {
+        "review_id": "human-review-policy-owner-0001",
+        "reviewer_role": "policy_enforcement_owner",
+        "decision": "accepted",
+        "reviewed_at_utc": "2025-03-04T11:42:20Z",
+        "attested_controls": [
+          "policy_decision_valid",
+          "release_conditions_enforceable",
+          "fail_closed_controls_available"
+        ]
+      }
+    ],
+    "conditions_checked": [
+      {
+        "condition_id": "release-approval-condition-001",
+        "condition": "sanitization_report_must_pass",
+        "check_result": "satisfied"
+      },
+      {
+        "condition_id": "release-approval-condition-002",
+        "condition": "source_identifiers_must_not_be_visible_to_recipients",
+        "check_result": "satisfied"
+      },
+      {
+        "condition_id": "release-approval-condition-003",
+        "condition": "recipient_scope_must_match_policy_decision",
+        "check_result": "satisfied"
+      },
+      {
+        "condition_id": "release-approval-condition-004",
+        "condition": "release_package_hash_must_match_approved_manifest",
+        "check_result": "satisfied"
+      },
+      {
+        "condition_id": "release-approval-condition-005",
+        "condition": "tenant_customer_boundaries_must_hold",
+        "check_result": "satisfied"
+      },
+      {
+        "condition_id": "release-approval-condition-006",
+        "condition": "audit_logging_must_be_available",
+        "check_result": "satisfied"
+      }
+    ]
+  },
+  "policy_input_readiness": {
+    "eligible_for_policy_evaluation": true,
+    "policy_evaluation_started_at_utc": "2025-03-04T11:36:30Z",
+    "policy_evaluation_completed_at_utc": "2025-03-04T11:38:40Z",
+    "required_policy_inputs_available": true,
+    "required_for_allow": true,
+    "review_recorded_before_policy_decision": true,
+    "policy_decision_may_reduce_recipient_scope": true,
+    "policy_decision_may_not_override_failed_sanitization": true,
+    "human_release_review_required_after_policy_decision": true
+  },
+  "review_decision": {
+    "sanitization_review_result": "passed",
+    "release_package_safe_for_policy_evaluation": true,
+    "release_delivery_authorized_by_sanitization_review_alone": false,
+    "policy_decision_required_before_release": true,
+    "human_release_review_required_before_release": true,
+    "customer_notification_authorized": false,
+    "raw_evidence_release_authorized": false,
+    "source_context_release_authorized": false,
+    "source_identifier_release_authorized": false,
+    "automated_customer_environment_action_authorized": false,
+    "model_training_or_fine_tuning_authorized": false,
+    "scope_expansion_authorized": false
+  },
+  "not_authorized_by_this_record": [
+    "release_delivery_without_policy_decision",
+    "raw_evidence_release",
+    "source_customer_identifier_release_to_recipients",
+    "source_tenant_identifier_release_to_recipients",
+    "source_case_identifier_release_to_recipients",
+    "source_user_or_device_identifier_release",
+    "source_ip_address_or_hostname_release",
+    "source_application_name_release",
+    "source_case_note_release",
+    "recipient_access_to_source_case",
+    "recipient_to_recipient_data_sharing",
+    "automated_customer_environment_containment",
+    "automated_customer_environment_remediation",
+    "customer_notification_release",
+    "model_training_or_fine_tuning_use",
+    "policy_exception",
+    "release_scope_expansion"
+  ],
+  "fail_closed_requirements": {
+    "fail_closed_required": true,
+    "fail_closed_conditions": [
+      "release_request_id_missing_or_mismatched",
+      "correlation_id_missing_or_mismatched",
+      "source_scope_missing_or_ambiguous",
+      "candidate_package_missing_or_unhashable",
+      "sanitization_policy_missing_or_unversioned",
+      "required_sanitization_input_missing",
+      "input_tamper_check_failed",
+      "source_identifier_detected_in_payload",
+      "raw_evidence_detected_in_payload",
+      "secret_or_token_material_detected_in_payload",
+      "model_memory_detected_in_payload",
+      "case_specific_value_detected_in_payload",
+      "payload_hash_mismatch",
+      "manifest_hash_mismatch",
+      "recipient_adaptation_requires_source_values",
+      "review_record_cannot_be_preserved"
+    ],
+    "action_if_triggered": "deny_policy_evaluation_and_preserve_failed_sanitization_review_record",
+    "post_review_payload_change_handling": "deny_release_and_require_new_sanitization_review"
+  },
+  "evidence_and_audit_requirements": {
+    "evidence_handling": "reference_only",
+    "source_evidence_may_be_modified": false,
+    "source_evidence_may_be_copied_into_release_package": false,
+    "sanitization_review_must_be_preserved": true,
+    "sanitization_report_must_be_preserved": true,
+    "policy_decision_must_be_preserved_after_evaluation": true,
+    "human_release_review_must_be_preserved_before_delivery": true,
+    "audit_records_append_only": true,
+    "required_evidence_refs": [
+      {
+        "evidence_ref_id": "evidence-ref-source-case-summary-0001",
+        "evidence_type": "source_case_summary_reference",
+        "source_system_id": "case-management-system",
+        "time_range_utc": {
+          "start": "2025-03-04T08:10:00Z",
+          "end": "2025-03-04T10:42:00Z"
+        },
+        "hash_reference": "sha256:5409d7a7597f9adf4d04f3fb06eac3223742877bd786718b601c200b7e871671"
+      },
+      {
+        "evidence_ref_id": "evidence-ref-sanitization-report-0002",
+        "evidence_type": "sanitization_validation_report",
+        "source_system_id": "intelligence-sanitization-validator",
+        "time_range_utc": {
+          "start": "2025-03-04T11:32:00Z",
+          "end": "2025-03-04T11:35:50Z"
+        },
+        "hash_reference": "sha256:bcca159736895be0ec95bede45cc823b20bb0e707482691892d8bfb3480a73b7"
+      },
+      {
+        "evidence_ref_id": "evidence-ref-release-approval-0004",
+        "evidence_type": "human_approval_record",
+        "source_system_id": "approval-workflow-service",
+        "time_range_utc": {
+          "start": "2025-03-04T11:39:00Z",
+          "end": "2025-03-04T11:43:15Z"
+        },
+        "hash_reference": "sha256:f58c51b257a548a961c81892e35430d51b934c6ffccb266763ac782996f6ee02"
+      }
+    ]
+  },
+  "audit_replay": {
+    "required_correlation_fields": [
+      "release_request_id",
+      "correlation_id",
+      "sanitization_review_record_id",
+      "sanitization_report_ref_id",
+      "release_package_id",
+      "source_tenant_id",
+      "source_customer_id",
+      "source_case_id",
+      "payload_hash_reference",
+      "package_manifest_hash_reference",
+      "removed_or_generalized_fields",
+      "review_result"
+    ],
+    "replay_must_reconstruct": [
+      "which release request triggered the sanitization review",
+      "which source tenant customer and case produced the candidate intelligence",
+      "which package manifest and payload hashes were reviewed",
+      "which source identifiers raw evidence secrets and model memory classes were prohibited",
+      "which automated scans passed",
+      "which fields were removed or generalized",
+      "which payload references passed review",
+      "whether recipient adaptation could reintroduce source values",
+      "whether sanitization review alone authorized release delivery",
+      "which follow-on policy and human review gates remained required"
+    ],
+    "reconstructable_facts": {
+      "sanitization_review_passed": true,
+      "release_package_safe_for_policy_evaluation": true,
+      "release_delivery_authorized_by_sanitization_review_alone": false,
+      "raw_evidence_absent_from_payload": true,
+      "source_identifiers_absent_from_payload": true,
+      "tenant_specific_values_absent_from_payload": true,
+      "secrets_absent_from_payload": true,
+      "model_memory_absent_from_payload": true,
+      "recipient_adaptation_requires_local_values_only": true,
+      "policy_decision_required_before_release": true,
+      "human_release_review_required_before_release": true,
+      "audit_record_supports_deterministic_replay": true
+    }
+  },
+  "retention_and_integrity": {
+    "retention_class": "security_audit_sanitization_review_record",
+    "retention_minimum": "7y",
+    "immutability_required": true,
+    "append_only_record": true,
+    "hash_algorithm": "sha256",
+    "previous_audit_reference_id": "audit-ref-sanitized-intel-request-0001",
+    "previous_audit_hash_reference": "sha256:6cd205f44d900c75cbcc161255af270e265fa12230fef608253c7475b890b096",
+    "canonicalization": "json_sorted_keys_compact",
+    "hash_scope": "entire_sanitization_review_record_excluding_record_hash_reference",
+    "record_hash_reference": "sha256:39aa182ec9ecf6330f2fd419de5b844f47fb33b45db952277ef9dabe3da5d08b"
+  },
+  "record_state": "finalized"
+}
