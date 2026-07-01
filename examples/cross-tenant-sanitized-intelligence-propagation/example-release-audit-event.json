@@ -28,11 +28,11 @@
     "approval_audit_reference_id": "audit-ref-sanitized-intel-approval-0001"
   },
   "source_artifacts": {
-  "release_request_artifact": "example-sanitized-intelligence-release-request.json",
-  "policy_decision_artifact": "example-release-policy-decision.json",
-  "sanitization_review_record_artifact": "example-sanitization-review-record.json",
-  "this_audit_artifact": "example-release-audit-event.json"
- },
+    "release_request_artifact": "example-sanitized-intelligence-release-request.json",
+    "policy_decision_artifact": "example-release-policy-decision.json",
+    "sanitization_review_record_artifact": "example-sanitization-review-record.json",
+    "this_audit_artifact": "example-release-audit-event.json"
+  },
   "scenario": {
     "name": "cross_tenant_sanitized_intelligence_propagation",
     "description": "Policy-governed release of sanitized threat intelligence derived from one tenant-bound investigation to eligible recipient tenants without exposing raw evidence, source customer identifiers, case context, secrets, or tenant-specific operational details.",
