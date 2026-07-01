@@ -1,1 +1,686 @@
-Placeholder
+{
+  "artifact_type": "agent_recall_audit_event",
+  "schema_version": "1.0.0",
+  "example_name": "compromised-agent-recall",
+  "audit_event_id": "audit-event-agent-recall-enforcement-0001",
+  "audit_reference_id": "audit-ref-agent-recall-enforcement-0001",
+  "event_type": "agent_recall_enforcement_completed",
+  "event_category": "governed_agent_recall",
+  "event_recorded_at_utc": "2025-02-14T16:45:10Z",
+  "event_time_range_utc": {
+    "start": "2025-02-14T16:35:20Z",
+    "end": "2025-02-14T16:45:10Z"
+  },
+  "event_recorded_by": {
+    "recording_identity_type": "service_workload",
+    "recording_identity_id": "agent-recall-enforcement-service",
+    "recording_component": "agent_recall_enforcement",
+    "recording_role": "policy_enforcement_point_audit_writer"
+  },
+  "correlation": {
+    "request_id": "recall-req-0001",
+    "correlation_id": "corr-compromised-agent-recall-0001",
+    "policy_decision_id": "recall-policy-decision-0001",
+    "approval_record_id": "recall-approval-0001",
+    "enforcement_release_id": "enforcement-release-agent-recall-0001",
+    "request_audit_reference_id": "audit-ref-agent-recall-request-0001",
+    "approval_audit_reference_id": "audit-ref-agent-recall-approval-0001"
+  },
+  "source_artifacts": {
+    "recall_request_artifact": "example-agent-recall-request.json",
+    "policy_decision_artifact": "example-recall-policy-decision.json",
+    "approval_record_artifact": "example-recall-approval-record.json",
+    "this_audit_artifact": "example-recall-audit-event.json"
+  },
+  "scenario": {
+    "name": "compromised_agent_recall",
+    "severity": "critical",
+    "urgency": "immediate",
+    "trigger_type": "suspected_agent_compromise",
+    "trigger_source": "fleet_health_monitoring",
+    "trigger_signal_ids": [
+      "fleet-signal-unauthorized-tool-request-0001",
+      "fleet-signal-policy-scope-mismatch-0002",
+      "fleet-signal-agent-output-drift-0003"
+    ]
+  },
+  "affected_agent": {
+    "agent_id": "soc-triage-agent",
+    "agent_name": "SOC Triage Agent",
+    "agent_package_id": "pkg-soc-triage-agent",
+    "agent_package_version": "2.7.3",
+    "agent_registry_id": "agent-registry-prod",
+    "model_route_id": "model-route-security-ops-standard",
+    "prompt_package_id": "prompt-package-soc-triage-2.7.3",
+    "policy_bundle_id": "policy-bundle-agent-actions-2025-02",
+    "tool_contract_id": "tool-contract-soc-triage-2.7.3"
+  },
+  "recall_scope": {
+    "scope_type": "policy_scoped_fleet_recall",
+    "environment_scope": [
+      "production"
+    ],
+    "tenant_selection": {
+      "mode": "affected_tenants_only",
+      "tenant_ids": [
+        "tenant-alpha-prod",
+        "tenant-bravo-prod"
+      ]
+    },
+    "customer_selection": {
+      "mode": "affected_customers_only",
+      "customer_ids": [
+        "customer-alpha",
+        "customer-bravo"
+      ]
+    },
+    "case_selection": {
+      "mode": "active_cases_using_affected_agent_version",
+      "case_ids": [
+        "case-iam-0007",
+        "case-endpoint-0019"
+      ]
+    },
+    "session_scope": "active_and_scheduled_sessions",
+    "tool_access_scope": "all_tools_registered_to_affected_agent_version",
+    "memory_scope": "case_memory_and_agent_runtime_context_for_affected_sessions",
+    "include_downstream_outputs": true
+  },
+  "authorization_context": {
+    "request_is_authorization": false,
+    "policy_decision": {
+      "policy_decision_id": "recall-policy-decision-0001",
+      "decision": "allow_with_conditions",
+      "decision_recorded_at_utc": "2025-02-14T16:39:10Z",
+      "decision_valid_for_request_id": "recall-req-0001",
+      "decision_scope_matches_enforcement_scope": true
+    },
+    "approval_decision": {
+      "approval_record_id": "recall-approval-0001",
+      "decision": "approved_with_conditions",
+      "approved_at_utc": "2025-02-14T16:42:05Z",
+      "valid_from_utc": "2025-02-14T16:42:05Z",
+      "valid_until_utc": "2025-02-14T17:12:05Z",
+      "approval_valid_at_enforcement_time": true,
+      "customer_approval_required": false,
+      "customer_notification_release_authorized": false
+    },
+    "approval_conditions_checked": [
+      {
+        "condition_id": "approval-condition-001",
+        "condition": "policy_decision_must_remain_valid",
+        "check_result": "satisfied"
+      },
+      {
+        "condition_id": "approval-condition-002",
+        "condition": "scope_must_not_expand",
+        "check_result": "satisfied"
+      },
+      {
+        "condition_id": "approval-condition-003",
+        "condition": "tenant_customer_boundaries_must_hold",
+        "check_result": "satisfied"
+      },
+      {
+        "condition_id": "approval-condition-004",
+        "condition": "audit_logging_must_be_available",
+        "check_result": "satisfied"
+      },
+      {
+        "condition_id": "approval-condition-005",
+        "condition": "memory_reuse_must_remain_blocked",
+        "check_result": "satisfied"
+      },
+      {
+        "condition_id": "approval-condition-006",
+        "condition": "customer_notification_release_requires_separate_review",
+        "check_result": "satisfied"
+      }
+    ]
+  },
+  "pre_enforcement_validation": {
+    "validated_at_utc": "2025-02-14T16:42:25Z",
+    "validated_by_component": "agent_recall_enforcement",
+    "validation_results": {
+      "affected_agent_identity_verified": true,
+      "agent_package_version_verified": true,
+      "agent_manifest_reference_verified": true,
+      "policy_bundle_reference_verified": true,
+      "tool_contract_reference_verified": true,
+      "tenant_scope_verified_against_fleet_inventory": true,
+      "customer_scope_verified_against_service_inventory": true,
+      "case_scope_verified_against_active_case_inventory": true,
+      "evidence_reference_integrity_checked": true,
+      "approval_record_valid_and_unexpired": true,
+      "policy_decision_valid_and_unexpired": true,
+      "audit_logging_available": true,
+      "no_scope_expansion_detected": true
+    },
+    "fail_closed_triggered": false
+  },
+  "enforcement_sequence": [
+    {
+      "sequence": 1,
+      "action_id": "recall-action-006",
+      "action_type": "preserve_recall_evidence_and_audit_records",
+      "target": "supporting_evidence_and_related_audit_records",
+      "priority": "immediate",
+      "authorization_check": {
+        "policy_decision_required": true,
+        "approval_required": false,
+        "policy_decision_id": "recall-policy-decision-0001",
+        "approval_record_id": null,
+        "authorization_status": "authorized"
+      },
+      "scope_check": {
+        "scope_validated_before_execution": true,
+        "scope_expansion_detected": false,
+        "tenant_scope": [
+          "tenant-alpha-prod",
+          "tenant-bravo-prod"
+        ],
+        "customer_scope": [
+          "customer-alpha",
+          "customer-bravo"
+        ],
+        "case_scope": [
+          "case-iam-0007",
+          "case-endpoint-0019"
+        ]
+      },
+      "started_at_utc": "2025-02-14T16:42:30Z",
+      "completed_at_utc": "2025-02-14T16:42:48Z",
+      "enforcement_component": "evidence-preservation-service",
+      "result_state": "completed",
+      "target_state_after": "evidence_and_audit_records_preserved",
+      "result_summary": "Supporting evidence and related audit records were preserved by immutable reference. No source evidence was modified.",
+      "output_refs": [
+        "preservation-ref-agent-runtime-log-0001",
+        "preservation-ref-policy-eval-0002",
+        "preservation-ref-tool-request-0003"
+      ],
+      "audit_event_id": "audit-event-recall-action-006-0001"
+    },
+    {
+      "sequence": 2,
+      "action_id": "recall-action-001",
+      "action_type": "suspend_agent_package_version",
+      "target": "pkg-soc-triage-agent:2.7.3",
+      "priority": "immediate",
+      "authorization_check": {
+        "policy_decision_required": true,
+        "approval_required": true,
+        "policy_decision_id": "recall-policy-decision-0001",
+        "approval_record_id": "recall-approval-0001",
+        "authorization_status": "authorized"
+      },
+      "scope_check": {
+        "scope_validated_before_execution": true,
+        "scope_expansion_detected": false,
+        "tenant_scope": [
+          "tenant-alpha-prod",
+          "tenant-bravo-prod"
+        ],
+        "customer_scope": [
+          "customer-alpha",
+          "customer-bravo"
+        ],
+        "case_scope": [
+          "case-iam-0007",
+          "case-endpoint-0019"
+        ]
+      },
+      "started_at_utc": "2025-02-14T16:42:50Z",
+      "completed_at_utc": "2025-02-14T16:43:12Z",
+      "enforcement_component": "agent-package-registry-control",
+      "result_state": "completed",
+      "target_state_after": "package_version_suspended",
+      "result_summary": "Affected agent package version was suspended for the approved production scope without deleting package metadata or manifest references.",
+      "output_refs": [
+        "registry-state-change-pkg-soc-triage-agent-2.7.3-0001"
+      ],
+      "audit_event_id": "audit-event-recall-action-001-0001"
+    },
+    {
+      "sequence": 3,
+      "action_id": "recall-action-002",
+      "action_type": "stop_active_agent_sessions",
+      "target": "active_sessions_for_affected_scope",
+      "priority": "immediate",
+      "authorization_check": {
+        "policy_decision_required": true,
+        "approval_required": true,
+        "policy_decision_id": "recall-policy-decision-0001",
+        "approval_record_id": "recall-approval-0001",
+        "authorization_status": "authorized"
+      },
+      "scope_check": {
+        "scope_validated_before_execution": true,
+        "scope_expansion_detected": false,
+        "tenant_scope": [
+          "tenant-alpha-prod",
+          "tenant-bravo-prod"
+        ],
+        "customer_scope": [
+          "customer-alpha",
+          "customer-bravo"
+        ],
+        "case_scope": [
+          "case-iam-0007",
+          "case-endpoint-0019"
+        ]
+      },
+      "started_at_utc": "2025-02-14T16:43:14Z",
+      "completed_at_utc": "2025-02-14T16:43:55Z",
+      "enforcement_component": "agent-session-control",
+      "result_state": "completed",
+      "target_state_after": "active_and_scheduled_sessions_stopped",
+      "result_summary": "Active sessions were stopped and scheduled sessions were cancelled for the affected tenants, customers, and cases.",
+      "output_refs": [
+        "session-stop-batch-case-iam-0007-0001",
+        "session-stop-batch-case-endpoint-0019-0001"
+      ],
+      "audit_event_id": "audit-event-recall-action-002-0001"
+    },
+    {
+      "sequence": 4,
+      "action_id": "recall-action-003",
+      "action_type": "revoke_agent_scoped_credentials",
+      "target": "credentials_bound_to_affected_agent_version",
+      "priority": "immediate",
+      "authorization_check": {
+        "policy_decision_required": true,
+        "approval_required": true,
+        "policy_decision_id": "recall-policy-decision-0001",
+        "approval_record_id": "recall-approval-0001",
+        "authorization_status": "authorized"
+      },
+      "scope_check": {
+        "scope_validated_before_execution": true,
+        "scope_expansion_detected": false,
+        "tenant_scope": [
+          "tenant-alpha-prod",
+          "tenant-bravo-prod"
+        ],
+        "customer_scope": [
+          "customer-alpha",
+          "customer-bravo"
+        ],
+        "case_scope": [
+          "case-iam-0007",
+          "case-endpoint-0019"
+        ]
+      },
+      "started_at_utc": "2025-02-14T16:43:58Z",
+      "completed_at_utc": "2025-02-14T16:44:18Z",
+      "enforcement_component": "agent-credential-control",
+      "result_state": "completed",
+      "target_state_after": "agent_scoped_credentials_revoked",
+      "result_summary": "Agent-scoped credentials bound to the affected package version were revoked. Customer-owned credentials and unrelated service identities were not changed.",
+      "output_refs": [
+        "credential-revocation-batch-pkg-soc-triage-agent-2.7.3-0001"
+      ],
+      "audit_event_id": "audit-event-recall-action-003-0001"
+    },
+    {
+      "sequence": 5,
+      "action_id": "recall-action-004",
+      "action_type": "block_registered_tool_access",
+      "target": "tools_registered_to_affected_agent_version",
+      "priority": "immediate",
+      "authorization_check": {
+        "policy_decision_required": true,
+        "approval_required": true,
+        "policy_decision_id": "recall-policy-decision-0001",
+        "approval_record_id": "recall-approval-0001",
+        "authorization_status": "authorized"
+      },
+      "scope_check": {
+        "scope_validated_before_execution": true,
+        "scope_expansion_detected": false,
+        "tenant_scope": [
+          "tenant-alpha-prod",
+          "tenant-bravo-prod"
+        ],
+        "customer_scope": [
+          "customer-alpha",
+          "customer-bravo"
+        ],
+        "case_scope": [
+          "case-iam-0007",
+          "case-endpoint-0019"
+        ]
+      },
+      "started_at_utc": "2025-02-14T16:44:20Z",
+      "completed_at_utc": "2025-02-14T16:44:39Z",
+      "enforcement_component": "tool-access-policy-enforcement-point",
+      "result_state": "completed",
+      "target_state_after": "registered_tool_access_blocked",
+      "result_summary": "Tool access registered to the affected agent package version was blocked through the policy enforcement point.",
+      "output_refs": [
+        "tool-access-block-pkg-soc-triage-agent-2.7.3-0001"
+      ],
+      "audit_event_id": "audit-event-recall-action-004-0001"
+    },
+    {
+      "sequence": 6,
+      "action_id": "recall-action-005",
+      "action_type": "quarantine_agent_runtime_context",
+      "target": "case_memory_and_runtime_context_for_affected_sessions",
+      "priority": "immediate",
+      "authorization_check": {
+        "policy_decision_required": true,
+        "approval_required": true,
+        "policy_decision_id": "recall-policy-decision-0001",
+        "approval_record_id": "recall-approval-0001",
+        "authorization_status": "authorized"
+      },
+      "scope_check": {
+        "scope_validated_before_execution": true,
+        "scope_expansion_detected": false,
+        "tenant_scope": [
+          "tenant-alpha-prod",
+          "tenant-bravo-prod"
+        ],
+        "customer_scope": [
+          "customer-alpha",
+          "customer-bravo"
+        ],
+        "case_scope": [
+          "case-iam-0007",
+          "case-endpoint-0019"
+        ]
+      },
+      "started_at_utc": "2025-02-14T16:44:41Z",
+      "completed_at_utc": "2025-02-14T16:45:02Z",
+      "enforcement_component": "agent-memory-quarantine-control",
+      "result_state": "completed",
+      "target_state_after": "affected_runtime_context_quarantined",
+      "result_summary": "Case memory and runtime context for affected sessions were quarantined for investigation and blocked from reuse in generation, recommendations, automation, and redeployment.",
+      "output_refs": [
+        "memory-quarantine-case-iam-0007-0001",
+        "memory-quarantine-case-endpoint-0019-0001"
+      ],
+      "audit_event_id": "audit-event-recall-action-005-0001"
+    }
+  ],
+  "enforcement_outcome": {
+    "recall_enforcement_state": "completed",
+    "all_requested_actions_completed": true,
+    "all_sensitive_actions_approved_before_execution": true,
+    "approval_not_required_actions_completed": [
+      "recall-action-006"
+    ],
+    "scope_expansion_detected": false,
+    "out_of_scope_action_attempted": false,
+    "customer_environment_containment_executed": false,
+    "customer_environment_remediation_executed": false,
+    "customer_notification_released": false,
+    "evidence_modified": false,
+    "agent_redeployment_executed": false,
+    "record_state_after_event": "agent_package_version_recalled_and_quarantined"
+  },
+  "state_transitions": {
+    "request_state_in_source_artifact": "pending_policy_decision",
+    "request_state_at_enforcement_start": "approved_for_enforcement",
+    "policy_decision_state": "allow_with_conditions",
+    "approval_record_state": "approved_for_enforcement",
+    "enforcement_state_before_event": "released_for_enforcement",
+    "enforcement_state_after_event": "completed",
+    "affected_package_state_before_event": "active_in_affected_production_scope",
+    "affected_package_state_after_event": "suspended_in_affected_production_scope",
+    "affected_session_state_after_event": "stopped_or_cancelled",
+    "affected_credential_state_after_event": "revoked",
+    "affected_tool_access_state_after_event": "blocked",
+    "affected_memory_state_after_event": "quarantined"
+  },
+  "tenant_and_customer_boundary_results": {
+    "tenant_customer_separation_maintained": true,
+    "affected_tenant_ids": [
+      "tenant-alpha-prod",
+      "tenant-bravo-prod"
+    ],
+    "affected_customer_ids": [
+      "customer-alpha",
+      "customer-bravo"
+    ],
+    "affected_case_ids": [
+      "case-iam-0007",
+      "case-endpoint-0019"
+    ],
+    "cross_tenant_generalization_performed": false,
+    "cross_customer_release_performed": false,
+    "unaffected_tenants_changed": false,
+    "unaffected_customers_changed": false,
+    "boundary_validation_result": "passed"
+  },
+  "knowledge_and_memory_results": {
+    "memory_access_used_for_investigation": true,
+    "memory_reuse_allowed": false,
+    "memory_reuse_attempted": false,
+    "memory_quarantine_completed": true,
+    "knowledge_store_or_memory_scope": "affected_agent_sessions_only",
+    "retrieved_context_released": false,
+    "quarantine_refs": [
+      {
+        "quarantine_ref_id": "memory-quarantine-case-iam-0007-0001",
+        "case_id": "case-iam-0007",
+        "tenant_id": "tenant-alpha-prod",
+        "customer_id": "customer-alpha",
+        "state": "quarantined"
+      },
+      {
+        "quarantine_ref_id": "memory-quarantine-case-endpoint-0019-0001",
+        "case_id": "case-endpoint-0019",
+        "tenant_id": "tenant-bravo-prod",
+        "customer_id": "customer-bravo",
+        "state": "quarantined"
+      }
+    ]
+  },
+  "evidence_and_audit_preservation": {
+    "evidence_handling": "reference_only",
+    "raw_evidence_embedded": false,
+    "evidence_refs": [
+      {
+        "evidence_ref_id": "evidence-ref-agent-runtime-log-0001",
+        "evidence_type": "agent_runtime_log",
+        "source_system_id": "agent-fleet-monitoring",
+        "time_range_utc": {
+          "start": "2025-02-14T16:12:00Z",
+          "end": "2025-02-14T16:34:00Z"
+        },
+        "hash_reference": "sha256:7b5e6f0c8f7b0a0d5f6b3c6e9a2d1c4f0e8a9b1c2d3e4f506172839405a6b7c8"
+      },
+      {
+        "evidence_ref_id": "evidence-ref-policy-eval-0002",
+        "evidence_type": "policy_evaluation_record",
+        "source_system_id": "policy-enforcement-service",
+        "time_range_utc": {
+          "start": "2025-02-14T16:20:00Z",
+          "end": "2025-02-14T16:33:00Z"
+        },
+        "hash_reference": "sha256:59f4c1d2e3a6b7c8d9e0f11223344556677889900aabbccddeeff0011223344"
+      },
+      {
+        "evidence_ref_id": "evidence-ref-tool-request-0003",
+        "evidence_type": "tool_request_audit_record",
+        "source_system_id": "tool-access-audit",
+        "time_range_utc": {
+          "start": "2025-02-14T16:25:00Z",
+          "end": "2025-02-14T16:34:00Z"
+        },
+        "hash_reference": "sha256:a1b2c3d4e5f60718293a4b5c6d7e8f90123456789abcdef0123456789abcdef0"
+      }
+    ],
+    "preservation_actions": [
+      {
+        "preservation_ref_id": "preservation-ref-agent-runtime-log-0001",
+        "evidence_ref_id": "evidence-ref-agent-runtime-log-0001",
+        "state": "preserved_immutable_reference",
+        "preserved_at_utc": "2025-02-14T16:42:36Z"
+      },
+      {
+        "preservation_ref_id": "preservation-ref-policy-eval-0002",
+        "evidence_ref_id": "evidence-ref-policy-eval-0002",
+        "state": "preserved_immutable_reference",
+        "preserved_at_utc": "2025-02-14T16:42:41Z"
+      },
+      {
+        "preservation_ref_id": "preservation-ref-tool-request-0003",
+        "evidence_ref_id": "evidence-ref-tool-request-0003",
+        "state": "preserved_immutable_reference",
+        "preserved_at_utc": "2025-02-14T16:42:48Z"
+      }
+    ],
+    "source_evidence_modified": false,
+    "audit_records_append_only": true
+  },
+  "not_authorized_and_not_performed": [
+    "customer_environment_containment",
+    "customer_environment_remediation",
+    "customer_notification_release",
+    "case_closure",
+    "evidence_modification",
+    "agent_redeployment",
+    "replacement_agent_deployment",
+    "cross_customer_data_sharing",
+    "policy_exception",
+    "scope_expansion_to_unaffected_tenants_customers_or_cases",
+    "permanent_deletion_of_agent_package_or_runtime_evidence"
+  ],
+  "fail_closed_evaluation": {
+    "fail_closed_conditions_checked": [
+      {
+        "condition": "policy_decision_is_missing_expired_or_not_allowing_requested_action",
+        "observed": false,
+        "result": "not_triggered"
+      },
+      {
+        "condition": "approval_record_is_missing_expired_or_incomplete",
+        "observed": false,
+        "result": "not_triggered"
+      },
+      {
+        "condition": "required_approver_role_is_missing",
+        "observed": false,
+        "result": "not_triggered"
+      },
+      {
+        "condition": "approver_identity_or_mfa_validation_fails",
+        "observed": false,
+        "result": "not_triggered"
+      },
+      {
+        "condition": "request_id_or_correlation_id_mismatch",
+        "observed": false,
+        "result": "not_triggered"
+      },
+      {
+        "condition": "affected_agent_identity_cannot_be_verified",
+        "observed": false,
+        "result": "not_triggered"
+      },
+      {
+        "condition": "agent_package_version_cannot_be_verified",
+        "observed": false,
+        "result": "not_triggered"
+      },
+      {
+        "condition": "tenant_or_customer_scope_is_missing_or_ambiguous",
+        "observed": false,
+        "result": "not_triggered"
+      },
+      {
+        "condition": "case_scope_is_missing_or_ambiguous",
+        "observed": false,
+        "result": "not_triggered"
+      },
+      {
+        "condition": "evidence_reference_validation_fails",
+        "observed": false,
+        "result": "not_triggered"
+      },
+      {
+        "condition": "audit_logging_is_unavailable",
+        "observed": false,
+        "result": "not_triggered"
+      },
+      {
+        "condition": "requested_action_exceeds_approval_scope",
+        "observed": false,
+        "result": "not_triggered"
+      },
+      {
+        "condition": "enforcement_target_does_not_match_fleet_inventory",
+        "observed": false,
+        "result": "not_triggered"
+      }
+    ],
+    "fail_closed_triggered": false,
+    "action_if_triggered": "stop_unexecuted_recall_actions_and_emit_failure_audit_event"
+  },
+  "audit_replay": {
+    "required_correlation_fields": [
+      "audit_event_id",
+      "audit_reference_id",
+      "request_id",
+      "correlation_id",
+      "policy_decision_id",
+      "approval_record_id",
+      "enforcement_release_id",
+      "agent_id",
+      "agent_package_id",
+      "agent_package_version",
+      "tenant_ids",
+      "customer_ids",
+      "case_ids",
+      "policy_bundle_id",
+      "tool_contract_id",
+      "evidence_ref_ids",
+      "executed_action_ids",
+      "enforcement_outcomes"
+    ],
+    "replay_must_reconstruct": [
+      "why recall was requested",
+      "which agent package version was affected",
+      "which tenants customers and cases were in scope",
+      "which evidence references supported the recall",
+      "which policy decision and approval record authorized enforcement",
+      "which recall actions were executed",
+      "which actions were not authorized or not performed",
+      "whether scope boundaries held during enforcement",
+      "whether memory and retrieved context were quarantined",
+      "whether evidence and audit records were preserved",
+      "whether customer notification release or customer environment remediation occurred"
+    ],
+    "reconstructable_facts": {
+      "recall_reason": "suspected_agent_compromise",
+      "affected_agent_version": "pkg-soc-triage-agent:2.7.3",
+      "executed_action_ids": [
+        "recall-action-006",
+        "recall-action-001",
+        "recall-action-002",
+        "recall-action-003",
+        "recall-action-004",
+        "recall-action-005"
+      ],
+      "policy_decision_and_approval_authorized_execution": true,
+      "enforcement_completed_within_approved_scope": true,
+      "customer_environment_changes_performed": false,
+      "customer_notification_release_performed": false
+    }
+  },
+  "retention_and_integrity": {
+    "retention_class": "security_incident_audit_record",
+    "retention_minimum": "7y",
+    "immutability_required": true,
+    "append_only_record": true,
+    "hash_algorithm": "sha256",
+    "previous_audit_reference_id": "audit-ref-agent-recall-approval-0001",
+    "previous_audit_hash_reference": "sha256:31602a4455039e256147090abf3419da3e5774023e7cd94218360ba8443fc6e5",
+    "canonicalization": "json_sorted_keys_compact",
+    "record_hash_reference": "sha256:f6575934be98e859d4ad2a755b02b20be5ee839900fac987e477b639f9132f82"
+  },
+  "record_state": "finalized"
+}
