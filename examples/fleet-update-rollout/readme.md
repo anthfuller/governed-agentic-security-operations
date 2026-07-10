@@ -4,7 +4,7 @@ This example models a governed production rollout for a versioned update to a ma
 
 The candidate release moves `pkg-mdr-triage-agent` from version `2.3.4` to `2.4.0`. The update improves evidence-reference handling, output-contract consistency, and tenant-boundary validation while preserving the existing tool set, action scope, approval requirements, and tenant-local data boundaries.
 
-The records show how a fleet update request, policy decision, human approval record, and rollout audit event bind the exact package manifest, eligible destination scope, staged rollout plan, monitoring gates, rollback target, and final outcome. A request, validation result, Agent Judge result, or human approval does not independently authorize activation. The Policy Decision Point decides, and the Policy Enforcement Point enforces the approved package, version, stage, tenant scope, validity window, and release conditions.
+The records show how a fleet update request, policy decision, human approval record, and rollout audit event bind the exact package manifest, eligible destination scope, staged rollout plan, monitoring gates, rollback target, and final outcome. A request, validation result, Agent Judge result, or human approval does not independently authorize activation. The Policy Decision Point decides. The Policy Enforcement Point enforces that policy decision at package signing, release registration, activation, stage progression, rollback, and prior-version retirement boundaries by verifying the approved package, version, stage, tenant scope, validity window, and release conditions before each governed transition.
 
 ## Files
 
@@ -14,6 +14,8 @@ The records show how a fleet update request, policy decision, human approval rec
 | [`example-fleet-policy-decision.json`](./example-fleet-policy-decision.json) | Policy decision record. Captures the Policy Decision Point result, approved package and manifest bindings, eligible and excluded scope, rollout-stage obligations, approval requirements, enforcement constraints, decision validity, and fail-closed behavior. |
 | [`example-fleet-approval-record.json`](./example-fleet-approval-record.json) | Human fleet-change approval record. Records the accountable approver, reviewed package and policy decision, authorized rollout stages, approval conditions, expiration, rollback expectations, exclusions, and limitations. |
 | [`example-fleet-audit-event.json`](./example-fleet-audit-event.json) | Rollout closeout audit event. Correlates the request, policy decision, approval, signed package, tenant eligibility results, stage transitions, monitoring outcomes, activations, exclusions, rollback readiness, and final fleet state. It represents a replay-oriented summary linked to the underlying rollout ledger; it does not replace stage-level audit events in an implementation. |
+
+Supporting validation, AI assurance, signing, tenant eligibility, stage-gate, activation-receipt, and rollout-ledger records are referenced by these four artifacts but are not represented as separate files in this scenario.
 
 ## Scenario summary
 
@@ -92,7 +94,7 @@ These identifiers are repeated across the four records so correlation checks can
 5. **Sign and register the approved release.** The release service signs the exact approved package and registers its immutable manifest, component references, signature, provenance, policy binding, monitoring profile, and rollback target. Any post-approval package or manifest change invalidates the decision and approval and requires a new governed cycle.
 6. **Activate the canary stage.** The Policy Enforcement Point verifies the current decision, approval, signature, manifest, tenant eligibility, cohort scope, monitoring availability, and audit readiness before issuing stage-scoped activation authority. Only the approved canary cohort may receive the package.
 7. **Evaluate stage gates.** Monitoring and assurance results are evaluated against the approved progression criteria. A passed stage permits evaluation of the next stage; it does not create unrestricted authority for broad rollout. A failed, incomplete, stale, or unavailable gate pauses or stops progression.
-8. **Progress through limited and broad rollout.** Each stage repeats policy, eligibility, integrity, monitoring, and audit checks. Activation is limited to the tenants and cohorts allowed for that stage. Excluded tenants remain on the known-good version.
+8. **Progress through limited and broad rollout.** Each stage revalidates the current policy decision and approval, together with eligibility, integrity, monitoring, and audit readiness. A new policy decision is required only when the package, scope, risk, conditions, or decision validity changes. Activation is limited to the tenants and cohorts allowed for that stage. Excluded tenants remain on the known-good version.
 9. **Close out or recover.** The final audit event records the signed package, actual activation scope, exclusions, stage outcomes, monitoring results, final active-version state, and rollback readiness. If a halt or rollback had occurred, the same correlation chain would preserve the trigger, affected scope, containment, recovery, and final state.
 
 ## Package and data boundaries
