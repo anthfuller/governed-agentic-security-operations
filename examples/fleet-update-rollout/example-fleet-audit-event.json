@@ -1,1 +1,2010 @@
-Placeholder
+{
+  "artifact_type": "fleet_update_rollout_audit_event",
+  "schema_version": "1.0.0",
+  "example_name": "fleet-update-rollout",
+  "audit_event_id": "audit-event-fleet-rollout-mdr-triage-0001",
+  "audit_reference_id": "audit-ref-fleet-rollout-mdr-triage-0001",
+  "event_type": "fleet_update_rollout_completed",
+  "event_category": "governed_agent_fleet_update_rollout",
+  "event_record_role": "replay_oriented_rollout_closeout_summary",
+  "event_recorded_at_utc": "2025-04-09T00:50:00Z",
+  "event_time_range_utc": {
+    "start": "2025-04-08T13:00:00Z",
+    "end": "2025-04-09T00:50:00Z"
+  },
+  "rollout_execution_time_range_utc": {
+    "start": "2025-04-08T14:12:00Z",
+    "end": "2025-04-09T00:45:00Z"
+  },
+  "event_recorded_by": {
+    "recording_identity_type": "service_workload",
+    "recording_identity_id": "fleet-rollout-audit-ledger-service",
+    "recording_component": "fleet_rollout_closeout_audit_writer",
+    "recording_role": "rollout_closeout_audit_writer",
+    "service_identity_registry_id": "service-identity-registry-prod",
+    "service_identity_active": true,
+    "append_only_ledger_write_authorized": true,
+    "recording_identity_can_authorize_rollout": false
+  },
+  "correlation": {
+    "fleet_update_request_id": "fleet-update-req-mdr-triage-0001",
+    "correlation_id": "corr-fleet-update-mdr-triage-0001",
+    "policy_decision_id": "fleet-policy-decision-mdr-triage-0001",
+    "approval_record_id": "fleet-approval-mdr-triage-0001",
+    "rollout_id": "fleet-rollout-mdr-triage-0001",
+    "fleet_id": "mdr-triage-agent-fleet",
+    "package_id": "pkg-mdr-triage-agent",
+    "package_version": "2.4.0",
+    "request_audit_reference_id": "audit-ref-fleet-update-request-mdr-triage-0001",
+    "policy_audit_reference_id": "audit-ref-fleet-policy-decision-mdr-triage-0001",
+    "approval_audit_reference_id": "audit-ref-fleet-approval-mdr-triage-0001",
+    "rollout_audit_reference_id": "audit-ref-fleet-rollout-mdr-triage-0001",
+    "rollout_ledger_id": "rollout-ledger-mdr-triage-0001",
+    "audit_event_id": "audit-event-fleet-rollout-mdr-triage-0001",
+    "signature_record_id": "fleet-package-signature-mdr-triage-2.4.0-0001",
+    "release_registration_id": "fleet-release-registration-mdr-triage-2.4.0-0001",
+    "active_version_inventory_snapshot_id": "active-version-inventory-mdr-triage-post-rollout-0001"
+  },
+  "source_artifacts": {
+    "fleet_update_request_artifact": "example-fleet-update-request.json",
+    "fleet_policy_decision_artifact": "example-fleet-policy-decision.json",
+    "fleet_approval_record_artifact": "example-fleet-approval-record.json",
+    "this_audit_artifact": "example-fleet-audit-event.json"
+  },
+  "scenario": {
+    "name": "fleet_update_rollout",
+    "description": "Completed governed production rollout of pkg-mdr-triage-agent version 2.4.0 to policy-eligible MSSP and MDR tenant scopes through package signing, immutable registration, canary activation, limited activation, broad activation, monitoring gates, exclusion enforcement, and closeout while retaining version 2.3.4 as the known-good rollback target.",
+    "change_type": "behavior_affecting_agent_package_update",
+    "risk_tier": "high",
+    "blast_radius": "multi_tenant_managed_mdr_agent_fleet",
+    "environment": "production",
+    "service_models": [
+      "MSSP",
+      "MDR"
+    ],
+    "expected_outcome": "complete_staged_rollout_for_approved_eligible_scope_without_rollback"
+  },
+  "authorization_context": {
+    "fleet_update_request_is_authorization": false,
+    "validation_or_ai_assurance_output_is_authorization": false,
+    "policy_decision": {
+      "policy_decision_id": "fleet-policy-decision-mdr-triage-0001",
+      "decision": "allow_with_conditions",
+      "decision_recorded_at_utc": "2025-04-08T13:42:00Z",
+      "valid_from_utc": "2025-04-08T13:42:00Z",
+      "valid_until_utc": "2025-04-09T03:00:00Z",
+      "decision_component": "fleet_update_policy_decision_point",
+      "policy_decision_binding_hash_reference": "sha256:985ad82136f9401022d1abae672e5a52ea74a9fe4c6ffd48febf7581511cfb5e",
+      "decision_current_at_every_governed_transition": true,
+      "decision_scope_match_at_every_governed_transition": true
+    },
+    "human_approval": {
+      "approval_record_id": "fleet-approval-mdr-triage-0001",
+      "decision": "approved_with_conditions",
+      "approved_at_utc": "2025-04-08T14:10:00Z",
+      "valid_from_utc": "2025-04-08T14:10:00Z",
+      "valid_until_utc": "2025-04-09T02:00:00Z",
+      "approval_scope_binding_hash_reference": "sha256:c5461a209e335e08ce44e56a7544d642030813a745d62a10ab5f73826f9f7701",
+      "approval_record_hash_reference": "sha256:ac05704bde44ec3b9b2ba590c47452c6e8218953cb53d77998a56ab1c55edb23",
+      "approval_current_at_every_governed_transition": true,
+      "approval_scope_match_at_every_governed_transition": true,
+      "human_gate_satisfied_before_package_signing": true,
+      "human_gate_satisfied_before_release_registration": true,
+      "human_gate_satisfied_before_production_activation": true,
+      "approval_alone_authorized_any_transition": false
+    },
+    "policy_enforcement": {
+      "policy_enforcement_component": "fleet_release_policy_enforcement_point",
+      "enforced_boundaries": [
+        "package_signing",
+        "release_registration",
+        "canary_activation",
+        "limited_rollout_activation",
+        "broad_rollout_activation",
+        "rollback_to_known_good",
+        "prior_version_retirement"
+      ],
+      "matching_policy_and_approval_revalidated_before_each_executed_transition": true,
+      "pep_did_not_decide_policy": true,
+      "pep_did_not_expand_package_scope_stage_or_validity": true
+    },
+    "new_policy_decision_required_during_rollout": false,
+    "reason_new_policy_decision_not_required": "The package, manifest, rollout scope, risk classification, conditions, and decision validity remained unchanged throughout the rollout.",
+    "customer_approval_required_for_this_centrally_managed_rollout": false,
+    "customer_contract_and_tenant_eligibility_required": true,
+    "runtime_actions_under_version_2_4_0_remain_separately_policy_gated": true,
+    "closeout_audit_event_grants_future_activation_authority": false
+  },
+  "package_and_release_integrity": {
+    "fleet_id": "mdr-triage-agent-fleet",
+    "package_id": "pkg-mdr-triage-agent",
+    "current_known_good_version": "2.3.4",
+    "rolled_out_version": "2.4.0",
+    "package_ref": "pkg-mdr-triage-agent@2.4.0",
+    "manifest_id": "manifest-pkg-mdr-triage-agent-2.4.0-0001",
+    "package_manifest_hash_reference": "sha256:cc50ca05a19e51e441a47ec8f9553750216308c811791cee09ce8f3a8107e9bf",
+    "package_payload_binding_hash_reference": "sha256:9ef02d48bc6798ceeaa1a833d89accc4d3a043bccf4ea11db56b2e0596db70cb",
+    "registered_manifest_content": {
+      "manifest_id": "manifest-pkg-mdr-triage-agent-2.4.0-0001",
+      "package_id": "pkg-mdr-triage-agent",
+      "package_version": "2.4.0",
+      "package_type": "managed_mdr_triage_agent_release",
+      "fleet_id": "mdr-triage-agent-fleet",
+      "components": [
+        {
+          "component_type": "agent_runtime_definition",
+          "component_id": "agent-runtime-mdr-triage-2.4.0",
+          "component_version": "2.4.0",
+          "change_state": "modified",
+          "content_hash_reference": "sha256:3332a28e5719b1077d8cabdf48b1ba9e1c97d5855376459f32f9d8577a777cba"
+        },
+        {
+          "component_type": "prompt_package",
+          "component_id": "prompt-package-mdr-triage-2.4.0",
+          "component_version": "2.4.0",
+          "change_state": "modified",
+          "content_hash_reference": "sha256:c2b6169112884c43b299f7e6cbcea5f735a62ee243530df292963587d0bb8d86"
+        },
+        {
+          "component_type": "structured_output_contract",
+          "component_id": "output-contract-mdr-triage-2.4.0",
+          "component_version": "2.4.0",
+          "change_state": "modified",
+          "content_hash_reference": "sha256:6b42432afaab5c5bdd783d191dfeafc243dbe354f5441ef3929b4d8f2ba72438"
+        },
+        {
+          "component_type": "model_route_binding",
+          "component_id": "model-route-security-ops-standard",
+          "component_version": "2025.04.0",
+          "change_state": "unchanged_binding",
+          "content_hash_reference": "sha256:340b8776e57e0670a39f8f54f455858c4c04e7074455fe922c429b48c081a1c7"
+        },
+        {
+          "component_type": "tool_contract_binding",
+          "component_id": "tool-contract-mdr-triage-2.3.4",
+          "component_version": "2.3.4",
+          "change_state": "unchanged_binding",
+          "content_hash_reference": "sha256:68616e0a9b9471a774c31dd28c1d3b94f1a460100f714e7f258978e6a7778ff4"
+        },
+        {
+          "component_type": "runtime_policy_bundle_binding",
+          "component_id": "policy-bundle-mdr-triage-agent-2025-04",
+          "component_version": "2025.04.0",
+          "change_state": "unchanged_binding",
+          "content_hash_reference": "sha256:00b6d6030428ce29d4fda87e921b4dd5ed745f095fd26af82c5d34fa3b4de3ad"
+        },
+        {
+          "component_type": "retrieval_and_memory_profile",
+          "component_id": "retrieval-memory-profile-mdr-triage-tenant-scoped-1.2.0",
+          "component_version": "1.2.0",
+          "change_state": "unchanged_binding",
+          "content_hash_reference": "sha256:8938615b7fe12e1c486e14eb988dfd0a6d3452dfee46ca28009d68436b11a84a"
+        },
+        {
+          "component_type": "ai_assurance_evaluation_profile",
+          "component_id": "ai-assurance-profile-mdr-triage-fleet-1.1.0",
+          "component_version": "1.1.0",
+          "change_state": "unchanged_binding",
+          "content_hash_reference": "sha256:c2e454b979864a50de4e5bc9e37b05f0b1512d2ff4045629cc5e75adfa1a2fc0"
+        },
+        {
+          "component_type": "rollout_monitoring_profile",
+          "component_id": "monitoring-profile-mdr-triage-rollout-2.4.0",
+          "component_version": "2.4.0",
+          "change_state": "release_specific",
+          "content_hash_reference": "sha256:51bbee01f08e071b5305c02dc2121051117e8d8152455cfeb4a498e8ad3d9788"
+        },
+        {
+          "component_type": "rollback_and_recovery_instructions",
+          "component_id": "rollback-plan-mdr-triage-2.4.0-to-2.3.4",
+          "component_version": "1.0.0",
+          "change_state": "release_specific",
+          "content_hash_reference": "sha256:7900f9664cbe185930e60c4809f3174316ac563df804fc5bf1c16d7246f8b015"
+        }
+      ],
+      "runtime_dependencies": [
+        {
+          "dependency_id": "agent-runtime-host-security-ops",
+          "minimum_version": "3.6.0",
+          "maximum_tested_version": "3.8.2",
+          "compatibility_result": "passed"
+        },
+        {
+          "dependency_id": "tenant-boundary-policy-adapter",
+          "minimum_version": "2.1.0",
+          "maximum_tested_version": "2.3.1",
+          "compatibility_result": "passed"
+        },
+        {
+          "dependency_id": "fleet-release-policy-enforcement-point",
+          "minimum_version": "1.5.0",
+          "maximum_tested_version": "1.6.2",
+          "compatibility_result": "passed"
+        }
+      ],
+      "rollback_target": {
+        "package_id": "pkg-mdr-triage-agent",
+        "package_version": "2.3.4",
+        "package_ref": "pkg-mdr-triage-agent@2.3.4",
+        "manifest_id": "manifest-pkg-mdr-triage-agent-2.3.4-known-good",
+        "manifest_hash_reference": "sha256:a60892548777ad4d6236fc2d11b43cc26850e5c32b43f489cdfed889f28e83eb",
+        "package_hash_reference": "sha256:84c81c9c2f36354f721312228fe16fabe872f17cfabb895a77e0bcf12049f4f6"
+      }
+    },
+    "component_hash_verification_result": "passed",
+    "dependency_compatibility_verification_result": "passed",
+    "tool_contract_binding_unchanged": true,
+    "runtime_action_scope_unchanged": true,
+    "credential_scope_unchanged": true,
+    "model_route_binding_unchanged": true,
+    "runtime_policy_binding_unchanged": true,
+    "retrieval_and_memory_profile_unchanged": true,
+    "post_approval_package_or_manifest_drift_detected": false,
+    "unsigned_or_unmanifested_component_detected": false,
+    "tenant_customer_case_evidence_or_runtime_memory_embedded": false,
+    "secret_token_or_connection_material_embedded": false,
+    "package_integrity_result": "passed"
+  },
+  "signing_result": {
+    "signature_record_id": "fleet-package-signature-mdr-triage-2.4.0-0001",
+    "package_ref": "pkg-mdr-triage-agent@2.4.0",
+    "manifest_id": "manifest-pkg-mdr-triage-agent-2.4.0-0001",
+    "signed_content_binding": {
+      "package_id": "pkg-mdr-triage-agent",
+      "package_version": "2.4.0",
+      "manifest_id": "manifest-pkg-mdr-triage-agent-2.4.0-0001",
+      "package_manifest_hash_reference": "sha256:cc50ca05a19e51e441a47ec8f9553750216308c811791cee09ce8f3a8107e9bf",
+      "package_payload_binding_hash_reference": "sha256:9ef02d48bc6798ceeaa1a833d89accc4d3a043bccf4ea11db56b2e0596db70cb",
+      "policy_decision_id": "fleet-policy-decision-mdr-triage-0001",
+      "policy_decision_binding_hash_reference": "sha256:985ad82136f9401022d1abae672e5a52ea74a9fe4c6ffd48febf7581511cfb5e",
+      "approval_record_id": "fleet-approval-mdr-triage-0001",
+      "approval_record_hash_reference": "sha256:ac05704bde44ec3b9b2ba590c47452c6e8218953cb53d77998a56ab1c55edb23",
+      "request_binding_hash_reference": "sha256:311cc50059a3f6ef701ccba6842fcdf9b45c00e56004f4e6e086a4225fb26871",
+      "rollout_id": "fleet-rollout-mdr-triage-0001",
+      "signing_profile_id": "signing-profile-governed-agent-fleet-prod-001",
+      "signing_service_id": "fleet-package-signing-service"
+    },
+    "signed_content_binding_hash_reference": "sha256:8840a948946e11a7482582c17a55b7fc5e221d33475c29904ff20c29d68f87b6",
+    "signature_algorithm": "ecdsa_p256_sha256",
+    "signing_profile_id": "signing-profile-governed-agent-fleet-prod-001",
+    "signing_service_id": "fleet-package-signing-service",
+    "signing_service_identity_id": "svc-fleet-package-signing-prod-001",
+    "signing_key_id": "key-governed-agent-fleet-prod-001",
+    "signing_key_version": "2025-04-01",
+    "key_attestation_record_id": "key-attestation-governed-agent-fleet-prod-2025-04-0001",
+    "signed_at_utc": "2025-04-08T14:15:00Z",
+    "signature_verification_result": "passed",
+    "signature_verified_at_registration": true,
+    "signature_verified_before_each_activation_stage": true,
+    "private_key_or_secret_material_embedded": false,
+    "signature_value_embedded_in_audit_record": false,
+    "signature_record_hash_reference": "sha256:bb24a8c4e3242b112a1bed910771328c04a7e9879b711d8f311e70ebc320230a"
+  },
+  "release_registration_result": {
+    "release_registration_id": "fleet-release-registration-mdr-triage-2.4.0-0001",
+    "release_registry_id": "governed-agent-release-registry-prod",
+    "package_ref": "pkg-mdr-triage-agent@2.4.0",
+    "manifest_id": "manifest-pkg-mdr-triage-agent-2.4.0-0001",
+    "package_manifest_hash_reference": "sha256:cc50ca05a19e51e441a47ec8f9553750216308c811791cee09ce8f3a8107e9bf",
+    "package_payload_binding_hash_reference": "sha256:9ef02d48bc6798ceeaa1a833d89accc4d3a043bccf4ea11db56b2e0596db70cb",
+    "signature_record_id": "fleet-package-signature-mdr-triage-2.4.0-0001",
+    "signature_record_hash_reference": "sha256:bb24a8c4e3242b112a1bed910771328c04a7e9879b711d8f311e70ebc320230a",
+    "monitoring_profile_id": "monitoring-profile-mdr-triage-rollout-2.4.0",
+    "rollback_target": "pkg-mdr-triage-agent@2.3.4",
+    "policy_decision_id": "fleet-policy-decision-mdr-triage-0001",
+    "approval_record_id": "fleet-approval-mdr-triage-0001",
+    "rollout_id": "fleet-rollout-mdr-triage-0001",
+    "registered_at_utc": "2025-04-08T14:20:00Z",
+    "registration_state": "registered_for_policy_scoped_staged_activation",
+    "registry_record_immutable": true,
+    "registry_record_append_only": true,
+    "registration_implies_activation_authority": false,
+    "registration_record_hash_reference": "sha256:8837c1f1cc0c672b059823bc725f32bff23f255253be4642b143ad515f6e33d1"
+  },
+  "rollout_scope": {
+    "scope_type": "policy_scoped_staged_fleet_update_rollout",
+    "environment_scope": [
+      "production"
+    ],
+    "service_model_scope": [
+      "MSSP",
+      "MDR"
+    ],
+    "fleet_id": "mdr-triage-agent-fleet",
+    "package_ref": "pkg-mdr-triage-agent@2.4.0",
+    "rollout_id": "fleet-rollout-mdr-triage-0001",
+    "approved_cohort_ids": [
+      "tenant-group-mdr-canary-001",
+      "tenant-group-mdr-limited-001",
+      "tenant-group-mdr-standard-001"
+    ],
+    "candidate_tenant_count": 201,
+    "eligible_tenant_count": 200,
+    "activated_tenant_count": 200,
+    "excluded_tenant_count": 1,
+    "excluded_tenants": [
+      {
+        "tenant_id": "tenant-regulated-example-001",
+        "reason": "restricted_operating_profile_compatibility_and_rollback_validation_incomplete",
+        "required_final_state": "remain_pinned_to_pkg-mdr-triage-agent_at_2.3.4"
+      }
+    ],
+    "scope_expansion_detected": false,
+    "unapproved_tenant_or_cohort_added": false,
+    "non_targeted_fleet_scope_changed": false,
+    "individual_tenant_eligibility_required_and_enforced": true
+  },
+  "tenant_eligibility_results": [
+    {
+      "snapshot_id": "eligibility-snapshot-canary-mdr-triage-2.4.0-0001",
+      "stage": "canary",
+      "cohort_id": "tenant-group-mdr-canary-001",
+      "resolved_at_utc": "2025-04-08T14:22:30Z",
+      "source_system_id": "tenant-eligibility-service",
+      "source_boundary_registry_id": "tenant-boundary-registry-prod",
+      "eligibility_policy_profile_id": "tenant-eligibility-profile-mdr-triage-2.4.0",
+      "candidate_tenant_count": 5,
+      "eligible_tenant_count": 5,
+      "denied_tenant_count": 0,
+      "excluded_tenant_count": 0,
+      "excluded_tenants": [],
+      "all_activated_tenants_individually_evaluated": true,
+      "cohort_membership_did_not_bypass_individual_eligibility": true,
+      "eligibility_current_at_activation": true,
+      "member_identifier_list_preserved_in_source_snapshot": true,
+      "member_identifier_list_embedded_in_closeout_summary": false,
+      "snapshot_hash_reference": "sha256:f0fa5610f66f7c9f022ede1a514521decd7ea6e35da3f63027f38a81b0163158"
+    },
+    {
+      "snapshot_id": "eligibility-snapshot-limited_rollout-mdr-triage-2.4.0-0001",
+      "stage": "limited_rollout",
+      "cohort_id": "tenant-group-mdr-limited-001",
+      "resolved_at_utc": "2025-04-08T16:11:00Z",
+      "source_system_id": "tenant-eligibility-service",
+      "source_boundary_registry_id": "tenant-boundary-registry-prod",
+      "eligibility_policy_profile_id": "tenant-eligibility-profile-mdr-triage-2.4.0",
+      "candidate_tenant_count": 25,
+      "eligible_tenant_count": 25,
+      "denied_tenant_count": 0,
+      "excluded_tenant_count": 0,
+      "excluded_tenants": [],
+      "all_activated_tenants_individually_evaluated": true,
+      "cohort_membership_did_not_bypass_individual_eligibility": true,
+      "eligibility_current_at_activation": true,
+      "member_identifier_list_preserved_in_source_snapshot": true,
+      "member_identifier_list_embedded_in_closeout_summary": false,
+      "snapshot_hash_reference": "sha256:b20ab72db73f5f13dd8bce056a993354586a46902c132a33a4f50b0652469025"
+    },
+    {
+      "snapshot_id": "eligibility-snapshot-broad_rollout-mdr-triage-2.4.0-0001",
+      "stage": "broad_rollout",
+      "cohort_id": "tenant-group-mdr-standard-001",
+      "resolved_at_utc": "2025-04-08T19:37:00Z",
+      "source_system_id": "tenant-eligibility-service",
+      "source_boundary_registry_id": "tenant-boundary-registry-prod",
+      "eligibility_policy_profile_id": "tenant-eligibility-profile-mdr-triage-2.4.0",
+      "candidate_tenant_count": 171,
+      "eligible_tenant_count": 170,
+      "denied_tenant_count": 0,
+      "excluded_tenant_count": 1,
+      "excluded_tenants": [
+        {
+          "tenant_id": "tenant-regulated-example-001",
+          "result": "excluded",
+          "reason": "restricted_operating_profile_compatibility_and_rollback_validation_incomplete",
+          "required_active_version": "pkg-mdr-triage-agent@2.3.4"
+        }
+      ],
+      "all_activated_tenants_individually_evaluated": true,
+      "cohort_membership_did_not_bypass_individual_eligibility": true,
+      "eligibility_current_at_activation": true,
+      "member_identifier_list_preserved_in_source_snapshot": true,
+      "member_identifier_list_embedded_in_closeout_summary": false,
+      "snapshot_hash_reference": "sha256:744db74a76b2acfe21d0bb948e1fff42c667a52013e8039e690da027b8a6fb94"
+    }
+  ],
+  "policy_enforcement_records": [
+    {
+      "enforcement_record_id": "pep-enforcement-package-signing-mdr-triage-0001",
+      "transition": "package_signing",
+      "stage_id": "fleet-stage-package-signing-0001",
+      "checked_at_utc": "2025-04-08T14:12:00Z",
+      "policy_enforcement_component": "fleet_release_policy_enforcement_point",
+      "policy_enforcement_service_id": "fleet-release-policy-enforcement-service",
+      "policy_decision_id": "fleet-policy-decision-mdr-triage-0001",
+      "policy_decision_outcome_used": "allow_with_conditions",
+      "approval_record_id": "fleet-approval-mdr-triage-0001",
+      "approval_outcome_used": "approved_with_conditions",
+      "rollout_id": "fleet-rollout-mdr-triage-0001",
+      "checks": [
+        {
+          "control": "policy_decision_current_unexpired_and_scope_matched",
+          "result": "passed",
+          "evidence_ref": "fleet-policy-decision-mdr-triage-0001"
+        },
+        {
+          "control": "human_approval_current_unexpired_and_scope_matched",
+          "result": "passed",
+          "evidence_ref": "fleet-approval-mdr-triage-0001"
+        },
+        {
+          "control": "package_manifest_matches_reviewed_hash",
+          "result": "passed",
+          "evidence_ref": "sha256:cc50ca05a19e51e441a47ec8f9553750216308c811791cee09ce8f3a8107e9bf"
+        },
+        {
+          "control": "package_payload_binding_matches_reviewed_hash",
+          "result": "passed",
+          "evidence_ref": "sha256:9ef02d48bc6798ceeaa1a833d89accc4d3a043bccf4ea11db56b2e0596db70cb"
+        },
+        {
+          "control": "audit_logging_available",
+          "result": "passed",
+          "evidence_ref": "rollout-ledger-mdr-triage-0001"
+        },
+        {
+          "control": "approved_signing_service_identity_and_profile_match",
+          "result": "passed",
+          "evidence_ref": "signing-profile-governed-agent-fleet-prod-001"
+        },
+        {
+          "control": "all_component_hashes_match_reviewed_manifest",
+          "result": "passed",
+          "evidence_ref": "manifest-pkg-mdr-triage-agent-2.4.0-0001"
+        }
+      ],
+      "all_required_checks_passed": true,
+      "enforcement_result": "allow_transition",
+      "transition_scope_limited_to_stage": true,
+      "unconsumed_authority_reusable_for_other_stage_or_scope": false,
+      "pep_created_or_modified_policy_decision": false,
+      "enforcement_record_hash_reference": "sha256:7229861329527c4781ee8945570e38d4d1477afcc7fab678f7b28275a434bc6c"
+    },
+    {
+      "enforcement_record_id": "pep-enforcement-release-registration-mdr-triage-0001",
+      "transition": "release_registration",
+      "stage_id": "fleet-stage-release-registration-0001",
+      "checked_at_utc": "2025-04-08T14:16:00Z",
+      "policy_enforcement_component": "fleet_release_policy_enforcement_point",
+      "policy_enforcement_service_id": "fleet-release-policy-enforcement-service",
+      "policy_decision_id": "fleet-policy-decision-mdr-triage-0001",
+      "policy_decision_outcome_used": "allow_with_conditions",
+      "approval_record_id": "fleet-approval-mdr-triage-0001",
+      "approval_outcome_used": "approved_with_conditions",
+      "rollout_id": "fleet-rollout-mdr-triage-0001",
+      "checks": [
+        {
+          "control": "policy_decision_current_unexpired_and_scope_matched",
+          "result": "passed",
+          "evidence_ref": "fleet-policy-decision-mdr-triage-0001"
+        },
+        {
+          "control": "human_approval_current_unexpired_and_scope_matched",
+          "result": "passed",
+          "evidence_ref": "fleet-approval-mdr-triage-0001"
+        },
+        {
+          "control": "package_manifest_matches_reviewed_hash",
+          "result": "passed",
+          "evidence_ref": "sha256:cc50ca05a19e51e441a47ec8f9553750216308c811791cee09ce8f3a8107e9bf"
+        },
+        {
+          "control": "package_payload_binding_matches_reviewed_hash",
+          "result": "passed",
+          "evidence_ref": "sha256:9ef02d48bc6798ceeaa1a833d89accc4d3a043bccf4ea11db56b2e0596db70cb"
+        },
+        {
+          "control": "audit_logging_available",
+          "result": "passed",
+          "evidence_ref": "rollout-ledger-mdr-triage-0001"
+        },
+        {
+          "control": "approved_signature_present_and_valid",
+          "result": "passed",
+          "evidence_ref": "fleet-package-signature-mdr-triage-2.4.0-0001"
+        },
+        {
+          "control": "monitoring_profile_registered",
+          "result": "passed",
+          "evidence_ref": "monitoring-profile-mdr-triage-rollout-2.4.0"
+        },
+        {
+          "control": "known_good_rollback_target_registered_and_integrity_verified",
+          "result": "passed",
+          "evidence_ref": "rollback-validation-record-mdr-triage-2.3.4-0001"
+        }
+      ],
+      "all_required_checks_passed": true,
+      "enforcement_result": "allow_transition",
+      "transition_scope_limited_to_stage": true,
+      "unconsumed_authority_reusable_for_other_stage_or_scope": false,
+      "pep_created_or_modified_policy_decision": false,
+      "enforcement_record_hash_reference": "sha256:854a46f34fc2eee0137b809f60f16c42da285a91a0038d648935430a2e6d4669"
+    },
+    {
+      "enforcement_record_id": "pep-enforcement-canary-activation-mdr-triage-0001",
+      "transition": "canary_activation",
+      "stage_id": "fleet-stage-canary-activation-0001",
+      "checked_at_utc": "2025-04-08T14:23:00Z",
+      "policy_enforcement_component": "fleet_release_policy_enforcement_point",
+      "policy_enforcement_service_id": "fleet-release-policy-enforcement-service",
+      "policy_decision_id": "fleet-policy-decision-mdr-triage-0001",
+      "policy_decision_outcome_used": "allow_with_conditions",
+      "approval_record_id": "fleet-approval-mdr-triage-0001",
+      "approval_outcome_used": "approved_with_conditions",
+      "rollout_id": "fleet-rollout-mdr-triage-0001",
+      "checks": [
+        {
+          "control": "policy_decision_current_unexpired_and_scope_matched",
+          "result": "passed",
+          "evidence_ref": "fleet-policy-decision-mdr-triage-0001"
+        },
+        {
+          "control": "human_approval_current_unexpired_and_scope_matched",
+          "result": "passed",
+          "evidence_ref": "fleet-approval-mdr-triage-0001"
+        },
+        {
+          "control": "package_manifest_matches_reviewed_hash",
+          "result": "passed",
+          "evidence_ref": "sha256:cc50ca05a19e51e441a47ec8f9553750216308c811791cee09ce8f3a8107e9bf"
+        },
+        {
+          "control": "package_payload_binding_matches_reviewed_hash",
+          "result": "passed",
+          "evidence_ref": "sha256:9ef02d48bc6798ceeaa1a833d89accc4d3a043bccf4ea11db56b2e0596db70cb"
+        },
+        {
+          "control": "audit_logging_available",
+          "result": "passed",
+          "evidence_ref": "rollout-ledger-mdr-triage-0001"
+        },
+        {
+          "control": "signed_release_registration_is_current_immutable_and_signature_valid",
+          "result": "passed",
+          "evidence_ref": "fleet-release-registration-mdr-triage-2.4.0-0001"
+        },
+        {
+          "control": "fresh_tenant_eligibility_passed_for_every_target",
+          "result": "passed",
+          "evidence_ref": "eligibility-snapshot-canary-mdr-triage-2.4.0-0001"
+        },
+        {
+          "control": "monitoring_and_halt_automation_active",
+          "result": "passed",
+          "evidence_ref": "monitoring-profile-mdr-triage-rollout-2.4.0"
+        },
+        {
+          "control": "known_good_rollback_target_available_and_integrity_verified",
+          "result": "passed",
+          "evidence_ref": "rollback-validation-record-mdr-triage-2.3.4-0001"
+        }
+      ],
+      "all_required_checks_passed": true,
+      "enforcement_result": "allow_transition",
+      "transition_scope_limited_to_stage": true,
+      "unconsumed_authority_reusable_for_other_stage_or_scope": false,
+      "pep_created_or_modified_policy_decision": false,
+      "enforcement_record_hash_reference": "sha256:8fd726e7882e626303f8206c5837f981ca8e332232e49b785ce4db80e1e0bfd1"
+    },
+    {
+      "enforcement_record_id": "pep-enforcement-limited-activation-mdr-triage-0001",
+      "transition": "limited_rollout_activation",
+      "stage_id": "fleet-stage-limited-activation-0001",
+      "checked_at_utc": "2025-04-08T16:12:00Z",
+      "policy_enforcement_component": "fleet_release_policy_enforcement_point",
+      "policy_enforcement_service_id": "fleet-release-policy-enforcement-service",
+      "policy_decision_id": "fleet-policy-decision-mdr-triage-0001",
+      "policy_decision_outcome_used": "allow_with_conditions",
+      "approval_record_id": "fleet-approval-mdr-triage-0001",
+      "approval_outcome_used": "approved_with_conditions",
+      "rollout_id": "fleet-rollout-mdr-triage-0001",
+      "checks": [
+        {
+          "control": "policy_decision_current_unexpired_and_scope_matched",
+          "result": "passed",
+          "evidence_ref": "fleet-policy-decision-mdr-triage-0001"
+        },
+        {
+          "control": "human_approval_current_unexpired_and_scope_matched",
+          "result": "passed",
+          "evidence_ref": "fleet-approval-mdr-triage-0001"
+        },
+        {
+          "control": "package_manifest_matches_reviewed_hash",
+          "result": "passed",
+          "evidence_ref": "sha256:cc50ca05a19e51e441a47ec8f9553750216308c811791cee09ce8f3a8107e9bf"
+        },
+        {
+          "control": "package_payload_binding_matches_reviewed_hash",
+          "result": "passed",
+          "evidence_ref": "sha256:9ef02d48bc6798ceeaa1a833d89accc4d3a043bccf4ea11db56b2e0596db70cb"
+        },
+        {
+          "control": "audit_logging_available",
+          "result": "passed",
+          "evidence_ref": "rollout-ledger-mdr-triage-0001"
+        },
+        {
+          "control": "signed_release_registration_is_current_immutable_and_signature_valid",
+          "result": "passed",
+          "evidence_ref": "fleet-release-registration-mdr-triage-2.4.0-0001"
+        },
+        {
+          "control": "canary_stage_gate_passed_and_current",
+          "result": "passed",
+          "evidence_ref": "stage-gate-canary-mdr-triage-2.4.0-0001"
+        },
+        {
+          "control": "canary_activation_receipts_complete",
+          "result": "passed",
+          "evidence_ref": "activation-receipt-set-canary-mdr-triage-2.4.0-0001"
+        },
+        {
+          "control": "fresh_tenant_eligibility_passed_for_every_target",
+          "result": "passed",
+          "evidence_ref": "eligibility-snapshot-limited_rollout-mdr-triage-2.4.0-0001"
+        },
+        {
+          "control": "monitoring_audit_and_rollback_readiness_remain_active",
+          "result": "passed",
+          "evidence_ref": "monitoring-profile-mdr-triage-rollout-2.4.0"
+        }
+      ],
+      "all_required_checks_passed": true,
+      "enforcement_result": "allow_transition",
+      "transition_scope_limited_to_stage": true,
+      "unconsumed_authority_reusable_for_other_stage_or_scope": false,
+      "pep_created_or_modified_policy_decision": false,
+      "enforcement_record_hash_reference": "sha256:c7dbd8383f07f41a4592ace313c9473b7ce5cfdf638409a149bfdd04cf7cbb2a"
+    },
+    {
+      "enforcement_record_id": "pep-enforcement-broad-activation-mdr-triage-0001",
+      "transition": "broad_rollout_activation",
+      "stage_id": "fleet-stage-broad-activation-0001",
+      "checked_at_utc": "2025-04-08T19:38:00Z",
+      "policy_enforcement_component": "fleet_release_policy_enforcement_point",
+      "policy_enforcement_service_id": "fleet-release-policy-enforcement-service",
+      "policy_decision_id": "fleet-policy-decision-mdr-triage-0001",
+      "policy_decision_outcome_used": "allow_with_conditions",
+      "approval_record_id": "fleet-approval-mdr-triage-0001",
+      "approval_outcome_used": "approved_with_conditions",
+      "rollout_id": "fleet-rollout-mdr-triage-0001",
+      "checks": [
+        {
+          "control": "policy_decision_current_unexpired_and_scope_matched",
+          "result": "passed",
+          "evidence_ref": "fleet-policy-decision-mdr-triage-0001"
+        },
+        {
+          "control": "human_approval_current_unexpired_and_scope_matched",
+          "result": "passed",
+          "evidence_ref": "fleet-approval-mdr-triage-0001"
+        },
+        {
+          "control": "package_manifest_matches_reviewed_hash",
+          "result": "passed",
+          "evidence_ref": "sha256:cc50ca05a19e51e441a47ec8f9553750216308c811791cee09ce8f3a8107e9bf"
+        },
+        {
+          "control": "package_payload_binding_matches_reviewed_hash",
+          "result": "passed",
+          "evidence_ref": "sha256:9ef02d48bc6798ceeaa1a833d89accc4d3a043bccf4ea11db56b2e0596db70cb"
+        },
+        {
+          "control": "audit_logging_available",
+          "result": "passed",
+          "evidence_ref": "rollout-ledger-mdr-triage-0001"
+        },
+        {
+          "control": "signed_release_registration_is_current_immutable_and_signature_valid",
+          "result": "passed",
+          "evidence_ref": "fleet-release-registration-mdr-triage-2.4.0-0001"
+        },
+        {
+          "control": "canary_stage_gate_passed_and_current",
+          "result": "passed",
+          "evidence_ref": "stage-gate-canary-mdr-triage-2.4.0-0001"
+        },
+        {
+          "control": "limited_stage_gate_passed_and_current",
+          "result": "passed",
+          "evidence_ref": "stage-gate-limited-mdr-triage-2.4.0-0001"
+        },
+        {
+          "control": "canary_activation_receipts_complete",
+          "result": "passed",
+          "evidence_ref": "activation-receipt-set-canary-mdr-triage-2.4.0-0001"
+        },
+        {
+          "control": "limited_activation_receipts_complete",
+          "result": "passed",
+          "evidence_ref": "activation-receipt-set-limited_rollout-mdr-triage-2.4.0-0001"
+        },
+        {
+          "control": "fresh_tenant_eligibility_passed_for_every_target_and_exclusion_enforced",
+          "result": "passed",
+          "evidence_ref": "eligibility-snapshot-broad_rollout-mdr-triage-2.4.0-0001"
+        },
+        {
+          "control": "monitoring_audit_and_rollback_readiness_remain_active",
+          "result": "passed",
+          "evidence_ref": "monitoring-profile-mdr-triage-rollout-2.4.0"
+        },
+        {
+          "control": "no_zero_tolerance_halt_signal_present",
+          "result": "passed",
+          "evidence_ref": "monitoring-profile-mdr-triage-rollout-2.4.0"
+        }
+      ],
+      "all_required_checks_passed": true,
+      "enforcement_result": "allow_transition",
+      "transition_scope_limited_to_stage": true,
+      "unconsumed_authority_reusable_for_other_stage_or_scope": false,
+      "pep_created_or_modified_policy_decision": false,
+      "enforcement_record_hash_reference": "sha256:2df225061334fc111d67705aa3a98e082358e098908ea421f76a2a40a204a2b0"
+    }
+  ],
+  "stage_execution_summary": [
+    {
+      "sequence": 1,
+      "stage_id": "fleet-stage-package-signing-0001",
+      "stage": "package_signing",
+      "stage_record_id": "rollout-stage-record-package-signing-mdr-triage-0001",
+      "time_range_utc": {
+        "start": "2025-04-08T14:12:00Z",
+        "end": "2025-04-08T14:15:00Z"
+      },
+      "pep_enforcement_record_id": "pep-enforcement-package-signing-mdr-triage-0001",
+      "pep_enforcement_record_hash_reference": "sha256:7229861329527c4781ee8945570e38d4d1477afcc7fab678f7b28275a434bc6c",
+      "result": "completed",
+      "resulting_state": "exact_approved_package_signed",
+      "output_record_ids": [
+        "fleet-package-signature-mdr-triage-2.4.0-0001"
+      ],
+      "scope_expansion_detected": false,
+      "stage_record_hash_reference": "sha256:537d3819fdef872343d0bed909f9bfdbf1a0e1c0fe922dc21d2e9c094f56f063"
+    },
+    {
+      "sequence": 2,
+      "stage_id": "fleet-stage-release-registration-0001",
+      "stage": "release_registration",
+      "stage_record_id": "rollout-stage-record-release-registration-mdr-triage-0001",
+      "time_range_utc": {
+        "start": "2025-04-08T14:16:00Z",
+        "end": "2025-04-08T14:20:00Z"
+      },
+      "pep_enforcement_record_id": "pep-enforcement-release-registration-mdr-triage-0001",
+      "pep_enforcement_record_hash_reference": "sha256:854a46f34fc2eee0137b809f60f16c42da285a91a0038d648935430a2e6d4669",
+      "result": "completed",
+      "resulting_state": "signed_package_registered_for_policy_scoped_staged_activation",
+      "output_record_ids": [
+        "fleet-release-registration-mdr-triage-2.4.0-0001"
+      ],
+      "scope_expansion_detected": false,
+      "stage_record_hash_reference": "sha256:b95714dd3f55a545b4ddc8d10e21224a6c7610c045fb33b5b54833e45151eaa5"
+    },
+    {
+      "sequence": 3,
+      "stage_id": "fleet-stage-canary-activation-0001",
+      "stage": "canary_activation",
+      "stage_record_id": "rollout-stage-record-canary-mdr-triage-0001",
+      "time_range_utc": {
+        "start": "2025-04-08T14:23:00Z",
+        "end": "2025-04-08T16:08:00Z"
+      },
+      "cohort_id": "tenant-group-mdr-canary-001",
+      "pep_enforcement_record_id": "pep-enforcement-canary-activation-mdr-triage-0001",
+      "pep_enforcement_record_hash_reference": "sha256:8fd726e7882e626303f8206c5837f981ca8e332232e49b785ce4db80e1e0bfd1",
+      "eligibility_snapshot_id": "eligibility-snapshot-canary-mdr-triage-2.4.0-0001",
+      "eligibility_snapshot_hash_reference": "sha256:f0fa5610f66f7c9f022ede1a514521decd7ea6e35da3f63027f38a81b0163158",
+      "activation_receipt_set_id": "activation-receipt-set-canary-mdr-triage-2.4.0-0001",
+      "activation_receipt_set_summary_hash_reference": "sha256:0cabb66e88c5cdad719a485f28126536ddb3cbcdfb3471b8a6512f0c1d51112f",
+      "stage_gate_record_id": "stage-gate-canary-mdr-triage-2.4.0-0001",
+      "linked_stage_gate_record_hash_reference": "sha256:f1937975e95b4e9ff70c70d2ed24ddf24c432915959723200abf2b258b8f54d9",
+      "result": "completed_gate_passed",
+      "resulting_state": "canary_scope_active_on_2.4.0_and_eligible_for_next_stage_evaluation",
+      "stage_gate_did_not_auto_authorize_next_stage": true,
+      "scope_expansion_detected": false,
+      "stage_record_hash_reference": "sha256:cdd47c6aa661b3ef3cb983abe2379a461c5ffc40a0d989f253e488e79ad77066"
+    },
+    {
+      "sequence": 4,
+      "stage_id": "fleet-stage-limited-activation-0001",
+      "stage": "limited_rollout_activation",
+      "stage_record_id": "rollout-stage-record-limited-mdr-triage-0001",
+      "time_range_utc": {
+        "start": "2025-04-08T16:12:00Z",
+        "end": "2025-04-08T19:34:00Z"
+      },
+      "cohort_id": "tenant-group-mdr-limited-001",
+      "pep_enforcement_record_id": "pep-enforcement-limited-activation-mdr-triage-0001",
+      "pep_enforcement_record_hash_reference": "sha256:c7dbd8383f07f41a4592ace313c9473b7ce5cfdf638409a149bfdd04cf7cbb2a",
+      "eligibility_snapshot_id": "eligibility-snapshot-limited_rollout-mdr-triage-2.4.0-0001",
+      "eligibility_snapshot_hash_reference": "sha256:b20ab72db73f5f13dd8bce056a993354586a46902c132a33a4f50b0652469025",
+      "activation_receipt_set_id": "activation-receipt-set-limited_rollout-mdr-triage-2.4.0-0001",
+      "activation_receipt_set_summary_hash_reference": "sha256:4c2471e75d4c2beeb3e26f6c3bb2d41a387819c2a66636b6031fbfd529db3d92",
+      "stage_gate_record_id": "stage-gate-limited-mdr-triage-2.4.0-0001",
+      "linked_stage_gate_record_hash_reference": "sha256:8ce4c1e8729189d6668764af590afbf7306fd09d7165c744d416cdb63eecdd4d",
+      "result": "completed_gate_passed",
+      "resulting_state": "limited_scope_active_on_2.4.0_and_eligible_for_broad_stage_evaluation",
+      "stage_gate_did_not_auto_authorize_next_stage": true,
+      "scope_expansion_detected": false,
+      "stage_record_hash_reference": "sha256:6b234060d004d5bedd59d352ff22f8a8cb8295e32c17c8f618b16cc25418707c"
+    },
+    {
+      "sequence": 5,
+      "stage_id": "fleet-stage-broad-activation-0001",
+      "stage": "broad_rollout_activation",
+      "stage_record_id": "rollout-stage-record-broad-mdr-triage-0001",
+      "time_range_utc": {
+        "start": "2025-04-08T19:38:00Z",
+        "end": "2025-04-09T00:16:00Z"
+      },
+      "cohort_id": "tenant-group-mdr-standard-001",
+      "pep_enforcement_record_id": "pep-enforcement-broad-activation-mdr-triage-0001",
+      "pep_enforcement_record_hash_reference": "sha256:2df225061334fc111d67705aa3a98e082358e098908ea421f76a2a40a204a2b0",
+      "eligibility_snapshot_id": "eligibility-snapshot-broad_rollout-mdr-triage-2.4.0-0001",
+      "eligibility_snapshot_hash_reference": "sha256:744db74a76b2acfe21d0bb948e1fff42c667a52013e8039e690da027b8a6fb94",
+      "activation_receipt_set_id": "activation-receipt-set-broad_rollout-mdr-triage-2.4.0-0001",
+      "activation_receipt_set_summary_hash_reference": "sha256:3f6f7917e4ce8135fe352a5b141b773e92c0b2b051d897c2f3591b22272f8ef1",
+      "stage_gate_record_id": "stage-gate-broad-closeout-mdr-triage-2.4.0-0001",
+      "linked_stage_gate_record_hash_reference": "sha256:72cf751c30e57688121aa445805a00f7cacfc200b3d673c1375b88f974dce9ed",
+      "result": "completed_gate_passed",
+      "resulting_state": "all_approved_eligible_target_scope_active_on_2.4.0",
+      "excluded_tenant_ids": [
+        "tenant-regulated-example-001"
+      ],
+      "scope_expansion_detected": false,
+      "stage_record_hash_reference": "sha256:5c1d212665bcbe21e29308760493812c01bf59e482ab56981456ded380feae64"
+    }
+  ],
+  "activation_receipt_summaries": [
+    {
+      "activation_receipt_set_id": "activation-receipt-set-canary-mdr-triage-2.4.0-0001",
+      "stage": "canary",
+      "cohort_id": "tenant-group-mdr-canary-001",
+      "activation_time_range_utc": {
+        "start": "2025-04-08T14:25:00Z",
+        "end": "2025-04-08T14:32:00Z"
+      },
+      "package_ref": "pkg-mdr-triage-agent@2.4.0",
+      "manifest_id": "manifest-pkg-mdr-triage-agent-2.4.0-0001",
+      "package_manifest_hash_reference": "sha256:cc50ca05a19e51e441a47ec8f9553750216308c811791cee09ce8f3a8107e9bf",
+      "signature_record_id": "fleet-package-signature-mdr-triage-2.4.0-0001",
+      "candidate_tenant_count": 5,
+      "eligible_tenant_count": 5,
+      "activation_attempt_count": 5,
+      "activation_success_count": 5,
+      "activation_failure_count": 0,
+      "excluded_tenant_count": 0,
+      "excluded_tenant_ids": [],
+      "receipt_completeness_percent": 100.0,
+      "per_tenant_receipts_append_only": true,
+      "per_tenant_receipts_correlation_linked": true,
+      "per_tenant_receipt_hashes_preserved_in_rollout_ledger": true,
+      "receipt_set_summary_hash_reference": "sha256:0cabb66e88c5cdad719a485f28126536ddb3cbcdfb3471b8a6512f0c1d51112f"
+    },
+    {
+      "activation_receipt_set_id": "activation-receipt-set-limited_rollout-mdr-triage-2.4.0-0001",
+      "stage": "limited_rollout",
+      "cohort_id": "tenant-group-mdr-limited-001",
+      "activation_time_range_utc": {
+        "start": "2025-04-08T16:15:00Z",
+        "end": "2025-04-08T16:28:00Z"
+      },
+      "package_ref": "pkg-mdr-triage-agent@2.4.0",
+      "manifest_id": "manifest-pkg-mdr-triage-agent-2.4.0-0001",
+      "package_manifest_hash_reference": "sha256:cc50ca05a19e51e441a47ec8f9553750216308c811791cee09ce8f3a8107e9bf",
+      "signature_record_id": "fleet-package-signature-mdr-triage-2.4.0-0001",
+      "candidate_tenant_count": 25,
+      "eligible_tenant_count": 25,
+      "activation_attempt_count": 25,
+      "activation_success_count": 25,
+      "activation_failure_count": 0,
+      "excluded_tenant_count": 0,
+      "excluded_tenant_ids": [],
+      "receipt_completeness_percent": 100.0,
+      "per_tenant_receipts_append_only": true,
+      "per_tenant_receipts_correlation_linked": true,
+      "per_tenant_receipt_hashes_preserved_in_rollout_ledger": true,
+      "receipt_set_summary_hash_reference": "sha256:4c2471e75d4c2beeb3e26f6c3bb2d41a387819c2a66636b6031fbfd529db3d92"
+    },
+    {
+      "activation_receipt_set_id": "activation-receipt-set-broad_rollout-mdr-triage-2.4.0-0001",
+      "stage": "broad_rollout",
+      "cohort_id": "tenant-group-mdr-standard-001",
+      "activation_time_range_utc": {
+        "start": "2025-04-08T19:40:00Z",
+        "end": "2025-04-08T20:10:00Z"
+      },
+      "package_ref": "pkg-mdr-triage-agent@2.4.0",
+      "manifest_id": "manifest-pkg-mdr-triage-agent-2.4.0-0001",
+      "package_manifest_hash_reference": "sha256:cc50ca05a19e51e441a47ec8f9553750216308c811791cee09ce8f3a8107e9bf",
+      "signature_record_id": "fleet-package-signature-mdr-triage-2.4.0-0001",
+      "candidate_tenant_count": 171,
+      "eligible_tenant_count": 170,
+      "activation_attempt_count": 170,
+      "activation_success_count": 170,
+      "activation_failure_count": 0,
+      "excluded_tenant_count": 1,
+      "excluded_tenant_ids": [
+        "tenant-regulated-example-001"
+      ],
+      "receipt_completeness_percent": 100.0,
+      "per_tenant_receipts_append_only": true,
+      "per_tenant_receipts_correlation_linked": true,
+      "per_tenant_receipt_hashes_preserved_in_rollout_ledger": true,
+      "receipt_set_summary_hash_reference": "sha256:3f6f7917e4ce8135fe352a5b141b773e92c0b2b051d897c2f3591b22272f8ef1"
+    }
+  ],
+  "stage_gate_results": [
+    {
+      "stage_gate_record_id": "stage-gate-canary-mdr-triage-2.4.0-0001",
+      "stage": "canary",
+      "stage_id": "fleet-stage-canary-activation-0001",
+      "cohort_id": "tenant-group-mdr-canary-001",
+      "package_ref": "pkg-mdr-triage-agent@2.4.0",
+      "monitoring_profile_id": "monitoring-profile-mdr-triage-rollout-2.4.0",
+      "observation_time_range_utc": {
+        "start": "2025-04-08T14:32:00Z",
+        "end": "2025-04-08T16:07:00Z"
+      },
+      "minimum_elapsed_time_minutes": 90,
+      "observed_elapsed_time_minutes": 95,
+      "minimum_governed_workflow_executions": 500,
+      "observed_governed_workflow_executions": 650,
+      "zero_tolerance_results": [
+        {
+          "metric": "tenant_customer_case_evidence_retrieval_memory_or_output_boundary_violation_count",
+          "observed_value": 0,
+          "required_value": 0,
+          "result": "passed"
+        },
+        {
+          "metric": "unapproved_tool_credential_parameter_or_action_attempt_count",
+          "observed_value": 0,
+          "required_value": 0,
+          "result": "passed"
+        },
+        {
+          "metric": "package_signature_manifest_component_hash_or_provenance_mismatch_count",
+          "observed_value": 0,
+          "required_value": 0,
+          "result": "passed"
+        },
+        {
+          "metric": "excluded_or_ineligible_tenant_activation_count",
+          "observed_value": 0,
+          "required_value": 0,
+          "result": "passed"
+        },
+        {
+          "metric": "missing_or_inconsistent_stage_record_or_activation_receipt_count",
+          "observed_value": 0,
+          "required_value": 0,
+          "result": "passed"
+        }
+      ],
+      "threshold_results": [
+        {
+          "metric": "policy_denial_or_fail_closed_rate_delta_percentage_points",
+          "observed_value": 0.2,
+          "maximum_allowed": 1.0,
+          "comparison": "versus_approved_baseline",
+          "result": "passed"
+        },
+        {
+          "metric": "unsupported_claim_rate_percent",
+          "observed_value": 0.8,
+          "maximum_allowed": 2.0,
+          "comparison": "within_stage",
+          "result": "passed"
+        },
+        {
+          "metric": "evidence_reference_validation_failure_rate_percent",
+          "observed_value": 0.3,
+          "maximum_allowed": 1.0,
+          "comparison": "within_stage",
+          "result": "passed"
+        },
+        {
+          "metric": "structured_output_contract_failure_rate_percent",
+          "observed_value": 0.15,
+          "maximum_allowed": 0.5,
+          "comparison": "within_stage",
+          "result": "passed"
+        },
+        {
+          "metric": "tool_invocation_error_timeout_retry_or_malformed_request_rate_percent",
+          "observed_value": 0.35,
+          "maximum_allowed": 1.0,
+          "comparison": "within_stage",
+          "result": "passed"
+        },
+        {
+          "metric": "analyst_rejection_correction_or_escalation_rate_delta_percentage_points",
+          "observed_value": 1.5,
+          "maximum_allowed": 5.0,
+          "comparison": "versus_approved_baseline",
+          "result": "passed"
+        },
+        {
+          "metric": "p95_end_to_end_latency_regression_percent",
+          "observed_value": 7.5,
+          "maximum_allowed": 20.0,
+          "comparison": "versus_approved_baseline",
+          "result": "passed"
+        },
+        {
+          "metric": "audit_and_activation_receipt_completeness_percent",
+          "observed_value": 100.0,
+          "minimum_required": 100.0,
+          "comparison": "within_stage",
+          "result": "passed"
+        }
+      ],
+      "activation_receipt_completeness_percent": 100.0,
+      "monitoring_data_complete": true,
+      "assurance_data_complete": true,
+      "gate_result": "passed",
+      "evaluated_at_utc": "2025-04-08T16:08:00Z",
+      "evaluated_by_component": "fleet-stage-gate-evaluation-service",
+      "monitoring_service_authorized_progression": false,
+      "gate_result_created_unrestricted_rollout_authority": false,
+      "pep_revalidation_required_before_next_transition": true,
+      "stage_gate_record_hash_reference": "sha256:f1937975e95b4e9ff70c70d2ed24ddf24c432915959723200abf2b258b8f54d9"
+    },
+    {
+      "stage_gate_record_id": "stage-gate-limited-mdr-triage-2.4.0-0001",
+      "stage": "limited_rollout",
+      "stage_id": "fleet-stage-limited-activation-0001",
+      "cohort_id": "tenant-group-mdr-limited-001",
+      "package_ref": "pkg-mdr-triage-agent@2.4.0",
+      "monitoring_profile_id": "monitoring-profile-mdr-triage-rollout-2.4.0",
+      "observation_time_range_utc": {
+        "start": "2025-04-08T16:28:00Z",
+        "end": "2025-04-08T19:33:00Z"
+      },
+      "minimum_elapsed_time_minutes": 180,
+      "observed_elapsed_time_minutes": 185,
+      "minimum_governed_workflow_executions": 2500,
+      "observed_governed_workflow_executions": 3200,
+      "zero_tolerance_results": [
+        {
+          "metric": "tenant_customer_case_evidence_retrieval_memory_or_output_boundary_violation_count",
+          "observed_value": 0,
+          "required_value": 0,
+          "result": "passed"
+        },
+        {
+          "metric": "unapproved_tool_credential_parameter_or_action_attempt_count",
+          "observed_value": 0,
+          "required_value": 0,
+          "result": "passed"
+        },
+        {
+          "metric": "package_signature_manifest_component_hash_or_provenance_mismatch_count",
+          "observed_value": 0,
+          "required_value": 0,
+          "result": "passed"
+        },
+        {
+          "metric": "excluded_or_ineligible_tenant_activation_count",
+          "observed_value": 0,
+          "required_value": 0,
+          "result": "passed"
+        },
+        {
+          "metric": "missing_or_inconsistent_stage_record_or_activation_receipt_count",
+          "observed_value": 0,
+          "required_value": 0,
+          "result": "passed"
+        }
+      ],
+      "threshold_results": [
+        {
+          "metric": "policy_denial_or_fail_closed_rate_delta_percentage_points",
+          "observed_value": 0.4,
+          "maximum_allowed": 1.0,
+          "comparison": "versus_approved_baseline",
+          "result": "passed"
+        },
+        {
+          "metric": "unsupported_claim_rate_percent",
+          "observed_value": 0.9,
+          "maximum_allowed": 2.0,
+          "comparison": "within_stage",
+          "result": "passed"
+        },
+        {
+          "metric": "evidence_reference_validation_failure_rate_percent",
+          "observed_value": 0.2,
+          "maximum_allowed": 1.0,
+          "comparison": "within_stage",
+          "result": "passed"
+        },
+        {
+          "metric": "structured_output_contract_failure_rate_percent",
+          "observed_value": 0.12,
+          "maximum_allowed": 0.5,
+          "comparison": "within_stage",
+          "result": "passed"
+        },
+        {
+          "metric": "tool_invocation_error_timeout_retry_or_malformed_request_rate_percent",
+          "observed_value": 0.42,
+          "maximum_allowed": 1.0,
+          "comparison": "within_stage",
+          "result": "passed"
+        },
+        {
+          "metric": "analyst_rejection_correction_or_escalation_rate_delta_percentage_points",
+          "observed_value": 2.1,
+          "maximum_allowed": 5.0,
+          "comparison": "versus_approved_baseline",
+          "result": "passed"
+        },
+        {
+          "metric": "p95_end_to_end_latency_regression_percent",
+          "observed_value": 10.8,
+          "maximum_allowed": 20.0,
+          "comparison": "versus_approved_baseline",
+          "result": "passed"
+        },
+        {
+          "metric": "audit_and_activation_receipt_completeness_percent",
+          "observed_value": 100.0,
+          "minimum_required": 100.0,
+          "comparison": "within_stage",
+          "result": "passed"
+        }
+      ],
+      "activation_receipt_completeness_percent": 100.0,
+      "monitoring_data_complete": true,
+      "assurance_data_complete": true,
+      "gate_result": "passed",
+      "evaluated_at_utc": "2025-04-08T19:34:00Z",
+      "evaluated_by_component": "fleet-stage-gate-evaluation-service",
+      "monitoring_service_authorized_progression": false,
+      "gate_result_created_unrestricted_rollout_authority": false,
+      "pep_revalidation_required_before_next_transition": true,
+      "stage_gate_record_hash_reference": "sha256:8ce4c1e8729189d6668764af590afbf7306fd09d7165c744d416cdb63eecdd4d"
+    },
+    {
+      "stage_gate_record_id": "stage-gate-broad-closeout-mdr-triage-2.4.0-0001",
+      "stage": "broad_rollout_closeout",
+      "stage_id": "fleet-stage-broad-activation-0001",
+      "cohort_id": "tenant-group-mdr-standard-001",
+      "package_ref": "pkg-mdr-triage-agent@2.4.0",
+      "monitoring_profile_id": "monitoring-profile-mdr-triage-rollout-2.4.0",
+      "observation_time_range_utc": {
+        "start": "2025-04-08T20:10:00Z",
+        "end": "2025-04-09T00:15:00Z"
+      },
+      "minimum_elapsed_time_minutes": 240,
+      "observed_elapsed_time_minutes": 245,
+      "minimum_governed_workflow_executions": 10000,
+      "observed_governed_workflow_executions": 13450,
+      "zero_tolerance_results": [
+        {
+          "metric": "tenant_customer_case_evidence_retrieval_memory_or_output_boundary_violation_count",
+          "observed_value": 0,
+          "required_value": 0,
+          "result": "passed"
+        },
+        {
+          "metric": "unapproved_tool_credential_parameter_or_action_attempt_count",
+          "observed_value": 0,
+          "required_value": 0,
+          "result": "passed"
+        },
+        {
+          "metric": "package_signature_manifest_component_hash_or_provenance_mismatch_count",
+          "observed_value": 0,
+          "required_value": 0,
+          "result": "passed"
+        },
+        {
+          "metric": "excluded_or_ineligible_tenant_activation_count",
+          "observed_value": 0,
+          "required_value": 0,
+          "result": "passed"
+        },
+        {
+          "metric": "missing_or_inconsistent_stage_record_or_activation_receipt_count",
+          "observed_value": 0,
+          "required_value": 0,
+          "result": "passed"
+        }
+      ],
+      "threshold_results": [
+        {
+          "metric": "policy_denial_or_fail_closed_rate_delta_percentage_points",
+          "observed_value": 0.5,
+          "maximum_allowed": 1.0,
+          "comparison": "versus_approved_baseline",
+          "result": "passed"
+        },
+        {
+          "metric": "unsupported_claim_rate_percent",
+          "observed_value": 0.7,
+          "maximum_allowed": 2.0,
+          "comparison": "within_stage",
+          "result": "passed"
+        },
+        {
+          "metric": "evidence_reference_validation_failure_rate_percent",
+          "observed_value": 0.18,
+          "maximum_allowed": 1.0,
+          "comparison": "within_stage",
+          "result": "passed"
+        },
+        {
+          "metric": "structured_output_contract_failure_rate_percent",
+          "observed_value": 0.1,
+          "maximum_allowed": 0.5,
+          "comparison": "within_stage",
+          "result": "passed"
+        },
+        {
+          "metric": "tool_invocation_error_timeout_retry_or_malformed_request_rate_percent",
+          "observed_value": 0.38,
+          "maximum_allowed": 1.0,
+          "comparison": "within_stage",
+          "result": "passed"
+        },
+        {
+          "metric": "analyst_rejection_correction_or_escalation_rate_delta_percentage_points",
+          "observed_value": 1.8,
+          "maximum_allowed": 5.0,
+          "comparison": "versus_approved_baseline",
+          "result": "passed"
+        },
+        {
+          "metric": "p95_end_to_end_latency_regression_percent",
+          "observed_value": 9.4,
+          "maximum_allowed": 20.0,
+          "comparison": "versus_approved_baseline",
+          "result": "passed"
+        },
+        {
+          "metric": "audit_and_activation_receipt_completeness_percent",
+          "observed_value": 100.0,
+          "minimum_required": 100.0,
+          "comparison": "within_stage",
+          "result": "passed"
+        }
+      ],
+      "activation_receipt_completeness_percent": 100.0,
+      "monitoring_data_complete": true,
+      "assurance_data_complete": true,
+      "gate_result": "passed",
+      "evaluated_at_utc": "2025-04-09T00:16:00Z",
+      "evaluated_by_component": "fleet-stage-gate-evaluation-service",
+      "monitoring_service_authorized_progression": false,
+      "gate_result_created_unrestricted_rollout_authority": false,
+      "pep_revalidation_required_before_next_transition": true,
+      "stage_gate_record_hash_reference": "sha256:72cf751c30e57688121aa445805a00f7cacfc200b3d673c1375b88f974dce9ed"
+    }
+  ],
+  "monitoring_and_assurance_outcome": {
+    "monitoring_profile_id": "monitoring-profile-mdr-triage-rollout-2.4.0",
+    "baseline_package_ref": "pkg-mdr-triage-agent@2.3.4",
+    "baseline_time_range_utc": {
+      "start": "2025-03-25T00:00:00Z",
+      "end": "2025-04-07T23:59:59Z"
+    },
+    "all_required_monitoring_active_before_each_stage": true,
+    "all_required_assurance_checks_active_before_each_stage": true,
+    "all_zero_tolerance_signals_remained_at_required_value": true,
+    "all_pause_thresholds_remained_within_approved_limits": true,
+    "stage_gate_records_complete_and_current": true,
+    "activation_receipt_completeness_percent": 100.0,
+    "pause_triggered": false,
+    "halt_triggered": false,
+    "automatic_resume_used": false,
+    "threshold_relaxation_or_silent_change_detected": false,
+    "monitoring_service_authorized_any_stage_transition": false,
+    "maximum_observed_values_across_stages": {
+      "policy_denial_or_fail_closed_rate_delta_percentage_points": 0.5,
+      "unsupported_claim_rate_percent": 0.9,
+      "evidence_reference_validation_failure_rate_percent": 0.3,
+      "structured_output_contract_failure_rate_percent": 0.15,
+      "tool_invocation_error_timeout_retry_or_malformed_request_rate_percent": 0.42,
+      "analyst_rejection_correction_or_escalation_rate_delta_percentage_points": 2.1,
+      "p95_end_to_end_latency_regression_percent": 10.8,
+      "minimum_audit_and_activation_receipt_completeness_percent": 100.0
+    },
+    "overall_result": "passed"
+  },
+  "activation_outcome": {
+    "canary": {
+      "cohort_id": "tenant-group-mdr-canary-001",
+      "candidate_tenant_count": 5,
+      "eligible_tenant_count": 5,
+      "activated_tenant_count": 5,
+      "failed_activation_count": 0,
+      "final_active_package_ref": "pkg-mdr-triage-agent@2.4.0"
+    },
+    "limited_rollout": {
+      "cohort_id": "tenant-group-mdr-limited-001",
+      "candidate_tenant_count": 25,
+      "eligible_tenant_count": 25,
+      "activated_tenant_count": 25,
+      "failed_activation_count": 0,
+      "final_active_package_ref": "pkg-mdr-triage-agent@2.4.0"
+    },
+    "broad_rollout": {
+      "cohort_id": "tenant-group-mdr-standard-001",
+      "candidate_tenant_count": 171,
+      "eligible_tenant_count": 170,
+      "activated_tenant_count": 170,
+      "excluded_tenant_count": 1,
+      "failed_activation_count": 0,
+      "final_active_package_ref_for_eligible_scope": "pkg-mdr-triage-agent@2.4.0"
+    },
+    "all_authorized_activations_completed": true,
+    "all_activations_have_individual_receipts": true,
+    "partial_or_ambiguous_activation_state_detected": false,
+    "excluded_or_ineligible_tenant_activation_count": 0
+  },
+  "active_version_inventory_snapshot": {
+    "snapshot_id": "active-version-inventory-mdr-triage-post-rollout-0001",
+    "captured_at_utc": "2025-04-09T00:20:00Z",
+    "fleet_id": "mdr-triage-agent-fleet",
+    "rollout_id": "fleet-rollout-mdr-triage-0001",
+    "scope": "tenants_evaluated_under_fleet-rollout-mdr-triage-0001",
+    "active_version_counts": [
+      {
+        "package_ref": "pkg-mdr-triage-agent@2.4.0",
+        "tenant_count": 200,
+        "state": "active_for_approved_eligible_scope"
+      },
+      {
+        "package_ref": "pkg-mdr-triage-agent@2.3.4",
+        "tenant_count": 1,
+        "state": "active_for_excluded_restricted_scope_and_retained_as_known_good"
+      }
+    ],
+    "excluded_tenant_states": [
+      {
+        "tenant_id": "tenant-regulated-example-001",
+        "active_package_ref": "pkg-mdr-triage-agent@2.3.4",
+        "version_2_4_0_activation_received": false,
+        "exclusion_reason": "restricted_operating_profile_compatibility_and_rollback_validation_incomplete"
+      }
+    ],
+    "per_tenant_active_version_timeline_preserved_in_rollout_ledger": true,
+    "per_tenant_identifier_list_embedded_in_closeout_summary": false,
+    "inventory_snapshot_hash_reference": "sha256:2eb3349a00a3301df6b78cc364a2feeda0208887c375d6edc7208041ef43cea0"
+  },
+  "rollback_and_recovery_outcome": {
+    "rollback_stage_id": "fleet-stage-rollback-to-known-good-0001",
+    "rollback_target": {
+      "package_id": "pkg-mdr-triage-agent",
+      "package_version": "2.3.4",
+      "package_ref": "pkg-mdr-triage-agent@2.3.4",
+      "manifest_id": "manifest-pkg-mdr-triage-agent-2.3.4-known-good",
+      "manifest_hash_reference": "sha256:a60892548777ad4d6236fc2d11b43cc26850e5c32b43f489cdfed889f28e83eb",
+      "package_hash_reference": "sha256:84c81c9c2f36354f721312228fe16fabe872f17cfabb895a77e0bcf12049f4f6"
+    },
+    "rollback_validation_record_id": "rollback-validation-record-mdr-triage-2.3.4-0001",
+    "rollback_target_available_at_closeout": true,
+    "rollback_target_integrity_verified_at_closeout": true,
+    "rollback_triggered": false,
+    "rollback_invoked": false,
+    "rollback_required": false,
+    "forward_progression_halted": false,
+    "emergency_recall_or_kill_switch_invoked": false,
+    "prior_version_retirement_requested": false,
+    "prior_version_retirement_authorized": false,
+    "prior_version_retired_or_deleted": false,
+    "known_good_version_retained": true,
+    "rollback_readiness_record_hash_reference": "sha256:e03d5315376b8bf54380ad40fd91a3f13f5bfd48b22c52d07df76161bcaa4408"
+  },
+  "final_fleet_state": {
+    "rollout_state": "completed_for_approved_eligible_scope",
+    "package_2_4_0_state": "signed_registered_and_active_for_approved_eligible_scope",
+    "package_2_3_4_state": "retained_registered_integrity_verified_and_active_for_excluded_scope",
+    "known_good_rollback_target_available": true,
+    "rollback_invoked": false,
+    "prior_version_retired": false,
+    "tenant_regulated_example_001_active_package_ref": "pkg-mdr-triage-agent@2.3.4",
+    "package_drift_detected": false,
+    "tenant_boundary_violation_detected": false,
+    "unapproved_tool_or_action_use_detected": false,
+    "scope_expansion_detected": false,
+    "all_stage_records_and_receipts_complete": true,
+    "record_state_after_event": "rollout_completed_and_closeout_recorded"
+  },
+  "state_transitions": {
+    "candidate_package_state_before_rollout": "validated_approved_not_signed",
+    "package_state_after_signing": "signed",
+    "package_state_after_registration": "registered_for_policy_scoped_staged_activation",
+    "canary_state_after_gate": "completed_gate_passed",
+    "limited_state_after_gate": "completed_gate_passed",
+    "broad_state_after_gate": "completed_gate_passed",
+    "rollout_state_after_closeout": "completed_for_approved_eligible_scope",
+    "excluded_tenant_state_after_closeout": "remained_on_known_good_version_2.3.4",
+    "rollback_state_after_closeout": "available_not_invoked",
+    "prior_version_retirement_state_after_closeout": "not_authorized_not_performed"
+  },
+  "boundary_authority_and_data_results": {
+    "release_package_remained_control_plane_artifact": true,
+    "tenant_or_customer_identifiers_embedded_as_targeting_logic": false,
+    "raw_alerts_logs_evidence_case_notes_or_investigation_narratives_embedded": false,
+    "credentials_tokens_secrets_connection_strings_or_tenant_keys_embedded": false,
+    "tenant_local_retrieval_results_vector_content_case_memory_or_runtime_memory_embedded": false,
+    "runtime_retrieval_and_memory_remained_tenant_local": true,
+    "tenant_customer_case_evidence_environment_retention_and_destination_boundaries_maintained": true,
+    "cross_tenant_context_or_memory_reuse_performed": false,
+    "cross_tenant_intelligence_propagation_performed": false,
+    "model_training_or_fine_tuning_on_tenant_data_performed": false,
+    "source_evidence_modified": false,
+    "new_tool_registration_or_operation_scope_introduced": false,
+    "credential_scope_expanded": false,
+    "new_state_changing_action_authority_introduced": false,
+    "managed_service_control_plane_agent_version_activation_executed": true,
+    "customer_environment_containment_or_remediation_executed": false,
+    "customer_notification_or_report_release_executed": false,
+    "boundary_and_authority_result": "passed"
+  },
+  "rollout_ledger_summary": {
+    "rollout_ledger_id": "rollout-ledger-mdr-triage-0001",
+    "ledger_mode": "append_only_hash_linked",
+    "summary_chain_entries": [
+      {
+        "sequence": 1,
+        "ledger_entry_id": "rollout-ledger-summary-entry-0001",
+        "entry_type": "approval_link",
+        "record_reference_id": "audit-ref-fleet-approval-mdr-triage-0001",
+        "record_hash_reference": "sha256:ac05704bde44ec3b9b2ba590c47452c6e8218953cb53d77998a56ab1c55edb23",
+        "recorded_at_utc": "2025-04-08T14:10:00Z",
+        "previous_entry_hash_reference": null,
+        "entry_hash_reference": "sha256:91a04b75354448793d832ab8ede50bbf7acde96549ed11b82f77342e2c6f9172"
+      },
+      {
+        "sequence": 2,
+        "ledger_entry_id": "rollout-ledger-summary-entry-0002",
+        "entry_type": "package_signature",
+        "record_reference_id": "fleet-package-signature-mdr-triage-2.4.0-0001",
+        "record_hash_reference": "sha256:bb24a8c4e3242b112a1bed910771328c04a7e9879b711d8f311e70ebc320230a",
+        "recorded_at_utc": "2025-04-08T14:15:00Z",
+        "previous_entry_hash_reference": "sha256:91a04b75354448793d832ab8ede50bbf7acde96549ed11b82f77342e2c6f9172",
+        "entry_hash_reference": "sha256:3801a89d1a73766720b0a45ffae8bf4b70233a9de93fe370753e756a5c619fff"
+      },
+      {
+        "sequence": 3,
+        "ledger_entry_id": "rollout-ledger-summary-entry-0003",
+        "entry_type": "release_registration",
+        "record_reference_id": "fleet-release-registration-mdr-triage-2.4.0-0001",
+        "record_hash_reference": "sha256:8837c1f1cc0c672b059823bc725f32bff23f255253be4642b143ad515f6e33d1",
+        "recorded_at_utc": "2025-04-08T14:20:00Z",
+        "previous_entry_hash_reference": "sha256:3801a89d1a73766720b0a45ffae8bf4b70233a9de93fe370753e756a5c619fff",
+        "entry_hash_reference": "sha256:f4f10120bad2b6240076434eff531df9e1f63fb14e66e1b6563019ddbc0569f2"
+      },
+      {
+        "sequence": 4,
+        "ledger_entry_id": "rollout-ledger-summary-entry-0004",
+        "entry_type": "canary_stage_closeout",
+        "record_reference_id": "rollout-stage-record-canary-mdr-triage-0001",
+        "record_hash_reference": "sha256:cdd47c6aa661b3ef3cb983abe2379a461c5ffc40a0d989f253e488e79ad77066",
+        "recorded_at_utc": "2025-04-08T16:08:00Z",
+        "previous_entry_hash_reference": "sha256:f4f10120bad2b6240076434eff531df9e1f63fb14e66e1b6563019ddbc0569f2",
+        "entry_hash_reference": "sha256:c622160af0ca06a0c79b4a27189c2aea9c18a0e516b83936ccf768dfb42e7050"
+      },
+      {
+        "sequence": 5,
+        "ledger_entry_id": "rollout-ledger-summary-entry-0005",
+        "entry_type": "limited_stage_closeout",
+        "record_reference_id": "rollout-stage-record-limited-mdr-triage-0001",
+        "record_hash_reference": "sha256:6b234060d004d5bedd59d352ff22f8a8cb8295e32c17c8f618b16cc25418707c",
+        "recorded_at_utc": "2025-04-08T19:34:00Z",
+        "previous_entry_hash_reference": "sha256:c622160af0ca06a0c79b4a27189c2aea9c18a0e516b83936ccf768dfb42e7050",
+        "entry_hash_reference": "sha256:97b56ca69813419a03a3fa974134eb649b76e159076d50067ecf5948cbbf21f7"
+      },
+      {
+        "sequence": 6,
+        "ledger_entry_id": "rollout-ledger-summary-entry-0006",
+        "entry_type": "broad_stage_closeout",
+        "record_reference_id": "rollout-stage-record-broad-mdr-triage-0001",
+        "record_hash_reference": "sha256:5c1d212665bcbe21e29308760493812c01bf59e482ab56981456ded380feae64",
+        "recorded_at_utc": "2025-04-09T00:16:00Z",
+        "previous_entry_hash_reference": "sha256:97b56ca69813419a03a3fa974134eb649b76e159076d50067ecf5948cbbf21f7",
+        "entry_hash_reference": "sha256:1a988bf78af1720071ac0bb9274b9e38063012abf9df01c64dec488367bd81e7"
+      },
+      {
+        "sequence": 7,
+        "ledger_entry_id": "rollout-ledger-summary-entry-0007",
+        "entry_type": "active_version_inventory",
+        "record_reference_id": "active-version-inventory-mdr-triage-post-rollout-0001",
+        "record_hash_reference": "sha256:2eb3349a00a3301df6b78cc364a2feeda0208887c375d6edc7208041ef43cea0",
+        "recorded_at_utc": "2025-04-09T00:20:00Z",
+        "previous_entry_hash_reference": "sha256:1a988bf78af1720071ac0bb9274b9e38063012abf9df01c64dec488367bd81e7",
+        "entry_hash_reference": "sha256:654b0acbd6acd69bb89c49f6220e0d39f9310a0f0958bb4e6ccb673be6a4a21e"
+      },
+      {
+        "sequence": 8,
+        "ledger_entry_id": "rollout-ledger-summary-entry-0008",
+        "entry_type": "rollback_readiness_closeout",
+        "record_reference_id": "fleet-stage-rollback-to-known-good-0001",
+        "record_hash_reference": "sha256:e03d5315376b8bf54380ad40fd91a3f13f5bfd48b22c52d07df76161bcaa4408",
+        "recorded_at_utc": "2025-04-09T00:25:00Z",
+        "previous_entry_hash_reference": "sha256:654b0acbd6acd69bb89c49f6220e0d39f9310a0f0958bb4e6ccb673be6a4a21e",
+        "entry_hash_reference": "sha256:1266d4f654f4d7e93114190e04786701aed48d3e4c0cbf4877b1bf22da9f6fc0"
+      },
+      {
+        "sequence": 9,
+        "ledger_entry_id": "rollout-ledger-summary-entry-0009",
+        "entry_type": "rollout_closeout_binding",
+        "record_reference_id": "rollout-closeout-binding-mdr-triage-0001",
+        "record_hash_reference": "sha256:16104d658839a2e4a1eb1425bd19be9afa1c16a9c8b3d0fa6fbf72b8c290a5c9",
+        "recorded_at_utc": "2025-04-09T00:45:00Z",
+        "previous_entry_hash_reference": "sha256:1266d4f654f4d7e93114190e04786701aed48d3e4c0cbf4877b1bf22da9f6fc0",
+        "entry_hash_reference": "sha256:661f76db8641f8314aa15f43d0445ebce02fce3a18690b52c29975ed617e0173"
+      }
+    ],
+    "summary_chain_entry_count": 9,
+    "summary_chain_head_hash_reference": "sha256:91a04b75354448793d832ab8ede50bbf7acde96549ed11b82f77342e2c6f9172",
+    "summary_chain_tail_hash_reference": "sha256:661f76db8641f8314aa15f43d0445ebce02fce3a18690b52c29975ed617e0173",
+    "chain_validation_result": "passed",
+    "underlying_stage_transition_record_count": 5,
+    "underlying_tenant_eligibility_snapshot_count": 3,
+    "underlying_stage_gate_record_count": 3,
+    "underlying_activation_receipt_count": 200,
+    "underlying_per_tenant_active_version_records_present": true,
+    "underlying_monitoring_sample_records_present": true,
+    "this_closeout_event_replaces_stage_level_records": false,
+    "rollout_ledger_summary_hash_reference": "sha256:0993e6d26cd367a27c06c5fc525e994eee773db4ca59e3bb8cb5febd976114b1"
+  },
+  "rollout_closeout_binding": {
+    "canonicalization": "json_sorted_keys_compact",
+    "hash_scope": "rollout_closeout_binding_fields_listed_in_this_object",
+    "binding_fields": {
+      "audit_event_id": "audit-event-fleet-rollout-mdr-triage-0001",
+      "audit_reference_id": "audit-ref-fleet-rollout-mdr-triage-0001",
+      "fleet_update_request_id": "fleet-update-req-mdr-triage-0001",
+      "request_binding_hash_reference": "sha256:311cc50059a3f6ef701ccba6842fcdf9b45c00e56004f4e6e086a4225fb26871",
+      "policy_decision_id": "fleet-policy-decision-mdr-triage-0001",
+      "policy_decision_binding_hash_reference": "sha256:985ad82136f9401022d1abae672e5a52ea74a9fe4c6ffd48febf7581511cfb5e",
+      "approval_record_id": "fleet-approval-mdr-triage-0001",
+      "approval_scope_binding_hash_reference": "sha256:c5461a209e335e08ce44e56a7544d642030813a745d62a10ab5f73826f9f7701",
+      "approval_record_hash_reference": "sha256:ac05704bde44ec3b9b2ba590c47452c6e8218953cb53d77998a56ab1c55edb23",
+      "rollout_id": "fleet-rollout-mdr-triage-0001",
+      "fleet_id": "mdr-triage-agent-fleet",
+      "package_id": "pkg-mdr-triage-agent",
+      "package_version": "2.4.0",
+      "package_manifest_hash_reference": "sha256:cc50ca05a19e51e441a47ec8f9553750216308c811791cee09ce8f3a8107e9bf",
+      "package_payload_binding_hash_reference": "sha256:9ef02d48bc6798ceeaa1a833d89accc4d3a043bccf4ea11db56b2e0596db70cb",
+      "signature_record_hash_reference": "sha256:bb24a8c4e3242b112a1bed910771328c04a7e9879b711d8f311e70ebc320230a",
+      "registration_record_hash_reference": "sha256:8837c1f1cc0c672b059823bc725f32bff23f255253be4642b143ad515f6e33d1",
+      "package_signing_stage_record_hash_reference": "sha256:537d3819fdef872343d0bed909f9bfdbf1a0e1c0fe922dc21d2e9c094f56f063",
+      "release_registration_stage_record_hash_reference": "sha256:b95714dd3f55a545b4ddc8d10e21224a6c7610c045fb33b5b54833e45151eaa5",
+      "canary_stage_record_hash_reference": "sha256:cdd47c6aa661b3ef3cb983abe2379a461c5ffc40a0d989f253e488e79ad77066",
+      "limited_stage_record_hash_reference": "sha256:6b234060d004d5bedd59d352ff22f8a8cb8295e32c17c8f618b16cc25418707c",
+      "broad_stage_record_hash_reference": "sha256:5c1d212665bcbe21e29308760493812c01bf59e482ab56981456ded380feae64",
+      "canary_eligibility_snapshot_hash_reference": "sha256:f0fa5610f66f7c9f022ede1a514521decd7ea6e35da3f63027f38a81b0163158",
+      "limited_eligibility_snapshot_hash_reference": "sha256:b20ab72db73f5f13dd8bce056a993354586a46902c132a33a4f50b0652469025",
+      "broad_eligibility_snapshot_hash_reference": "sha256:744db74a76b2acfe21d0bb948e1fff42c667a52013e8039e690da027b8a6fb94",
+      "canary_activation_receipt_set_hash_reference": "sha256:0cabb66e88c5cdad719a485f28126536ddb3cbcdfb3471b8a6512f0c1d51112f",
+      "limited_activation_receipt_set_hash_reference": "sha256:4c2471e75d4c2beeb3e26f6c3bb2d41a387819c2a66636b6031fbfd529db3d92",
+      "broad_activation_receipt_set_hash_reference": "sha256:3f6f7917e4ce8135fe352a5b141b773e92c0b2b051d897c2f3591b22272f8ef1",
+      "canary_stage_gate_hash_reference": "sha256:f1937975e95b4e9ff70c70d2ed24ddf24c432915959723200abf2b258b8f54d9",
+      "limited_stage_gate_hash_reference": "sha256:8ce4c1e8729189d6668764af590afbf7306fd09d7165c744d416cdb63eecdd4d",
+      "broad_stage_gate_hash_reference": "sha256:72cf751c30e57688121aa445805a00f7cacfc200b3d673c1375b88f974dce9ed",
+      "active_version_inventory_snapshot_hash_reference": "sha256:2eb3349a00a3301df6b78cc364a2feeda0208887c375d6edc7208041ef43cea0",
+      "rollback_readiness_record_hash_reference": "sha256:e03d5315376b8bf54380ad40fd91a3f13f5bfd48b22c52d07df76161bcaa4408",
+      "activated_tenant_count": 200,
+      "excluded_tenant_ids": [
+        "tenant-regulated-example-001"
+      ],
+      "rollback_invoked": false,
+      "final_rollout_state": "completed_for_approved_eligible_scope"
+    },
+    "binding_hash_reference": "sha256:16104d658839a2e4a1eb1425bd19be9afa1c16a9c8b3d0fa6fbf72b8c290a5c9",
+    "binding_verified": true
+  },
+  "evidence_and_audit_preservation": {
+    "evidence_handling": "reference_only",
+    "raw_customer_or_case_evidence_embedded": false,
+    "source_record_references": [
+      {
+        "record_type": "fleet_update_request_binding",
+        "record_reference_id": "fleet-update-req-mdr-triage-0001",
+        "hash_reference": "sha256:311cc50059a3f6ef701ccba6842fcdf9b45c00e56004f4e6e086a4225fb26871"
+      },
+      {
+        "record_type": "fleet_policy_decision_binding",
+        "record_reference_id": "fleet-policy-decision-mdr-triage-0001",
+        "hash_reference": "sha256:985ad82136f9401022d1abae672e5a52ea74a9fe4c6ffd48febf7581511cfb5e"
+      },
+      {
+        "record_type": "fleet_change_approval_scope_binding",
+        "record_reference_id": "fleet-approval-mdr-triage-0001",
+        "hash_reference": "sha256:c5461a209e335e08ce44e56a7544d642030813a745d62a10ab5f73826f9f7701"
+      },
+      {
+        "record_type": "fleet_change_approval_record",
+        "record_reference_id": "fleet-approval-mdr-triage-0001",
+        "hash_reference": "sha256:ac05704bde44ec3b9b2ba590c47452c6e8218953cb53d77998a56ab1c55edb23"
+      },
+      {
+        "record_type": "package_signature_record",
+        "record_reference_id": "fleet-package-signature-mdr-triage-2.4.0-0001",
+        "hash_reference": "sha256:bb24a8c4e3242b112a1bed910771328c04a7e9879b711d8f311e70ebc320230a"
+      },
+      {
+        "record_type": "release_registration_record",
+        "record_reference_id": "fleet-release-registration-mdr-triage-2.4.0-0001",
+        "hash_reference": "sha256:8837c1f1cc0c672b059823bc725f32bff23f255253be4642b143ad515f6e33d1"
+      },
+      {
+        "record_type": "canary_tenant_eligibility_snapshot",
+        "record_reference_id": "eligibility-snapshot-canary-mdr-triage-2.4.0-0001",
+        "hash_reference": "sha256:f0fa5610f66f7c9f022ede1a514521decd7ea6e35da3f63027f38a81b0163158"
+      },
+      {
+        "record_type": "limited_tenant_eligibility_snapshot",
+        "record_reference_id": "eligibility-snapshot-limited_rollout-mdr-triage-2.4.0-0001",
+        "hash_reference": "sha256:b20ab72db73f5f13dd8bce056a993354586a46902c132a33a4f50b0652469025"
+      },
+      {
+        "record_type": "broad_tenant_eligibility_snapshot",
+        "record_reference_id": "eligibility-snapshot-broad_rollout-mdr-triage-2.4.0-0001",
+        "hash_reference": "sha256:744db74a76b2acfe21d0bb948e1fff42c667a52013e8039e690da027b8a6fb94"
+      },
+      {
+        "record_type": "canary_activation_receipt_set_summary",
+        "record_reference_id": "activation-receipt-set-canary-mdr-triage-2.4.0-0001",
+        "hash_reference": "sha256:0cabb66e88c5cdad719a485f28126536ddb3cbcdfb3471b8a6512f0c1d51112f"
+      },
+      {
+        "record_type": "limited_activation_receipt_set_summary",
+        "record_reference_id": "activation-receipt-set-limited_rollout-mdr-triage-2.4.0-0001",
+        "hash_reference": "sha256:4c2471e75d4c2beeb3e26f6c3bb2d41a387819c2a66636b6031fbfd529db3d92"
+      },
+      {
+        "record_type": "broad_activation_receipt_set_summary",
+        "record_reference_id": "activation-receipt-set-broad_rollout-mdr-triage-2.4.0-0001",
+        "hash_reference": "sha256:3f6f7917e4ce8135fe352a5b141b773e92c0b2b051d897c2f3591b22272f8ef1"
+      },
+      {
+        "record_type": "canary_stage_gate_record",
+        "record_reference_id": "stage-gate-canary-mdr-triage-2.4.0-0001",
+        "hash_reference": "sha256:f1937975e95b4e9ff70c70d2ed24ddf24c432915959723200abf2b258b8f54d9"
+      },
+      {
+        "record_type": "limited_stage_gate_record",
+        "record_reference_id": "stage-gate-limited-mdr-triage-2.4.0-0001",
+        "hash_reference": "sha256:8ce4c1e8729189d6668764af590afbf7306fd09d7165c744d416cdb63eecdd4d"
+      },
+      {
+        "record_type": "broad_stage_gate_record",
+        "record_reference_id": "stage-gate-broad-closeout-mdr-triage-2.4.0-0001",
+        "hash_reference": "sha256:72cf751c30e57688121aa445805a00f7cacfc200b3d673c1375b88f974dce9ed"
+      },
+      {
+        "record_type": "active_version_inventory_snapshot",
+        "record_reference_id": "active-version-inventory-mdr-triage-post-rollout-0001",
+        "hash_reference": "sha256:2eb3349a00a3301df6b78cc364a2feeda0208887c375d6edc7208041ef43cea0"
+      },
+      {
+        "record_type": "rollback_readiness_closeout_record",
+        "record_reference_id": "fleet-stage-rollback-to-known-good-0001",
+        "hash_reference": "sha256:e03d5315376b8bf54380ad40fd91a3f13f5bfd48b22c52d07df76161bcaa4408"
+      },
+      {
+        "record_type": "rollout_closeout_binding",
+        "record_reference_id": "rollout-closeout-binding-mdr-triage-0001",
+        "hash_reference": "sha256:16104d658839a2e4a1eb1425bd19be9afa1c16a9c8b3d0fa6fbf72b8c290a5c9"
+      },
+      {
+        "record_type": "rollout_ledger_summary",
+        "record_reference_id": "rollout-ledger-mdr-triage-0001",
+        "hash_reference": "sha256:0993e6d26cd367a27c06c5fc525e994eee773db4ca59e3bb8cb5febd976114b1"
+      }
+    ],
+    "policy_enforcement_record_references": [
+      {
+        "record_reference_id": "pep-enforcement-package-signing-mdr-triage-0001",
+        "hash_reference": "sha256:7229861329527c4781ee8945570e38d4d1477afcc7fab678f7b28275a434bc6c"
+      },
+      {
+        "record_reference_id": "pep-enforcement-release-registration-mdr-triage-0001",
+        "hash_reference": "sha256:854a46f34fc2eee0137b809f60f16c42da285a91a0038d648935430a2e6d4669"
+      },
+      {
+        "record_reference_id": "pep-enforcement-canary-activation-mdr-triage-0001",
+        "hash_reference": "sha256:8fd726e7882e626303f8206c5837f981ca8e332232e49b785ce4db80e1e0bfd1"
+      },
+      {
+        "record_reference_id": "pep-enforcement-limited-activation-mdr-triage-0001",
+        "hash_reference": "sha256:c7dbd8383f07f41a4592ace313c9473b7ce5cfdf638409a149bfdd04cf7cbb2a"
+      },
+      {
+        "record_reference_id": "pep-enforcement-broad-activation-mdr-triage-0001",
+        "hash_reference": "sha256:2df225061334fc111d67705aa3a98e082358e098908ea421f76a2a40a204a2b0"
+      }
+    ],
+    "stage_execution_record_references": [
+      {
+        "record_reference_id": "rollout-stage-record-package-signing-mdr-triage-0001",
+        "hash_reference": "sha256:537d3819fdef872343d0bed909f9bfdbf1a0e1c0fe922dc21d2e9c094f56f063"
+      },
+      {
+        "record_reference_id": "rollout-stage-record-release-registration-mdr-triage-0001",
+        "hash_reference": "sha256:b95714dd3f55a545b4ddc8d10e21224a6c7610c045fb33b5b54833e45151eaa5"
+      },
+      {
+        "record_reference_id": "rollout-stage-record-canary-mdr-triage-0001",
+        "hash_reference": "sha256:cdd47c6aa661b3ef3cb983abe2379a461c5ffc40a0d989f253e488e79ad77066"
+      },
+      {
+        "record_reference_id": "rollout-stage-record-limited-mdr-triage-0001",
+        "hash_reference": "sha256:6b234060d004d5bedd59d352ff22f8a8cb8295e32c17c8f618b16cc25418707c"
+      },
+      {
+        "record_reference_id": "rollout-stage-record-broad-mdr-triage-0001",
+        "hash_reference": "sha256:5c1d212665bcbe21e29308760493812c01bf59e482ab56981456ded380feae64"
+      }
+    ],
+    "supporting_validation_records": [
+      {
+        "record_id": "fleet-validation-record-mdr-triage-2.4.0-0001",
+        "record_type": "candidate_package_validation_record",
+        "source_system_id": "fleet-package-validation-service",
+        "required": true,
+        "present": true,
+        "completed_at_utc": "2025-04-08T13:20:00Z",
+        "result": "passed",
+        "hash_reference": "sha256:5bf4232431ddd1a31530ecec826e39f8ce4eec6fc78ae4592119ed302863c334",
+        "approval_effect": "none"
+      },
+      {
+        "record_id": "fleet-ai-assurance-record-mdr-triage-2.4.0-0001",
+        "record_type": "ai_assurance_evaluation_record",
+        "source_system_id": "fleet-ai-assurance-service",
+        "required": true,
+        "present": true,
+        "completed_at_utc": "2025-04-08T13:24:00Z",
+        "result": "passed_with_conditions",
+        "hash_reference": "sha256:fd20443ed684334b10d7e410c574a36832f8c3956364108e7a842ee26f457ade",
+        "approval_effect": "none"
+      },
+      {
+        "record_id": "package-provenance-record-mdr-triage-2.4.0-0001",
+        "record_type": "package_provenance_and_dependency_record",
+        "source_system_id": "agent-package-registry",
+        "required": true,
+        "present": true,
+        "completed_at_utc": "2025-04-08T13:26:00Z",
+        "result": "passed",
+        "hash_reference": "sha256:345836c46301315636a3dacbc481481a79aa25d2c0d2515476851b92f2473c9d",
+        "approval_effect": "none"
+      },
+      {
+        "record_id": "tool-scope-diff-record-mdr-triage-2.4.0-0001",
+        "record_type": "tool_and_action_scope_diff_record",
+        "source_system_id": "tool-contract-registry",
+        "required": true,
+        "present": true,
+        "completed_at_utc": "2025-04-08T13:28:00Z",
+        "result": "no_scope_expansion",
+        "hash_reference": "sha256:f780209a330fed007a25b50fe0876aa19c231c256d02c9de2aec8ad6a4cb78af",
+        "approval_effect": "none"
+      },
+      {
+        "record_id": "boundary-validation-record-mdr-triage-2.4.0-0001",
+        "record_type": "tenant_retrieval_memory_evidence_and_output_boundary_validation_record",
+        "source_system_id": "tenant-boundary-validation-service",
+        "required": true,
+        "present": true,
+        "completed_at_utc": "2025-04-08T13:31:00Z",
+        "result": "passed",
+        "hash_reference": "sha256:0009257a92dd0de07e4d8a69961c5a8bef0def55c8b4cb61934efe95e60e6e1c",
+        "approval_effect": "none"
+      },
+      {
+        "record_id": "tenant-eligibility-snapshot-mdr-triage-2.4.0-0001",
+        "record_type": "candidate_tenant_and_cohort_eligibility_snapshot",
+        "source_system_id": "tenant-eligibility-service",
+        "required": true,
+        "present": true,
+        "completed_at_utc": "2025-04-08T13:33:00Z",
+        "result": "eligible_with_documented_exclusion",
+        "hash_reference": "sha256:2a53e809de8a2b420665244220c9d621d4ee40d3601be7c892f888b13a8a793e",
+        "approval_effect": "none"
+      },
+      {
+        "record_id": "monitoring-readiness-record-mdr-triage-2.4.0-0001",
+        "record_type": "rollout_monitoring_and_halt_readiness_record",
+        "source_system_id": "fleet-health-monitoring-service",
+        "required": true,
+        "present": true,
+        "completed_at_utc": "2025-04-08T13:35:00Z",
+        "result": "ready",
+        "hash_reference": "sha256:c3a7c4bca797eb3b9f35108e601b2b16566279828d20b9780038ef28f86bb25d",
+        "approval_effect": "none"
+      },
+      {
+        "record_id": "rollback-validation-record-mdr-triage-2.3.4-0001",
+        "record_type": "known_good_rollback_target_validation_record",
+        "source_system_id": "fleet-recovery-validation-service",
+        "required": true,
+        "present": true,
+        "completed_at_utc": "2025-04-08T13:37:00Z",
+        "result": "passed",
+        "hash_reference": "sha256:3428933d67aa5c6641163fc5f4814fb96e7687943fa6c981e8e207a89396cbc8",
+        "approval_effect": "none"
+      }
+    ],
+    "supporting_validation_record_ids": [
+      "fleet-validation-record-mdr-triage-2.4.0-0001",
+      "fleet-ai-assurance-record-mdr-triage-2.4.0-0001",
+      "package-provenance-record-mdr-triage-2.4.0-0001",
+      "tool-scope-diff-record-mdr-triage-2.4.0-0001",
+      "boundary-validation-record-mdr-triage-2.4.0-0001",
+      "tenant-eligibility-snapshot-mdr-triage-2.4.0-0001",
+      "monitoring-readiness-record-mdr-triage-2.4.0-0001",
+      "rollback-validation-record-mdr-triage-2.3.4-0001"
+    ],
+    "package_manifest_preserved": true,
+    "signature_and_key_attestation_references_preserved": true,
+    "tenant_eligibility_snapshots_preserved": true,
+    "stage_gate_records_preserved": true,
+    "per_tenant_activation_receipts_preserved": true,
+    "active_version_timeline_preserved": true,
+    "monitoring_and_assurance_results_preserved": true,
+    "excluded_tenant_state_preserved": true,
+    "rollback_readiness_state_preserved": true,
+    "audit_records_append_only": true,
+    "this_closeout_event_replaces_underlying_records": false
+  },
+  "not_authorized_and_not_performed": [
+    "package_manifest_or_component_change_after_approval",
+    "activation_of_any_package_other_than_pkg-mdr-triage-agent_at_2.4.0",
+    "activation_for_tenant-regulated-example-001",
+    "activation_for_an_ineligible_or_unverified_tenant",
+    "addition_of_unreviewed_tenants_cohorts_service_models_or_environments",
+    "bypass_of_canary_or_limited_stage_gates",
+    "relaxation_or_silent_change_of_monitoring_thresholds",
+    "new_tool_registration_or_tool_operation_expansion",
+    "credential_scope_expansion",
+    "new_state_changing_action_or_parameter_class",
+    "retrieval_memory_evidence_or_output_scope_expansion",
+    "shared_tenant_memory_or_cross_tenant_context_reuse",
+    "cross_tenant_intelligence_propagation",
+    "customer_notification_or_customer_report_release",
+    "customer_environment_containment_or_remediation",
+    "raw_customer_data_case_content_or_evidence_distribution",
+    "model_training_or_fine_tuning_on_tenant_data",
+    "policy_exception_or_override",
+    "substitution_of_a_different_rollback_target",
+    "retirement_or_deletion_of_pkg-mdr-triage-agent_at_2.3.4",
+    "automatic_resume_after_pause_or_halt",
+    "reuse_of_this_approval_for_another_package_version_or_rollout"
+  ],
+  "fail_closed_evaluation": {
+    "fail_closed_required": true,
+    "conditions_checked": [
+      "fleet_update_request_id_or_correlation_id_missing_or_mismatched",
+      "policy_decision_missing_denied_expired_revoked_or_scope_mismatched",
+      "approval_record_missing_expired_revoked_incomplete_or_scope_mismatched",
+      "accountable_approver_identity_role_authority_or_mfa_validation_fails",
+      "requester_or_package_author_separation_of_duties_fails",
+      "package_id_version_payload_hash_manifest_hash_or_component_hash_mismatch",
+      "package_signature_missing_invalid_or_created_by_unapproved_signing_service",
+      "release_registration_missing_inconsistent_or_mutable",
+      "required_validation_ai_assurance_provenance_boundary_or_rollback_record_missing_failed_or_stale",
+      "tenant_eligibility_missing_stale_denied_or_inconsistent",
+      "excluded_tenant_or_unapproved_cohort_targeted",
+      "required_canary_or_limited_stage_gate_missing_failed_incomplete_stale_or_inconsistent",
+      "monitoring_halt_automation_audit_or_activation_receipt_service_unavailable",
+      "rollback_target_missing_unavailable_invalid_or_no_longer_recoverable",
+      "package_drift_detected_after_validation_policy_decision_or_approval",
+      "unapproved_tool_credential_parameter_or_action_scope_detected",
+      "tenant_customer_case_evidence_retrieval_memory_or_output_boundary_violation_detected",
+      "requested_transition_exceeds_approved_stage_scope_or_validity_window",
+      "stage_record_or_activation_receipt_missing_or_correlation_mismatched"
+    ],
+    "triggered_conditions": [],
+    "fail_closed_triggered": false,
+    "denied_transition_count": 0,
+    "paused_transition_count": 0,
+    "halted_transition_count": 0,
+    "rollback_trigger_count": 0,
+    "scope_expansion_attempt_count": 0,
+    "excluded_tenant_activation_attempt_count": 0,
+    "audit_logging_available_throughout_rollout": true,
+    "automatic_resume_used": false,
+    "action_if_triggered": "deny_or_halt_affected_transition_and_preserve_attempted_change_record",
+    "forward_progression_after_trigger_would_be_allowed": false
+  },
+  "audit_replay": {
+    "required_correlation_fields": [
+      "fleet_update_request_id",
+      "correlation_id",
+      "policy_decision_id",
+      "approval_record_id",
+      "rollout_id",
+      "audit_event_id",
+      "rollout_ledger_id",
+      "fleet_id",
+      "package_id",
+      "package_version",
+      "manifest_id",
+      "request_binding_hash_reference",
+      "policy_decision_binding_hash_reference",
+      "approval_scope_binding_hash_reference",
+      "approval_record_hash_reference",
+      "package_manifest_hash_reference",
+      "package_payload_binding_hash_reference",
+      "signature_record_id",
+      "signature_record_hash_reference",
+      "release_registration_id",
+      "registration_record_hash_reference",
+      "policy_enforcement_record_ids",
+      "stage_execution_record_ids",
+      "cohort_ids",
+      "eligibility_snapshot_ids",
+      "stage_gate_record_ids",
+      "activation_receipt_set_ids",
+      "excluded_tenant_ids",
+      "active_version_inventory_snapshot_id",
+      "rollback_target",
+      "rollout_closeout_binding_hash_reference",
+      "rollout_ledger_summary_hash_reference"
+    ],
+    "replay_must_reconstruct": [
+      "which request policy decision approval and rollout were correlated",
+      "which exact package manifest component hashes dependencies policy bindings tool bindings model route retrieval profile monitoring profile and rollback target governed the rollout",
+      "which service signed the package under which signing profile and key attestation",
+      "which immutable release registration admitted the package for staged activation",
+      "which Policy Enforcement Point checks ran before signing registration and each activation stage",
+      "which tenant cohorts were evaluated and which individual tenant eligibility results controlled activation",
+      "why tenant-regulated-example-001 was excluded and remained on version 2.3.4",
+      "which tenants received version 2.4.0 and when their activation receipts were recorded",
+      "which monitoring values zero-tolerance signals minimum observation windows and stage gates controlled progression",
+      "whether a new policy decision or approval became necessary during rollout",
+      "whether any package drift scope expansion unapproved tool use boundary violation pause halt rollback or recall occurred",
+      "which package version was active for each evaluated tenant at any point in the rollout timeline",
+      "whether version 2.3.4 remained available and integrity verified as the rollback target",
+      "how the append-only rollout ledger links the approval signing registration stage gates active-version snapshot rollback readiness and closeout record"
+    ],
+    "reconstructable_facts": {
+      "rollout_was_policy_authorized_with_conditions": true,
+      "rollout_was_human_approved_with_conditions": true,
+      "policy_decision_point_and_policy_enforcement_point_roles_remained_separate": true,
+      "exact_approved_package_was_signed_and_registered": true,
+      "no_post_approval_package_drift_occurred": true,
+      "canary_limited_and_broad_stages_were_pep_revalidated_separately": true,
+      "canary_limited_and_broad_stage_gates_passed": true,
+      "two_hundred_eligible_tenants_were_activated_on_version_2_4_0": true,
+      "tenant_regulated_example_001_received_no_version_2_4_0_activation": true,
+      "excluded_tenant_remained_on_version_2_3_4": true,
+      "all_required_activation_receipts_were_complete": true,
+      "no_zero_tolerance_halt_signal_occurred": true,
+      "no_pause_halt_or_rollback_was_required": true,
+      "known_good_version_2_3_4_remained_available_and_integrity_verified": true,
+      "prior_version_retirement_was_not_authorized_or_performed": true,
+      "tenant_data_case_evidence_secrets_and_runtime_memory_were_not_embedded_in_the_package": true,
+      "tool_credential_action_retrieval_and_memory_scope_were_not_expanded": true,
+      "record_supports_deterministic_replay": true
+    }
+  },
+  "retention_and_integrity": {
+    "retention_class": "security_audit_fleet_rollout_closeout_record",
+    "retention_minimum": "7y",
+    "immutability_required": true,
+    "append_only_record": true,
+    "hash_algorithm": "sha256",
+    "previous_audit_reference_id": "audit-ref-fleet-approval-mdr-triage-0001",
+    "previous_audit_hash_reference": "sha256:ac05704bde44ec3b9b2ba590c47452c6e8218953cb53d77998a56ab1c55edb23",
+    "canonicalization": "json_sorted_keys_compact",
+    "hash_scope": "entire_audit_event_excluding_record_hash_reference",
+    "record_hash_reference": "sha256:83f17abd01520583099a8e2440869219c0613fce66d800e084ce8a8bc5ced711"
+  },
+  "record_state": "finalized"
+}
+
