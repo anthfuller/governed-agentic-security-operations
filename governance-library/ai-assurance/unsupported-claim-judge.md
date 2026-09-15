@@ -405,11 +405,11 @@ The Unsupported Claim Judge is acceptable when:
 
 ## Related Repository Areas
 
-- [`agent-judge-contract.md`](agent-judge-contract.md) for general Agent Judge responsibilities and limits.
-- [`unsupported-claim-checks.md`](unsupported-claim-checks.md) for reusable unsupported-claim check patterns.
-- [`agent-output-quality-checks.md`](agent-output-quality-checks.md) for broader output-quality checks.
-- [`tenant-boundary-checks.md`](tenant-boundary-checks.md) for tenant and destination-scope checks.
-- [`human-in-the-loop-limitations.md`](human-in-the-loop-limitations.md) for review and approval limitations.
+- [`judge-evaluation-contract.md`](judge-evaluation-contract.md) for general Agent Judge responsibilities and limits.
+- [`evidence-support-judge.md`](evidence-support-judge.md) for reusable evidence-support checks.
+- [`output-quality-judge.md`](output-quality-judge.md) for broader output-quality checks.
+- [`tenant-boundary-judge.md`](tenant-boundary-judge.md) for tenant and destination-scope checks.
+- [`hitl-requirement-check.md`](hitl-requirement-check.md) for review and approval limitations.
 - [`fleet-update-evaluation-and-safety-validation.md`](fleet-update-evaluation-and-safety-validation.md) for fleet update validation.
 - [`../../evidence-traceability/readme.md`](../../evidence-traceability/readme.md) for evidence references and finding support.
 - [`../../policy-enforcement/readme.md`](../../policy-enforcement/readme.md) for policy decisions and fail-closed enforcement.

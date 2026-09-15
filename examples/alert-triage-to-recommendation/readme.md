@@ -210,8 +210,8 @@ This example maps to:
 - [`policy-enforced-tool-use-pattern.md`](../../patterns/policy-enforced-tool-use-pattern.md)
 - [`human-approved-sensitive-action-pattern.md`](../../patterns/human-approved-sensitive-action-pattern.md)
 - [`tenant-safe-rag-memory-pattern.md`](../../patterns/tenant-safe-rag-memory-pattern.md)
-- [`control-loop.md`](../../control-loop.md)
-- [`layered-architecture.md`](../../layered-architecture.md)
+- [`control-loop.md`](../../architecture/control-loop.md)
+- [`layered-architecture.md`](../../architecture/layered-architecture.md)
 
 ## Summary
 

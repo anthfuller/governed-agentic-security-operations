@@ -1,10 +1,29 @@
 # Changelog
 
-All notable documentation and architecture changes to this repository will be recorded in this file.
+All notable architecture, governance-contract, schema, conformance-tooling, test, and documentation changes to this repository will be recorded in this file.
 
-This repository is a conceptual reference architecture and documentation scaffold. Changelog entries describe documentation, diagram, template, pattern, governance, and architecture updates only.
+This repository is a conceptual reference architecture and adoption kit with bounded offline conformance tooling. Changelog entries do not imply a production security product or control plane.
 
 These entries do not represent product releases, service releases, customer guidance, implementation guidance, or official guidance from Microsoft or any other organization.
+
+## 2026-09-15
+
+### Added
+
+- Added a 36-control normative catalog and MSSP, MDR, and DFIR implementation profiles.
+- Added JSON Schemas and synthetic templates for governance, approval, policy, tool, evidence, audit, fleet, assurance, recommendation, replay, and decision artifacts.
+- Added the deterministic `gaso` CLI for offline schema, scope, policy, evidence, audit-chain, and replay checks.
+- Added complete MSSP endpoint-isolation, MDR cloud-IAM, and DFIR local-model timeline walkthrough artifact sets with documented negative cases.
+- Added request-digest-bound approvals, validate-only tool records, tamper-evident synthetic audit chains, and deterministic expected replay results.
+- Added positive, negative, repository-integrity, link, placeholder, catalog, profile, fleet, and walkthrough tests plus GitHub Actions CI.
+- Added adoption and architecture-to-control traceability guidance.
+
+### Changed
+
+- Completed every placeholder file and repaired case-sensitive internal links.
+- Repositioned the repository from documentation-only scaffolding to a non-production adoption kit with bounded offline validation.
+- Removed stale fixed inventory counts and statements requiring schemas, tests, or validation to live in another repository.
+- Clarified throughout that `ALLOW` is a conformance result and never external action execution.
 
 ## 2026-06-03
 

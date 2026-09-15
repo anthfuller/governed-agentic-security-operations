@@ -69,7 +69,7 @@ Use the repository by the architectural question you are working through.
 
 | Question | Start Here |
 |---|---|
-| What is the overall architecture? | [`architecture/`](architecture/README.md) |
+| What is the overall architecture? | [`architecture/`](architecture/readme.md) |
 | What reusable design patterns are available? | [`patterns/`](patterns/readme.md) |
 | Which normative controls apply? | [`controls/`](controls/README.md) |
 | Which service profile should I use? | [`profiles/`](profiles/README.md) |
@@ -79,6 +79,8 @@ Use the repository by the architectural question you are working through.
 | How are agents governed across lifecycle, access, monitoring, and rollback? | [`agent-governance/`](agent-governance/readme.md) |
 | How are policy decisions and enforcement boundaries modeled? | [`policy-enforcement/`](policy-enforcement/readme.md) |
 | What reusable records and templates are available? | [`templates/`](templates/readme.md) |
+| How do I adopt and tailor a profile? | [`ADOPTION-GUIDE.md`](ADOPTION-GUIDE.md) |
+| What is validated here versus externally enforced? | [`TRACEABILITY.md`](TRACEABILITY.md) |
 
 ## Quick Start
 
@@ -90,6 +92,32 @@ New readers can use the role-based quick-start guides to navigate the repository
 | DFIR practitioner | [`quick-start/for-dfir.md`](quick-start/for-dfir.md) | Review local/private LLM-assisted DFIR boundaries, evidence handling, and audit replay. |
 | Adoption-kit builder | [`quick-start/for-poc-builders.md`](quick-start/for-poc-builders.md) | Validate governance artifacts and conformance locally without operating real systems. |
 
+### Local Validation
+
+The `gaso` CLI requires Python 3.11 or later and operates on local synthetic artifacts only.
+
+```bash
+python -m venv .venv
+. .venv/bin/activate
+python -m pip install -e ".[dev]"
+
+gaso validate controls/control-catalog.yaml profiles/mssp.yaml
+gaso verify-tenant-scope \
+  templates/governed-action-request.yaml \
+  templates/human-approval-record.yaml \
+  templates/customer-approval-record.yaml
+gaso evaluate-policy templates/governed-action-request.yaml \
+  --policy policies/endpoint-response-policy.yaml \
+  --approvals templates/human-approval-record.yaml templates/customer-approval-record.yaml
+gaso verify-evidence-manifest templates/evidence-manifest.yaml \
+  --lineage templates/derived-artifact-lineage.yaml
+gaso verify-audit-chain tests/fixtures/audit-valid.jsonl
+gaso replay tests/fixtures/audit-valid.jsonl
+pytest
+```
+
+`ALLOW` means only that the synthetic request satisfied the selected reference policy. The CLI never invokes the requested action.
+
 ## Scenario Walkthroughs
 
 Scenario walkthroughs show how the architecture applies to concrete governed security operations workflows.
@@ -97,6 +125,8 @@ Scenario walkthroughs show how the architecture applies to concrete governed sec
 | Walkthrough | Focus |
 |---|---|
 | [`walkthroughs/mssp-endpoint-isolation.md`](walkthroughs/mssp-endpoint-isolation.md) | Agent recommendation, evidence support, policy decision, human approval, scoped tool execution, and audit replay. |
+| [`walkthroughs/mdr-cloud-iam-compromise.md`](walkthroughs/mdr-cloud-iam-compromise.md) | Cloud identity containment recommendation with exact approval and tool boundaries. |
+| [`walkthroughs/dfir-local-llm-timeline.md`](walkthroughs/dfir-local-llm-timeline.md) | Local-model timeline lineage, review, and replay without evidentiary claims. |
 
 ## Architecture Views
 
@@ -148,7 +178,7 @@ The root README provides the high-level map. See [`REPO-STRUCTURE.md`](REPO-STRU
 |---|---|---|
 | `quick-start/` | [`quick-start/README.md`](quick-start/README.md) | Role-based navigation paths for MSSP/MDR, DFIR, and PoC-builder readers. |
 | `walkthroughs/` | [`walkthroughs/README.md`](walkthroughs/README.md) | Concrete scenario walkthroughs that connect recommendations, policy decisions, approval, execution, and audit replay. |
-| `architecture/` | [`architecture/README.md`](architecture/README.md) | Architecture views, principles, assumptions, control loop, and diagrams. |
+| `architecture/` | [`architecture/readme.md`](architecture/readme.md) | Architecture views, principles, assumptions, control loop, and diagrams. |
 | `patterns/` | [`patterns/readme.md`](patterns/readme.md) | Reusable architecture patterns for governed agentic security operations. |
 | `examples/` | [`examples/readme.md`](examples/readme.md) | Scenario artifacts showing requests, approvals, decisions, judge outputs, evidence, timelines, review records, and audit events. |
 | `service-models/` | [`service-models/readme.md`](service-models/readme.md) | Operating models for MSSP, MDR, cloud incident response, private/local LLM-assisted DFIR, and fleet operations. |
@@ -163,6 +193,12 @@ The root README provides the high-level map. See [`REPO-STRUCTURE.md`](REPO-STRU
 | `local-llm-dfir/` | [`local-llm-dfir/readme.md`](local-llm-dfir/readme.md) | Local/private LLM DFIR boundaries, evidence handling, review, and audit replay. |
 | `audit-replay/` | [`audit-replay/readme.md`](audit-replay/readme.md) | Audit event model, replayability, correlation, failure audit, and immutable audit guidance. |
 | `templates/` | [`templates/readme.md`](templates/readme.md) | Standard records and reusable documentation templates. |
+| `controls/` | [`controls/README.md`](controls/README.md) | Normative machine-readable control catalog. |
+| `profiles/` | [`profiles/README.md`](profiles/README.md) | MSSP, MDR, and DFIR control selections and adoption requirements. |
+| `schemas/` | [`schemas/index.json`](schemas/index.json) | JSON Schema registry for repository artifacts. |
+| `policies/` | [`policies/endpoint-response-policy.yaml`](policies/endpoint-response-policy.yaml) | Deterministic, synthetic reference policy fixtures. |
+| `src/gaso/` | [`src/gaso/cli.py`](src/gaso/cli.py) | Offline validation, policy, scope, evidence, audit, and replay CLI. |
+| `tests/` | [`tests/`](tests/) | Positive and negative conformance tests and synthetic fixtures. |
 | `governance-library/ai-assurance/` | [`governance-library/ai-assurance/readme.md`](governance-library/ai-assurance/readme.md) | Agent judge contracts, output quality checks, unsupported-claim checks, tenant-boundary checks, and limitations. |
 
 ## Schema-Governed Reference Artifacts

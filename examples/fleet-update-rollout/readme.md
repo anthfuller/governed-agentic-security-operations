@@ -261,4 +261,4 @@ The audit chain must preserve successful, denied, paused, failed, rolled-back, a
 
 ## Documentation scope
 
-The JSON files in this directory are non-runnable architecture artifacts. They illustrate record relationships, authorization boundaries, rollout stages, tenant eligibility, monitoring gates, rollback controls, and audit replay expectations. Runtime schemas, package-signing services, deployment automation, policy code, tests, telemetry pipelines, and release tooling belong in a separate implementation repository.
+The JSON files in this directory are non-runnable architecture artifacts. They illustrate record relationships, authorization boundaries, rollout stages, tenant eligibility, monitoring gates, rollback controls, and audit replay expectations. This repository supplies offline schemas and conformance tests; package signing, deployment automation, telemetry pipelines, and release enforcement remain external implementation responsibilities.
