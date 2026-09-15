@@ -43,3 +43,13 @@ def test_profile_control_selection_matches_catalog_applicability():
         expected = {control_id for control_id, control in controls.items() if profile_name in control["profiles"]}
         assert selected == expected
         assert all(item["control_id"] in controls for item in profile["conditional_controls"])
+
+
+def test_controls_do_not_claim_unimplemented_automation():
+    controls = {item["id"]: item for item in catalog()["controls"]}
+    assert {item["type"] for item in controls["GASO-POL-003"]["verification"]} == {"automated", "external"}
+    assert {item["type"] for item in controls["GASO-TOL-001"]["verification"]} == {"automated", "external"}
+    assert {item["type"] for item in controls["GASO-TOL-003"]["verification"]} == {"automated", "external"}
+    assert {item["type"] for item in controls["GASO-FLT-002"]["verification"]} == {"manual", "external"}
+    for control_id in ("GASO-POL-003", "GASO-TOL-001", "GASO-TOL-003", "GASO-FLT-002"):
+        assert controls[control_id]["external_dependencies"], control_id

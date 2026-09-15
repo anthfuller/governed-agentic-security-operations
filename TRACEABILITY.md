@@ -1,10 +1,10 @@
 # Control and Architecture Traceability
 
-This index connects conceptual architecture components to normative controls, profiles, machine contracts, walkthrough evidence, tests, and external enforcement. Each control range below includes controls `001`, `002`, and `003` in that domain; the canonical requirements remain in [`controls/control-catalog.yaml`](controls/control-catalog.yaml).
+This index connects conceptual architecture components to normative controls, profiles, machine contracts, walkthrough evidence, tests, and external enforcement. Each control range below includes controls `001`, `002`, and `003` in that domain; the canonical requirements remain in [`controls/control-catalog.yaml`](controls/control-catalog.yaml). Repository tests cover only the checks implemented by this offline kit. They do not imply that every requirement in a control range is automated; consult each control's `verification` and `external_dependencies` fields for the authoritative boundary.
 
 ## Control Traceability
 
-| Architecture component | Controls | Profile requirement | Schema and template | Walkthrough evidence | Automated verification | External enforcement dependency |
+| Architecture component | Controls | Profile requirement | Schema and template | Walkthrough evidence | Repository checks (partial) | External enforcement dependency |
 |---|---|---|---|---|---|---|
 | Governance and accountability | `GASO-GOV-001`–`003` | [MSSP](profiles/mssp.yaml), [MDR](profiles/mdr.yaml), [DFIR](profiles/dfir.yaml) | [agent card](schemas/agent-card.schema.json), [ADR](schemas/adr.schema.json), [templates](templates/) | All three [walkthroughs](walkthroughs/README.md) separate recommendation, assurance, decision, and approval | [`test_catalog.py`](tests/test_catalog.py), [`test_controls.py`](tests/test_controls.py), [`test_policy.py`](tests/test_policy.py) | Organization ownership and change-management systems |
 | Agent and service identity | `GASO-IDN-001`–`003` | MSSP, MDR, DFIR | [agent-card schema](schemas/agent-card.schema.json), [agent-card template](templates/agent-card.yaml), [tool contract](templates/tool-contract.yaml) | Walkthrough actor, producer, evaluator, and tool identifiers | [`test_controls.py`](tests/test_controls.py), [`test_scope.py`](tests/test_scope.py) | Identity provider, workload identity, credential revocation |

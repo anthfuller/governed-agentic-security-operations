@@ -31,6 +31,29 @@ def find_schema_directory() -> Path:
     raise UsageError("schema_directory_not_found", "Could not locate the GASO schema directory.")
 
 
+def find_control_catalog(schema_directory: Path) -> Path:
+    if configured := os.environ.get("GASO_CONTROL_CATALOG"):
+        path = Path(configured)
+        if path.is_file():
+            return path
+        raise UsageError(
+            "control_catalog_not_found",
+            f"GASO_CONTROL_CATALOG does not identify a file: {path}",
+        )
+
+    candidates = [
+        schema_directory.parent / "controls" / "control-catalog.yaml",
+        Path(sys.prefix) / "share" / "gaso" / "controls" / "control-catalog.yaml",
+    ]
+    for candidate in candidates:
+        if candidate.is_file():
+            return candidate
+    raise UsageError(
+        "control_catalog_not_found",
+        "Could not locate the GASO control catalog required to validate an implementation profile.",
+    )
+
+
 class SchemaStore:
     def __init__(self, schema_directory: str | Path | None = None):
         self.directory = Path(schema_directory) if schema_directory else find_schema_directory()
@@ -50,6 +73,7 @@ class SchemaStore:
             self.schemas[path.name] = schema
             resources.append((uri, Resource.from_contents(schema)))
         self.registry = Registry().with_resources(resources)
+        self._catalog_control_ids: set[str] | None = None
 
     def validate(self, artifact: dict[str, Any], source: str = "artifact") -> str:
         artifact_type = artifact.get("artifact_type")
@@ -86,15 +110,12 @@ class SchemaStore:
             if unknown := sorted(referenced - known):
                 raise ConformanceError("unknown_related_control", f"{source}: unknown related controls: {', '.join(unknown)}")
         if artifact.get("artifact_type") == "implementation_profile":
-            catalog_path = self.directory.parent / "controls" / "control-catalog.yaml"
-            if catalog_path.is_file():
-                catalog = yaml.safe_load(catalog_path.read_text(encoding="utf-8"))
-                known = {control["id"] for control in catalog["controls"]}
-                selected = set(artifact["applicable_controls"])
-                selected.update(item["control_id"] for item in artifact["conditional_controls"])
-                unknown = sorted(selected - known)
-                if unknown:
-                    raise ConformanceError("unknown_control_reference", f"{source}: unknown controls: {', '.join(unknown)}")
+            known = self._load_catalog_control_ids()
+            selected = set(artifact["applicable_controls"])
+            selected.update(item["control_id"] for item in artifact["conditional_controls"])
+            unknown = sorted(selected - known)
+            if unknown:
+                raise ConformanceError("unknown_control_reference", f"{source}: unknown controls: {', '.join(unknown)}")
         if artifact.get("artifact_type") == "reference_policy":
             names = [action["name"] for action in artifact["actions"]]
             if len(names) != len(set(names)):
@@ -118,3 +139,17 @@ class SchemaStore:
             expected = list(range(1, len(sequences) + 1))
             if sequences != expected:
                 raise ConformanceError("replay_sequence_invalid", f"{source}: replay sequence must be contiguous and start at 1.")
+
+    def _load_catalog_control_ids(self) -> set[str]:
+        if self._catalog_control_ids is not None:
+            return self._catalog_control_ids
+        catalog_path = find_control_catalog(self.directory)
+        try:
+            catalog = yaml.safe_load(catalog_path.read_text(encoding="utf-8"))
+        except (OSError, yaml.YAMLError) as exc:
+            raise UsageError("control_catalog_load_error", f"Could not load {catalog_path}: {exc}") from exc
+        if not isinstance(catalog, dict):
+            raise UsageError("control_catalog_load_error", f"Control catalog is not an object: {catalog_path}")
+        self.validate(catalog, str(catalog_path))
+        self._catalog_control_ids = {control["id"] for control in catalog["controls"]}
+        return self._catalog_control_ids

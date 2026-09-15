@@ -49,6 +49,8 @@ def _approval_matches(
     if normalized_scope(approval, f"approval {approval.get('approval_id', '<unknown>')}") != request_scope:
         return False
     instant = _timestamp(request["requested_at"], "requested_at")
+    if _timestamp(approval["recorded_at"], "recorded_at") > instant:
+        return False
     return _timestamp(approval["valid_from"], "valid_from") <= instant <= _timestamp(approval["valid_until"], "valid_until")
 
 

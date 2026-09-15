@@ -145,9 +145,11 @@ controls:
     required_inputs: [decision timestamp, expiry, current context]
     expected_evidence: [fresh decision or expiration denial]
     failure_behavior: deny
-    verification: [{type: automated, method: Reject expired decisions and decisions bound to different context.}]
-    related: {controls: [GASO-APR-002, GASO-TOL-002], documents: [policy-enforcement/policy-contract.md], templates: [templates/policy-decision-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
-    external_dependencies: []
+    verification:
+      - {type: automated, method: Validate that each decision has well-ordered evaluated_at and expires_at bounds.}
+      - {type: external, method: Test that the deployed enforcement point rejects decisions at or after expires_at and requires a new evaluation after relevant context changes.}
+    related: {controls: [GASO-APR-002, GASO-TOL-002], documents: [policy-enforcement/policy-contract.md], templates: [templates/policy-decision-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
+    external_dependencies: [production policy decision and enforcement points, current authorization context source]
 
   - id: GASO-APR-001
     title: Distinguish review from approval
@@ -195,8 +197,10 @@ controls:
     required_inputs: [tool contract, operation identifier]
     expected_evidence: [tool registration and review record]
     failure_behavior: deny
-    verification: [{type: automated, method: "Reject unknown tools, operations, and inactive contract versions."}]
-    related: {controls: [GASO-TOL-002], documents: [tool-access/tool-registration-requirements.md], templates: [templates/tool-contract-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
+    verification:
+      - {type: automated, method: Validate tool-contract structure and reject duplicate operation definitions.}
+      - {type: external, method: Test that the production tool registry rejects unknown tools and operations and contracts that are not approved and current.}
+    related: {controls: [GASO-TOL-002], documents: [tool-access/tool-registration-requirements.md], templates: [templates/tool-contract-template.md], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
     external_dependencies: [production tool registry when deployed]
   - id: GASO-TOL-002
     title: Enforce decisions at the tool boundary
@@ -219,9 +223,11 @@ controls:
     required_inputs: [tool request, approval, tool contract]
     expected_evidence: [parameter comparison result]
     failure_behavior: deny
-    verification: [{type: automated, method: "Reject fixtures with altered targets, parameters, or operations."}]
+    verification:
+      - {type: automated, method: "Reject synthetic governed requests when tool IDs, targets, parameters, or scope differ from the reference policy or digest-bound approvals."}
+      - {type: external, method: "Test that the production enforcement point compares each execution request with the current tool contract, policy decision, and approvals before execution."}
     related: {controls: [GASO-APR-002, GASO-TEN-002], documents: [tool-access/restricted-tool-patterns.md], templates: [templates/tool-contract-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
-    external_dependencies: []
+    external_dependencies: [production policy enforcement point and tool registry]
 
   - id: GASO-EVD-001
     title: Identify and hash evidence references
@@ -318,8 +324,10 @@ controls:
     required_inputs: [release manifest, tenant eligibility, rollout plan]
     expected_evidence: [stage decisions, monitoring results]
     failure_behavior: fail_closed
-    verification: [{type: automated, method: Reject skipped stages and ineligible tenant assignments.}]
-    related: {controls: [GASO-FLT-001, GASO-FLT-003], documents: [agent-governance/agent-fleet-governance.md], templates: [], schemas: [], walkthroughs: [], tests: [tests/test_fleet.py]}
+    verification:
+      - {type: manual, method: "Review the rollout plan, tenant eligibility criteria, stage gates, and required monitoring evidence."}
+      - {type: external, method: Test that the production rollout system rejects ineligible tenant assignments and stage transitions without preceding recorded gates.}
+    related: {controls: [GASO-FLT-001, GASO-FLT-003], documents: [agent-governance/agent-fleet-governance.md], templates: [], schemas: [], walkthroughs: [], tests: []}
     external_dependencies: [production rollout and monitoring systems]
   - id: GASO-FLT-003
     title: Support rollback and emergency recall

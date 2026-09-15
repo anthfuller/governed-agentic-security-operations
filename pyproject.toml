@@ -25,6 +25,7 @@ where = ["src"]
 
 [tool.setuptools.data-files]
 "share/gaso/schemas" = ["schemas/*.json"]
+"share/gaso/controls" = ["controls/control-catalog.yaml"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

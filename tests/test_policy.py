@@ -51,6 +51,14 @@ def test_unregistered_parameter_is_denied():
     assert "parameter_not_allowed:force" in result["reason_codes"]
 
 
+def test_unregistered_tool_is_denied():
+    request = load("templates/governed-action-request.yaml")
+    request["tool_id"] = "tool-example-unregistered"
+    result = evaluate(request=request)
+    assert result["outcome"] == "DENY"
+    assert "tool_not_allowed_for_action" in result["reason_codes"]
+
+
 def test_explicitly_prohibited_action_is_denied():
     request = load("templates/governed-action-request.yaml")
     request["action"] = "delete_endpoint_data"
@@ -80,6 +88,14 @@ def test_request_change_invalidates_existing_approvals():
         "approval_missing_or_invalid:human",
         "approval_missing_or_invalid:customer",
     }
+
+
+def test_retroactive_approval_is_not_accepted():
+    approval = deepcopy(load("templates/human-approval-record.yaml"))
+    approval["recorded_at"] = "2026-09-15T12:04:00Z"
+    result = evaluate(approvals=[approval, load("templates/customer-approval-record.yaml")])
+    assert result["outcome"] == "REQUIRE_APPROVAL"
+    assert "approval_missing_or_invalid:human" in result["reason_codes"]
 
 
 def test_target_must_be_in_declared_scope():
