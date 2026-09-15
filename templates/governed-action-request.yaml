@@ -1,0 +1,18 @@
+artifact_type: governed_action_request
+schema_version: 1.0.0
+request_id: request-example-isolation-001
+correlation_id: correlation-example-isolation-001
+profile: MDR
+action: isolate_endpoint
+tool_id: tool-example-endpoint-response
+target_id: host-example-001
+parameters:
+  isolation_type: full
+  reason: Synthetic suspicious endpoint behavior
+scope:
+  customer_id: customer-example-001
+  tenant_id: tenant-example-001
+  case_id: case-example-2026-0001
+  target_ids: [host-example-001]
+requested_at: "2026-09-15T12:03:00Z"
+external_action_executed: false

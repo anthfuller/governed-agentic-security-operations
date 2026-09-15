@@ -1,0 +1,16 @@
+artifact_type: assurance_result
+schema_version: 1.0.0
+result_id: assurance-walkthrough-mdr-001
+evaluator_id: assurance-walkthrough-scope-and-support-002
+authoritative: false
+evaluated_artifact_ids: [recommendation-walkthrough-mdr-revoke-001]
+scope:
+  customer_id: customer-walkthrough-002
+  tenant_id: tenant-walkthrough-002
+  case_id: case-walkthrough-mdr-001
+  target_ids: [identity-walkthrough-001]
+outcome: REVIEW
+evidence_supported: true
+unsupported_claims: []
+limitations: [advisory only, does not grant authorization, synthetic fixture does not establish factual correctness]
+created_at: "2026-09-15T14:57:00Z"

@@ -1,0 +1,16 @@
+artifact_type: derived_artifact_lineage
+schema_version: 1.0.0
+derived_artifact_id: derived-example-timeline-001
+scope:
+  customer_id: customer-example-001
+  tenant_id: tenant-example-001
+  case_id: case-example-2026-0001
+  environment: synthetic-local-analysis
+classification: derived_artifact
+source_evidence_ids: [evidence-example-event-log-001]
+transformation: Normalize timestamps and order synthetic records without changing source evidence.
+producer: forensic timeline utility
+hash_algorithm: sha256
+hash_value: "2222222222222222222222222222222222222222222222222222222222222222"
+created_at: "2026-09-15T10:10:00Z"
+review_status: reviewed

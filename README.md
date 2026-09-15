@@ -4,11 +4,11 @@
 
 ## Overview
 
-This repository provides a documentation-first reference architecture and pattern library for governed agentic security operations.
+This repository provides a reference architecture, adoption kit, and offline conformance tooling for governed agentic security operations.
 
 It is designed for MSSP, MDR, SOC, cloud incident response, and private/local LLM-assisted DFIR use cases where agent-assisted workflows must remain scoped, policy-mediated, human-accountable, tenant-safe, evidence-aware, and auditable.
 
-The repository includes architecture views, governance patterns, service operating models, threat models, reusable templates, example artifacts, and control-library guidance. It is intended to support architecture review, service design, governance planning, and implementation planning for a separate runnable control plane.
+The repository includes architecture views, governance patterns, service operating models, threat models, a normative control catalog, implementation profiles, reusable templates, schema-governed examples, and deterministic validation tooling. It supports architecture review, service design, governance planning, artifact validation, and conformance testing without operating a real security platform.
 
 ## Core Principle
 
@@ -18,7 +18,7 @@ Agents may retrieve, reason, summarize, correlate, classify, draft, recommend, a
 
 ## Repository Scope
 
-This repository is an architecture and governance library. It is not a production deployment package.
+This repository is an architecture, governance, and adoption library with limited offline validation code. It is not a production deployment package or security operations product.
 
 It does not provide:
 
@@ -28,9 +28,9 @@ It does not provide:
 - a SIEM or SOAR deployment package;
 - a legally sufficient DFIR evidence system;
 - a customer-ready managed security service;
-- runtime code, tests, schemas, CI pipelines, Docker files, infrastructure automation, KQL query packs, or implementation-specific policy execution files.
+- production control-plane code, external tool execution, infrastructure automation, deployment templates, production policy enforcement, or vendor credentials.
 
-Implementation artifacts belong in a separate proof-of-concept or product implementation repository.
+The included `gaso` tooling validates repository-defined artifacts and reconstructs synthetic audit records. It does not invoke agents, models, SIEM, SOAR, EDR, identity, cloud, case-management, or forensic systems. Real enforcement remains an external implementation responsibility.
 
 Product names, where referenced in architecture assumptions or examples, are conceptual placement references unless explicitly stated otherwise. This repository does not claim that any specific vendor product natively provides all controls described here.
 
@@ -69,14 +69,18 @@ Use the repository by the architectural question you are working through.
 
 | Question | Start Here |
 |---|---|
-| What is the overall architecture? | [`architecture/`](architecture/README.md) |
+| What is the overall architecture? | [`architecture/`](architecture/readme.md) |
 | What reusable design patterns are available? | [`patterns/`](patterns/readme.md) |
+| Which normative controls apply? | [`controls/`](controls/README.md) |
+| Which service profile should I use? | [`profiles/`](profiles/README.md) |
 | What do example records and artifacts look like? | [`examples/`](examples/readme.md) |
 | How do MSSP, MDR, cloud IR, and DFIR service boundaries work? | [`service-models/`](service-models/readme.md) |
 | What threats and failure modes should be evaluated? | [`threat-model/`](threat-model/readme.md) |
 | How are agents governed across lifecycle, access, monitoring, and rollback? | [`agent-governance/`](agent-governance/readme.md) |
 | How are policy decisions and enforcement boundaries modeled? | [`policy-enforcement/`](policy-enforcement/readme.md) |
 | What reusable records and templates are available? | [`templates/`](templates/readme.md) |
+| How do I adopt and tailor a profile? | [`ADOPTION-GUIDE.md`](ADOPTION-GUIDE.md) |
+| What is validated here versus externally enforced? | [`TRACEABILITY.md`](TRACEABILITY.md) |
 
 ## Quick Start
 
@@ -86,7 +90,33 @@ New readers can use the role-based quick-start guides to navigate the repository
 |---|---|---|
 | MSSP / MDR architect | [`quick-start/for-mssp-mdr.md`](quick-start/for-mssp-mdr.md) | Review tenant-safe, policy-mediated agentic security operations. |
 | DFIR practitioner | [`quick-start/for-dfir.md`](quick-start/for-dfir.md) | Review local/private LLM-assisted DFIR boundaries, evidence handling, and audit replay. |
-| PoC builder | [`quick-start/for-poc-builders.md`](quick-start/for-poc-builders.md) | Identify the minimum artifacts needed for a separate runnable control-plane demonstration. |
+| Adoption-kit builder | [`quick-start/for-poc-builders.md`](quick-start/for-poc-builders.md) | Validate governance artifacts and conformance locally without operating real systems. |
+
+### Local Validation
+
+The `gaso` CLI requires Python 3.11 or later and operates on local synthetic artifacts only.
+
+```bash
+python -m venv .venv
+. .venv/bin/activate
+python -m pip install -e ".[dev]"
+
+gaso validate controls/control-catalog.yaml profiles/mssp.yaml
+gaso verify-tenant-scope \
+  templates/governed-action-request.yaml \
+  templates/human-approval-record.yaml \
+  templates/customer-approval-record.yaml
+gaso evaluate-policy templates/governed-action-request.yaml \
+  --policy policies/endpoint-response-policy.yaml \
+  --approvals templates/human-approval-record.yaml templates/customer-approval-record.yaml
+gaso verify-evidence-manifest templates/evidence-manifest.yaml \
+  --lineage templates/derived-artifact-lineage.yaml
+gaso verify-audit-chain tests/fixtures/audit-valid.jsonl
+gaso replay tests/fixtures/audit-valid.jsonl
+pytest
+```
+
+`ALLOW` means only that the synthetic request satisfied the selected reference policy. The CLI never invokes the requested action.
 
 ## Scenario Walkthroughs
 
@@ -95,6 +125,8 @@ Scenario walkthroughs show how the architecture applies to concrete governed sec
 | Walkthrough | Focus |
 |---|---|
 | [`walkthroughs/mssp-endpoint-isolation.md`](walkthroughs/mssp-endpoint-isolation.md) | Agent recommendation, evidence support, policy decision, human approval, scoped tool execution, and audit replay. |
+| [`walkthroughs/mdr-cloud-iam-compromise.md`](walkthroughs/mdr-cloud-iam-compromise.md) | Cloud identity containment recommendation with exact approval and tool boundaries. |
+| [`walkthroughs/dfir-local-llm-timeline.md`](walkthroughs/dfir-local-llm-timeline.md) | Local-model timeline lineage, review, and replay without evidentiary claims. |
 
 ## Architecture Views
 
@@ -146,7 +178,7 @@ The root README provides the high-level map. See [`REPO-STRUCTURE.md`](REPO-STRU
 |---|---|---|
 | `quick-start/` | [`quick-start/README.md`](quick-start/README.md) | Role-based navigation paths for MSSP/MDR, DFIR, and PoC-builder readers. |
 | `walkthroughs/` | [`walkthroughs/README.md`](walkthroughs/README.md) | Concrete scenario walkthroughs that connect recommendations, policy decisions, approval, execution, and audit replay. |
-| `architecture/` | [`architecture/README.md`](architecture/README.md) | Architecture views, principles, assumptions, control loop, and diagrams. |
+| `architecture/` | [`architecture/readme.md`](architecture/readme.md) | Architecture views, principles, assumptions, control loop, and diagrams. |
 | `patterns/` | [`patterns/readme.md`](patterns/readme.md) | Reusable architecture patterns for governed agentic security operations. |
 | `examples/` | [`examples/readme.md`](examples/readme.md) | Scenario artifacts showing requests, approvals, decisions, judge outputs, evidence, timelines, review records, and audit events. |
 | `service-models/` | [`service-models/readme.md`](service-models/readme.md) | Operating models for MSSP, MDR, cloud incident response, private/local LLM-assisted DFIR, and fleet operations. |
@@ -161,31 +193,29 @@ The root README provides the high-level map. See [`REPO-STRUCTURE.md`](REPO-STRU
 | `local-llm-dfir/` | [`local-llm-dfir/readme.md`](local-llm-dfir/readme.md) | Local/private LLM DFIR boundaries, evidence handling, review, and audit replay. |
 | `audit-replay/` | [`audit-replay/readme.md`](audit-replay/readme.md) | Audit event model, replayability, correlation, failure audit, and immutable audit guidance. |
 | `templates/` | [`templates/readme.md`](templates/readme.md) | Standard records and reusable documentation templates. |
+| `controls/` | [`controls/README.md`](controls/README.md) | Normative machine-readable control catalog. |
+| `profiles/` | [`profiles/README.md`](profiles/README.md) | MSSP, MDR, and DFIR control selections and adoption requirements. |
+| `schemas/` | [`schemas/index.json`](schemas/index.json) | JSON Schema registry for repository artifacts. |
+| `policies/` | [`policies/endpoint-response-policy.yaml`](policies/endpoint-response-policy.yaml) | Deterministic, synthetic reference policy fixtures. |
+| `src/gaso/` | [`src/gaso/cli.py`](src/gaso/cli.py) | Offline validation, policy, scope, evidence, audit, and replay CLI. |
+| `tests/` | [`tests/`](tests/) | Positive and negative conformance tests and synthetic fixtures. |
 | `governance-library/ai-assurance/` | [`governance-library/ai-assurance/readme.md`](governance-library/ai-assurance/readme.md) | Agent judge contracts, output quality checks, unsupported-claim checks, tenant-boundary checks, and limitations. |
 
-## Documentation Artifacts
+## Schema-Governed Reference Artifacts
 
-The JSON files under `examples/` are non-runnable documentation artifacts. They show representative shapes of requests, judge outputs, approval records, policy decisions, evidence manifests, timeline outputs, review records, and audit events for architecture discussion.
+The JSON files under `examples/` are synthetic reference artifacts. They show representative requests, judge outputs, approvals, policy decisions, evidence manifests, timeline outputs, review records, and audit events.
 
-They are not executable payloads and are not intended to validate runtime behavior.
+The repository validates their declared structure and selected governance invariants. Validation does not make them production payloads and does not prove runtime enforcement, factual correctness, evidentiary validity, or operational safety.
 
-Runnable request payloads, executable validation examples, tests, schemas, policy examples, KQL queries, and runtime behavior belong in a separate companion implementation or proof-of-concept repository.
+## Executable Conformance Tooling
 
-## Companion Implementation Repository
+The deterministic `gaso` CLI validates local artifacts, checks tenant and case scope, evaluates synthetic reference policies, verifies evidence manifests and audit chains, and reconstructs recorded timelines.
 
-This architecture can be paired with a separate runnable reference implementation:
-
-```text
-agentic-security-operations-control-plane-poc/
-```
-
-A companion implementation can demonstrate selected control-plane concepts using sample code, including schema validation, policy-gated agent actions, PDP/PEP flow, approval checks, audit event generation, and replay-oriented telemetry.
-
-A companion proof of concept does not replace enterprise identity, SIEM, SOAR, approval, audit, DFIR evidence, customer governance, or production enforcement systems.
+It never executes the governed action. Organizations remain responsible for implementing and verifying production identity, authorization, policy enforcement, approval, tenant isolation, tool mediation, logging, evidence preservation, and security controls.
 
 ## Public Repository Positioning
 
-This repository is intended to be useful as a public architecture reference while avoiding claims that would imply product readiness, official guidance, vendor endorsement, or production deployment status.
+This repository is intended to be useful as a public architecture and adoption reference while avoiding claims that imply product readiness, official guidance, vendor endorsement, or production deployment status.
 
 The emphasis is on architecture clarity, governance boundaries, tenant isolation, evidence traceability, human accountability, and auditability.
 

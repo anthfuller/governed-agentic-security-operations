@@ -1,0 +1,19 @@
+artifact_type: governed_action_request
+schema_version: 1.0.0
+request_id: request-walkthrough-dfir-review-001
+correlation_id: correlation-walkthrough-dfir-timeline-001
+profile: DFIR
+action: record_timeline_review
+tool_id: tool-walkthrough-case-record
+target_id: derived-walkthrough-timeline-001
+parameters:
+  purpose: internal investigative review
+  disposition: reviewed with limitations
+scope:
+  customer_id: customer-walkthrough-003
+  case_id: case-walkthrough-dfir-001
+  evidence_ids: [evidence-walkthrough-event-log-001]
+  target_ids: [derived-walkthrough-timeline-001]
+  environment: synthetic-isolated-analysis
+requested_at: "2026-09-15T16:15:00Z"
+external_action_executed: false

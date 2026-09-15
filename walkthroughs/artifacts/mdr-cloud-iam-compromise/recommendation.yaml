@@ -1,0 +1,16 @@
+artifact_type: security_recommendation
+schema_version: 1.0.0
+recommendation_id: recommendation-walkthrough-mdr-revoke-001
+producer_id: agent-walkthrough-mdr-investigation-001
+authoritative: false
+scope:
+  customer_id: customer-walkthrough-002
+  tenant_id: tenant-walkthrough-002
+  case_id: case-walkthrough-mdr-001
+  target_ids: [identity-walkthrough-001]
+recommended_action: revoke_identity_sessions
+target_id: identity-walkthrough-001
+evidence_ids: [evidence-walkthrough-signin-001]
+summary: Synthetic sign-in indicators support presenting session revocation for approval.
+limitations: [single synthetic evidence object, requires analyst review, does not authorize execution]
+created_at: "2026-09-15T14:55:00Z"

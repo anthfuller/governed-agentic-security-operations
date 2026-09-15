@@ -1,0 +1,29 @@
+artifact_type: reference_policy
+schema_version: 1.0.0
+policy_id: policy-example-endpoint-response
+version: 1.0.0
+profile: MDR
+default_outcome: FAIL_CLOSED
+decision_ttl_seconds: 3600
+actions:
+  - name: read_endpoint_status
+    allowed: true
+    risk_class: read_only
+    required_tool_id: tool-example-endpoint-response
+    required_approvals: []
+    required_scope_fields: [customer_id, tenant_id, case_id, target_ids]
+    allowed_parameters: [include_network_state]
+  - name: isolate_endpoint
+    allowed: true
+    risk_class: state_change
+    required_tool_id: tool-example-endpoint-response
+    required_approvals: [human, customer]
+    required_scope_fields: [customer_id, tenant_id, case_id, target_ids]
+    allowed_parameters: [isolation_type, reason]
+  - name: delete_endpoint_data
+    allowed: false
+    risk_class: destructive
+    required_tool_id: tool-example-endpoint-response
+    required_approvals: [human, customer]
+    required_scope_fields: [customer_id, tenant_id, case_id, target_ids]
+    allowed_parameters: [path]

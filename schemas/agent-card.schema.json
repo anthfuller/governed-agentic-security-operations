@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/gaso/schemas/agent-card.schema.json",
+  "title": "Agent Card",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["artifact_type", "schema_version", "agent_id", "version", "name", "owner_role", "identity_reference", "lifecycle_state", "approved_missions", "allowed_tools", "prohibited_actions", "scope", "approval_requirements", "external_dependencies"],
+  "properties": {
+    "artifact_type": {"const": "agent_card"},
+    "schema_version": {"$ref": "common-defs.schema.json#/$defs/semver"},
+    "agent_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "version": {"$ref": "common-defs.schema.json#/$defs/semver"},
+    "name": {"type": "string", "minLength": 3},
+    "owner_role": {"type": "string", "minLength": 3},
+    "identity_reference": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "lifecycle_state": {"enum": ["draft", "approved", "active", "suspended", "retired", "recalled"]},
+    "approved_missions": {"$ref": "common-defs.schema.json#/$defs/stringList"},
+    "allowed_tools": {"$ref": "common-defs.schema.json#/$defs/stringList"},
+    "prohibited_actions": {"$ref": "common-defs.schema.json#/$defs/stringList"},
+    "scope": {"$ref": "common-defs.schema.json#/$defs/scope"},
+    "approval_requirements": {"$ref": "common-defs.schema.json#/$defs/stringList"},
+    "external_dependencies": {"$ref": "common-defs.schema.json#/$defs/stringList"}
+  }
+}

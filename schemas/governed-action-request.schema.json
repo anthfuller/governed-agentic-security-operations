@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/gaso/schemas/governed-action-request.schema.json",
+  "title": "Governed Action Request",
+  "type": "object", "additionalProperties": false,
+  "required": ["artifact_type", "schema_version", "request_id", "correlation_id", "profile", "action", "tool_id", "target_id", "parameters", "scope", "requested_at", "external_action_executed"],
+  "properties": {
+    "artifact_type": {"const": "governed_action_request"},
+    "schema_version": {"$ref": "common-defs.schema.json#/$defs/semver"},
+    "request_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "correlation_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "profile": {"enum": ["MSSP", "MDR", "DFIR"]},
+    "action": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "tool_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "target_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "parameters": {"type": "object"},
+    "scope": {"$ref": "common-defs.schema.json#/$defs/scope"},
+    "requested_at": {"$ref": "common-defs.schema.json#/$defs/timestamp"},
+    "external_action_executed": {"const": false}
+  }
+}

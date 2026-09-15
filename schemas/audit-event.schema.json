@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/gaso/schemas/audit-event.schema.json",
+  "title": "Audit Event",
+  "type": "object", "additionalProperties": false,
+  "required": ["artifact_type", "schema_version", "event_id", "sequence", "correlation_id", "event_type", "event_time", "actor_id", "actor_type", "scope", "outcome", "details", "previous_event_hash", "event_hash"],
+  "properties": {
+    "artifact_type": {"const": "audit_event"},
+    "schema_version": {"$ref": "common-defs.schema.json#/$defs/semver"},
+    "event_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "sequence": {"type": "integer", "minimum": 1},
+    "correlation_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "event_type": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "event_time": {"$ref": "common-defs.schema.json#/$defs/timestamp"},
+    "actor_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "actor_type": {"enum": ["human", "agent", "service", "policy_engine", "external_system"]},
+    "scope": {"$ref": "common-defs.schema.json#/$defs/scope"},
+    "outcome": {"enum": ["recorded", "allowed", "denied", "failed_closed", "requires_approval", "not_executed", "succeeded", "failed"]},
+    "details": {"type": "object"},
+    "previous_event_hash": {"type": ["string", "null"], "pattern": "^(sha256:)?[a-fA-F0-9]{64}$"},
+    "event_hash": {"$ref": "common-defs.schema.json#/$defs/sha256"}
+  }
+}

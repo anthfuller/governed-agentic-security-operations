@@ -1,0 +1,14 @@
+artifact_type: fleet_recall_record
+schema_version: 1.0.0
+record_id: fleet-recall-example-001
+fleet_id: fleet-example-mdr-triage
+package_id: package-example-mdr-triage
+package_version: 1.1.0
+owner_role: fleet owner
+scope:
+  provider_id: provider-example-001
+  environment: synthetic
+rollback_target: package-example-mdr-triage@1.0.0
+recall_reason: Synthetic validation failure exceeded the approved halt threshold.
+approval_ids: [approval-example-fleet-recall-001]
+recorded_at: "2026-09-15T10:00:00Z"

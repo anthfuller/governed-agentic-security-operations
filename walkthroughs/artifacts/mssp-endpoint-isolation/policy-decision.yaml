@@ -1,0 +1,19 @@
+artifact_type: policy_decision_record
+schema_version: 1.0.0
+decision_id: decision:request-walkthrough-mssp-isolation-001:1.0.0
+request_id: request-walkthrough-mssp-isolation-001
+policy_id: policy-walkthrough-mssp-endpoint
+policy_version: 1.0.0
+outcome: ALLOW
+scope:
+  provider_id: provider-walkthrough-001
+  customer_id: customer-walkthrough-001
+  tenant_id: tenant-walkthrough-001
+  case_id: case-walkthrough-mssp-001
+  target_ids: [host-walkthrough-001]
+reason_codes: [reference_policy_requirements_satisfied]
+required_approvals: [human, customer]
+obligations: [external enforcement must revalidate this decision, no action was executed by gaso]
+evaluated_at: "2026-09-15T14:05:00Z"
+expires_at: "2026-09-15T14:35:00Z"
+executed_action: false

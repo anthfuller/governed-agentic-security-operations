@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/gaso/schemas/fleet-record.schema.json",
+  "title": "Fleet Release Manifest or Recall Record",
+  "type": "object", "additionalProperties": false,
+  "required": ["artifact_type", "schema_version", "record_id", "fleet_id", "package_id", "package_version", "owner_role", "scope", "recorded_at"],
+  "properties": {
+    "artifact_type": {"enum": ["fleet_release_manifest", "fleet_recall_record"]},
+    "schema_version": {"$ref": "common-defs.schema.json#/$defs/semver"},
+    "record_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "fleet_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "package_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "package_version": {"$ref": "common-defs.schema.json#/$defs/semver"},
+    "owner_role": {"type": "string", "minLength": 3},
+    "scope": {"$ref": "common-defs.schema.json#/$defs/scope"},
+    "package_hash": {"$ref": "common-defs.schema.json#/$defs/sha256"},
+    "eligibility_profile": {"type": "string"},
+    "rollout_stage": {"enum": ["validated", "approved", "canary", "limited", "broad", "rolled_back", "recalled"]},
+    "rollback_target": {"type": "string"},
+    "recall_reason": {"type": "string"},
+    "approval_ids": {"type": "array", "items": {"$ref": "common-defs.schema.json#/$defs/identifier"}, "uniqueItems": true},
+    "recorded_at": {"$ref": "common-defs.schema.json#/$defs/timestamp"}
+  },
+  "allOf": [
+    {"if": {"properties": {"artifact_type": {"const": "fleet_release_manifest"}}}, "then": {"required": ["package_hash", "eligibility_profile", "rollout_stage", "rollback_target", "approval_ids"]}},
+    {"if": {"properties": {"artifact_type": {"const": "fleet_recall_record"}}}, "then": {"required": ["recall_reason", "rollback_target", "approval_ids"]}}
+  ]
+}

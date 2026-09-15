@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gaso-conformance"
+version = "0.1.0"
+description = "Offline governance artifact validation and conformance tooling"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {file = "LICENSE"}
+dependencies = [
+  "jsonschema>=4.20,<5",
+  "PyYAML>=6,<7"
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10"]
+
+[project.scripts]
+gaso = "gaso.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.data-files]
+"share/gaso/schemas" = ["schemas/*.json"]
+"share/gaso/controls" = ["controls/control-catalog.yaml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

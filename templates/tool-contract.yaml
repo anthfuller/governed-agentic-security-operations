@@ -1,0 +1,14 @@
+artifact_type: tool_contract
+schema_version: 1.0.0
+tool_id: tool-example-endpoint-response
+version: 1.0.0
+owner_role: endpoint security owner
+lifecycle_state: approved
+operations:
+  - name: isolate_endpoint
+    risk_class: state_change
+    required_approvals: [human, customer]
+    allowed_parameters: [isolation_type, reason]
+scope_dimensions: [customer_id, tenant_id, case_id, target_id]
+prohibited_uses: [cross-tenant action, unapproved target substitution, credential collection]
+external_enforcement: An external policy enforcement point and endpoint platform must authorize and execute the action.

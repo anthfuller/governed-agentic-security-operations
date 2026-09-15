@@ -1,0 +1,14 @@
+artifact_type: tool_contract
+schema_version: 1.0.0
+tool_id: tool-walkthrough-endpoint
+version: 1.0.0
+owner_role: MSSP endpoint tooling owner
+lifecycle_state: approved
+operations:
+  - name: isolate_endpoint
+    risk_class: state_change
+    required_approvals: [human, customer]
+    allowed_parameters: [isolation_type, reason]
+scope_dimensions: [provider_id, customer_id, tenant_id, case_id, target_id]
+prohibited_uses: [cross-tenant action, target substitution, execution by this repository]
+external_enforcement: A production PEP and endpoint platform must authorize and execute the action.

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/gaso/schemas/assurance-result.schema.json",
+  "title": "Assurance Result",
+  "type": "object", "additionalProperties": false,
+  "required": ["artifact_type", "schema_version", "result_id", "evaluator_id", "authoritative", "evaluated_artifact_ids", "scope", "outcome", "evidence_supported", "unsupported_claims", "limitations", "created_at"],
+  "properties": {
+    "artifact_type": {"const": "assurance_result"},
+    "schema_version": {"$ref": "common-defs.schema.json#/$defs/semver"},
+    "result_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "evaluator_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "authoritative": {"const": false},
+    "evaluated_artifact_ids": {"type": "array", "minItems": 1, "items": {"$ref": "common-defs.schema.json#/$defs/identifier"}, "uniqueItems": true},
+    "scope": {"$ref": "common-defs.schema.json#/$defs/scope"},
+    "outcome": {"enum": ["PASS", "FAIL", "REVIEW"]},
+    "evidence_supported": {"type": "boolean"},
+    "unsupported_claims": {"type": "array", "items": {"type": "string"}},
+    "limitations": {"$ref": "common-defs.schema.json#/$defs/stringList"},
+    "created_at": {"$ref": "common-defs.schema.json#/$defs/timestamp"}
+  }
+}

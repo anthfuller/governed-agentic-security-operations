@@ -1,0 +1,81 @@
+artifact_type: implementation_profile
+profile_id: GASO-PROFILE-MSSP
+version: 0.1.0
+title: Managed Security Service Provider profile
+description: Minimum governance contract for multi-tenant managed security operations using agent-assisted workflows.
+applicable_controls:
+  - GASO-GOV-001
+  - GASO-GOV-002
+  - GASO-GOV-003
+  - GASO-IDN-001
+  - GASO-IDN-002
+  - GASO-IDN-003
+  - GASO-TEN-001
+  - GASO-TEN-002
+  - GASO-TEN-003
+  - GASO-POL-001
+  - GASO-POL-002
+  - GASO-POL-003
+  - GASO-APR-001
+  - GASO-APR-002
+  - GASO-APR-003
+  - GASO-TOL-001
+  - GASO-TOL-002
+  - GASO-TOL-003
+  - GASO-EVD-001
+  - GASO-EVD-002
+  - GASO-EVD-003
+  - GASO-AUD-001
+  - GASO-AUD-002
+  - GASO-AUD-003
+  - GASO-FLT-001
+  - GASO-FLT-002
+  - GASO-FLT-003
+  - GASO-ING-001
+  - GASO-ING-002
+  - GASO-ING-003
+  - GASO-ASR-001
+  - GASO-ASR-002
+  - GASO-ASR-003
+conditional_controls:
+  - control_id: GASO-LLM-001
+    condition: Apply when the service processes tenant evidence with a private or local model.
+  - control_id: GASO-LLM-002
+    condition: Apply when model-derived material contributes to a finding, recommendation, or report.
+  - control_id: GASO-LLM-003
+    condition: Apply when sensitive tenant data enters a private or local model environment.
+roles:
+  - name: Service governance owner
+    responsibilities: [approve service control requirements, own exceptions and residual risk]
+  - name: Tenant service owner
+    responsibilities: [maintain tenant scope and contracted authorization boundaries]
+  - name: SOC analyst
+    responsibilities: [review evidence and recommendations, escalate unsupported conclusions]
+  - name: Customer approver
+    responsibilities: [authorize customer-impacting actions when the service agreement requires approval]
+  - name: Policy and enforcement owner
+    responsibilities: [maintain policy rules, verify enforcement outside this repository]
+prohibited_actions:
+  - Cross-tenant retrieval or action without separately authorized scope
+  - Treating agent or judge output as approval
+  - Reusing one customer's approval for another customer or target
+  - Distributing raw tenant data as shared intelligence
+required_approvals:
+  - Internal approval for material service, policy, tool, and fleet changes
+  - Customer authorization for sensitive actions when required by the service agreement
+  - Separate release approval for sanitized cross-tenant intelligence
+scope_dimensions: [service provider, customer, tenant, case, evidence object, tool, operation, target, time window]
+required_artifacts: [agent card, tool contract, policy decision, approval record, audit events, fleet release record when applicable]
+required_commands:
+  - gaso validate profiles/mssp.yaml
+  - gaso verify-tenant-scope <artifact-set>
+  - gaso evaluate-policy <request> --policy <policy> --approvals <records>
+  - gaso verify-audit-chain <events.jsonl>
+  - gaso replay <events.jsonl>
+conformance_tests:
+  - Cross-tenant request is denied
+  - Missing required customer approval is denied
+  - Modified tool target is denied
+  - Ineligible tenant fleet assignment is denied
+  - Broken audit chain is rejected
+external_dependencies: [identity provider, SIEM or data platform, policy enforcement point, approval system, target security tools, durable audit store]

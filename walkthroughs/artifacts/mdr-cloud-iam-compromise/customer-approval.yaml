@@ -1,0 +1,21 @@
+artifact_type: customer_approval_record
+schema_version: 1.0.0
+approval_id: approval-walkthrough-mdr-customer-001
+request_id: request-walkthrough-mdr-session-revoke-001
+request_digest: a7bc07fb3bdd374f392b5df4d1cc3c626f8823c73984da1fab9ee781302d83e0
+policy_decision_id: decision:request-walkthrough-mdr-session-revoke-001:1.0.0
+approver:
+  identity_id: user-walkthrough-customer-approver-002
+  role: customer identity incident owner
+  is_agent: false
+decision: approved
+approved_actions: [revoke_identity_sessions]
+scope:
+  customer_id: customer-walkthrough-002
+  tenant_id: tenant-walkthrough-002
+  case_id: case-walkthrough-mdr-001
+  target_ids: [identity-walkthrough-001]
+conditions: [customer owns follow-up credential reset]
+valid_from: "2026-09-15T15:00:00Z"
+valid_until: "2026-09-15T15:15:00Z"
+recorded_at: "2026-09-15T15:03:00Z"

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/gaso/schemas/policy-decision.schema.json",
+  "title": "Policy Decision Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["artifact_type", "schema_version", "decision_id", "request_id", "policy_id", "policy_version", "outcome", "scope", "reason_codes", "required_approvals", "obligations", "evaluated_at", "expires_at", "executed_action"],
+  "properties": {
+    "artifact_type": {"const": "policy_decision_record"},
+    "schema_version": {"$ref": "common-defs.schema.json#/$defs/semver"},
+    "decision_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "request_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "policy_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "policy_version": {"$ref": "common-defs.schema.json#/$defs/semver"},
+    "outcome": {"enum": ["ALLOW", "DENY", "REQUIRE_APPROVAL", "FAIL_CLOSED"]},
+    "scope": {"$ref": "common-defs.schema.json#/$defs/scope"},
+    "reason_codes": {"$ref": "common-defs.schema.json#/$defs/stringList"},
+    "required_approvals": {"type": "array", "items": {"enum": ["human", "customer"]}, "uniqueItems": true},
+    "obligations": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "evaluated_at": {"$ref": "common-defs.schema.json#/$defs/timestamp"},
+    "expires_at": {"$ref": "common-defs.schema.json#/$defs/timestamp"},
+    "executed_action": {"const": false}
+  }
+}

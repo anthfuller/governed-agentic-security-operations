@@ -299,8 +299,8 @@ This example maps to:
 - [`human-approved-sensitive-action-pattern.md`](../../patterns/human-approved-sensitive-action-pattern.md)
 - [`policy-enforced-tool-use-pattern.md`](../../patterns/policy-enforced-tool-use-pattern.md)
 - [`governed-agentic-security-operations-pattern.md`](../../patterns/governed-agentic-security-operations-pattern.md)
-- [`control-loop.md`](../../control-loop.md)
-- [`layered-architecture.md`](../../layered-architecture.md)
+- [`control-loop.md`](../../architecture/control-loop.md)
+- [`layered-architecture.md`](../../architecture/layered-architecture.md)
 
 ## Summary
 

@@ -1,0 +1,18 @@
+artifact_type: tool_execution_request
+schema_version: 1.0.0
+request_id: tool-request-walkthrough-mdr-revoke-001
+correlation_id: correlation-walkthrough-mdr-cloud-iam-001
+tool_id: tool-walkthrough-cloud-identity
+tool_version: 1.0.0
+operation: revoke_identity_sessions
+target_id: identity-walkthrough-001
+parameters:
+  reason: Synthetic token replay indicators
+scope:
+  customer_id: customer-walkthrough-002
+  tenant_id: tenant-walkthrough-002
+  case_id: case-walkthrough-mdr-001
+  target_ids: [identity-walkthrough-001]
+policy_decision_id: decision:request-walkthrough-mdr-session-revoke-001:1.0.0
+approval_ids: [approval-walkthrough-mdr-human-001, approval-walkthrough-mdr-customer-001]
+execution_mode: validate_only

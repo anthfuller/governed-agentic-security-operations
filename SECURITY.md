@@ -2,11 +2,11 @@
 
 ## Supported Scope
 
-This repository contains conceptual reference architecture, documentation, templates, examples, diagrams, and synthetic sample data.
+This repository contains conceptual reference architecture, documentation, templates, schemas, deterministic offline validation code, tests, diagrams, and synthetic sample data.
 
 This repository is not production software, a deployable security product, a managed service, a SOC automation platform, a DFIR evidence system, or an implementation of an agentic security control plane.
 
-Because this repository is documentation-first, traditional software vulnerability support does not apply in the same way it would for production code.
+The included tooling does not operate external systems, but repository-specific software vulnerabilities, unsafe validation behavior, dependency risks, and accidental data exposure remain in scope for private reporting.
 
 ## Security Issue Reporting
 
@@ -40,7 +40,7 @@ All examples, alerts, logs, decisions, outputs, policies, schemas, workflows, te
 
 Agentic security operations must include explicit human accountability, policy enforcement, auditability, tenant isolation, evidence traceability, and fail-closed behavior for sensitive actions.
 
-The examples in this repository must not be treated as production-ready controls.
+The examples and validation results in this repository must not be treated as production-ready controls or proof of external enforcement.
 
 Any implementation based on these concepts should be reviewed, adapted, tested, and approved by qualified security, legal, privacy, compliance, AI governance, incident response, DFIR, engineering, and operational stakeholders before use.
 
@@ -69,6 +69,6 @@ See [`DISCLAIMER.md`](DISCLAIMER.md) for the full repository disclaimer.
 
 ## No Security Warranty
 
-This repository is provided for conceptual architecture discussion only.
+This repository is provided for architecture, adoption planning, and offline conformance testing only.
 
 It does not guarantee security outcomes, compliance outcomes, forensic validity, incident response correctness, operational safety, or production readiness.

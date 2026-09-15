@@ -1,0 +1,19 @@
+artifact_type: policy_decision_record
+schema_version: 1.0.0
+decision_id: decision:request-walkthrough-dfir-review-001:1.0.0
+request_id: request-walkthrough-dfir-review-001
+policy_id: policy-walkthrough-dfir-timeline
+policy_version: 1.0.0
+outcome: ALLOW
+scope:
+  customer_id: customer-walkthrough-003
+  case_id: case-walkthrough-dfir-001
+  evidence_ids: [evidence-walkthrough-event-log-001]
+  target_ids: [derived-walkthrough-timeline-001]
+  environment: synthetic-isolated-analysis
+reason_codes: [reference_policy_requirements_satisfied]
+required_approvals: [human]
+obligations: [external enforcement must revalidate this decision, no action was executed by gaso]
+evaluated_at: "2026-09-15T16:15:00Z"
+expires_at: "2026-09-15T16:45:00Z"
+executed_action: false

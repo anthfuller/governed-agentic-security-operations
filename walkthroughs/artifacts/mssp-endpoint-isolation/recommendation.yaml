@@ -1,0 +1,17 @@
+artifact_type: security_recommendation
+schema_version: 1.0.0
+recommendation_id: recommendation-walkthrough-mssp-isolation-001
+producer_id: agent-walkthrough-mssp-investigation-001
+authoritative: false
+scope:
+  provider_id: provider-walkthrough-001
+  customer_id: customer-walkthrough-001
+  tenant_id: tenant-walkthrough-001
+  case_id: case-walkthrough-mssp-001
+  target_ids: [host-walkthrough-001]
+recommended_action: isolate_endpoint
+target_id: host-walkthrough-001
+evidence_ids: [evidence-walkthrough-endpoint-alert-001]
+summary: Synthetic endpoint indicators support presenting isolation for approval.
+limitations: [single synthetic evidence object, requires analyst review, does not authorize execution]
+created_at: "2026-09-15T13:55:00Z"

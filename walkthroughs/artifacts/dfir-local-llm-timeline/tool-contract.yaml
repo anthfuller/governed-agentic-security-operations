@@ -1,0 +1,14 @@
+artifact_type: tool_contract
+schema_version: 1.0.0
+tool_id: tool-walkthrough-case-record
+version: 1.0.0
+owner_role: DFIR case governance owner
+lifecycle_state: approved
+operations:
+  - name: record_timeline_review
+    risk_class: sensitive_read
+    required_approvals: [human]
+    allowed_parameters: [purpose, disposition]
+scope_dimensions: [customer_id, case_id, evidence_ids, target_id, environment]
+prohibited_uses: [modify original evidence, external release, execution by this repository]
+external_enforcement: A production case and evidence system must enforce access and preserve the review record.

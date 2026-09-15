@@ -113,7 +113,7 @@ Agent governance is acceptable only when the following outcomes are true:
 
 | Related Area | Relationship |
 |---|---|
-| [`architecture/`](../architecture/README.md) | Defines where the Agent Governance & Identity Control Plane sits in the architecture. |
+| [`architecture/`](../architecture/readme.md) | Defines where the Agent Governance & Identity Control Plane sits in the architecture. |
 | [`patterns/`](../patterns/readme.md) | Defines reusable agentic workflow patterns that depend on governed identity, scope, policy, and auditability. |
 | [`policy-enforcement/`](../policy-enforcement/readme.md) | Uses agent identity, scope, version, risk tier, and lifecycle state as policy inputs. |
 | [`tool-access/`](../tool-access/readme.md) | Enforces approved tool and action scope for agents. |

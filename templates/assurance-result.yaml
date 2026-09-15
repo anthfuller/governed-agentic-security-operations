@@ -1,0 +1,15 @@
+artifact_type: assurance_result
+schema_version: 1.0.0
+result_id: assurance-example-001
+evaluator_id: assurance-example-evidence-check-001
+authoritative: false
+evaluated_artifact_ids: [request-example-isolation-001]
+scope:
+  customer_id: customer-example-001
+  tenant_id: tenant-example-001
+  case_id: case-example-2026-0001
+outcome: REVIEW
+evidence_supported: true
+unsupported_claims: []
+limitations: [does not grant authorization, does not establish factual correctness]
+created_at: "2026-09-15T11:57:00Z"

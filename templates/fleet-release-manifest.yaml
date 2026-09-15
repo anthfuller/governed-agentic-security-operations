@@ -1,0 +1,16 @@
+artifact_type: fleet_release_manifest
+schema_version: 1.0.0
+record_id: fleet-release-example-001
+fleet_id: fleet-example-mdr-triage
+package_id: package-example-mdr-triage
+package_version: 1.1.0
+owner_role: fleet owner
+scope:
+  provider_id: provider-example-001
+  environment: synthetic
+package_hash: "4444444444444444444444444444444444444444444444444444444444444444"
+eligibility_profile: synthetic-standard-tenants
+rollout_stage: validated
+rollback_target: package-example-mdr-triage@1.0.0
+approval_ids: [approval-example-fleet-001]
+recorded_at: "2026-09-15T09:30:00Z"

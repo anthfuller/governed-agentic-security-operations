@@ -2,7 +2,7 @@
 
 ## Scenario
 
-An MDR analyst receives an alert indicating suspicious endpoint behavior in a customer tenant. An agent assists by summarizing scoped evidence and recommending endpoint isolation.
+An MSSP analyst receives a synthetic alert in a workflow where Microsoft Sentinel and Microsoft Defender are conceptual source and response-system placements. An agent assists by summarizing scoped evidence and recommending endpoint isolation. The fixtures are not vendor payloads, do not use vendor credentials, and make no API call.
 
 ## Governance Objective
 
@@ -46,15 +46,61 @@ Show how an agent-assisted recommendation moves through evidence support, policy
 
 ## Representative Artifacts
 
-- Agent recommendation record
-- Agent judge output
-- Policy decision record
-- Human approval record
-- Customer approval record, where required
-- Tool execution request
-- Tool execution result
-- Audit event
-- Replay summary
+The complete synthetic set is under [`artifacts/mssp-endpoint-isolation/`](artifacts/mssp-endpoint-isolation/): evidence manifest, non-authoritative recommendation and assurance result, policy, governed request, generated decision fixture, human and customer approvals, tool contract, validate-only tool request, `not_executed` result, hash-chained audit events, and expected replay.
+
+## Run the Deterministic Gates
+
+From the repository root:
+
+```bash
+gaso validate walkthroughs/artifacts/mssp-endpoint-isolation/*.yaml \
+  walkthroughs/artifacts/mssp-endpoint-isolation/expected-replay.json
+
+gaso verify-tenant-scope \
+  walkthroughs/artifacts/mssp-endpoint-isolation/request.yaml \
+  walkthroughs/artifacts/mssp-endpoint-isolation/human-approval.yaml \
+  walkthroughs/artifacts/mssp-endpoint-isolation/customer-approval.yaml
+
+gaso evaluate-policy \
+  walkthroughs/artifacts/mssp-endpoint-isolation/request.yaml \
+  --policy walkthroughs/artifacts/mssp-endpoint-isolation/policy.yaml
+
+gaso verify-evidence-manifest \
+  walkthroughs/artifacts/mssp-endpoint-isolation/evidence-manifest.yaml
+
+gaso verify-audit-chain \
+  walkthroughs/artifacts/mssp-endpoint-isolation/audit-events.jsonl
+gaso replay \
+  walkthroughs/artifacts/mssp-endpoint-isolation/audit-events.jsonl
+```
+
+The third command must return `REQUIRE_APPROVAL` and exit `1`. Supplying both exact approvals returns `ALLOW`:
+
+```bash
+gaso evaluate-policy \
+  walkthroughs/artifacts/mssp-endpoint-isolation/request.yaml \
+  --policy walkthroughs/artifacts/mssp-endpoint-isolation/policy.yaml \
+  --approvals \
+  walkthroughs/artifacts/mssp-endpoint-isolation/human-approval.yaml \
+  walkthroughs/artifacts/mssp-endpoint-isolation/customer-approval.yaml
+```
+
+`ALLOW` means only that the supplied synthetic records satisfy the reference policy. `gaso` never contacts or isolates an endpoint. A production PEP must revalidate the decision and enforce the action through an approved tool.
+
+## Negative Case
+
+This changes the request target without changing declared scope and must return `FAIL_CLOSED` with exit `1`:
+
+```bash
+gaso evaluate-policy \
+  walkthroughs/artifacts/mssp-endpoint-isolation/negative/request-target-mismatch.yaml \
+  --policy walkthroughs/artifacts/mssp-endpoint-isolation/policy.yaml \
+  --approvals \
+  walkthroughs/artifacts/mssp-endpoint-isolation/human-approval.yaml \
+  walkthroughs/artifacts/mssp-endpoint-isolation/customer-approval.yaml
+```
+
+The automated assertion is `test_mssp_cross_target_request_fails_closed` in [`../tests/test_walkthroughs.py`](../tests/test_walkthroughs.py).
 
 ## Architecture References
 
@@ -64,3 +110,4 @@ Show how an agent-assisted recommendation moves through evidence support, policy
 - [`../tenant-isolation/readme.md`](../tenant-isolation/readme.md)
 - [`../tool-access/readme.md`](../tool-access/readme.md)
 - [`../audit-replay/readme.md`](../audit-replay/readme.md)
+- [`../profiles/mssp.yaml`](../profiles/mssp.yaml)
