@@ -1,0 +1,21 @@
+artifact_type: human_approval_record
+schema_version: 1.0.0
+approval_id: approval-example-human-001
+request_id: request-example-isolation-001
+request_digest: a1ea986e2c3a3c43580ace0da932ade25f62ab4d210a3130315b43d91fc92d2d
+policy_decision_id: decision:request-example-isolation-001:1.0.0
+approver:
+  identity_id: user-example-response-approver-001
+  role: response approver
+  is_agent: false
+decision: approved
+approved_actions: [isolate_endpoint]
+scope:
+  customer_id: customer-example-001
+  tenant_id: tenant-example-001
+  case_id: case-example-2026-0001
+  target_ids: [host-example-001]
+conditions: [approval is valid only for the named host and request]
+valid_from: "2026-09-15T12:00:00Z"
+valid_until: "2026-09-15T13:00:00Z"
+recorded_at: "2026-09-15T12:00:00Z"

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/gaso/schemas/approval-record.schema.json",
+  "title": "Human or Customer Approval Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["artifact_type", "schema_version", "approval_id", "request_id", "request_digest", "policy_decision_id", "approver", "decision", "approved_actions", "scope", "conditions", "valid_from", "valid_until", "recorded_at"],
+  "properties": {
+    "artifact_type": {"enum": ["human_approval_record", "customer_approval_record"]},
+    "schema_version": {"$ref": "common-defs.schema.json#/$defs/semver"},
+    "approval_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "request_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "request_digest": {"$ref": "common-defs.schema.json#/$defs/sha256"},
+    "policy_decision_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "approver": {"$ref": "common-defs.schema.json#/$defs/humanActor"},
+    "decision": {"enum": ["approved", "denied"]},
+    "approved_actions": {"$ref": "common-defs.schema.json#/$defs/stringList"},
+    "scope": {"$ref": "common-defs.schema.json#/$defs/scope"},
+    "conditions": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "valid_from": {"$ref": "common-defs.schema.json#/$defs/timestamp"},
+    "valid_until": {"$ref": "common-defs.schema.json#/$defs/timestamp"},
+    "recorded_at": {"$ref": "common-defs.schema.json#/$defs/timestamp"}
+  }
+}

@@ -62,8 +62,13 @@
         "related": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["documents", "templates", "schemas", "walkthroughs", "tests"],
+          "required": ["controls", "documents", "templates", "schemas", "walkthroughs", "tests"],
           "properties": {
+            "controls": {
+              "type": "array",
+              "items": {"type": "string", "pattern": "^GASO-(GOV|IDN|TEN|POL|APR|TOL|EVD|AUD|FLT|LLM|ING|ASR)-[0-9]{3}$"},
+              "uniqueItems": true
+            },
             "documents": {"$ref": "#/$defs/pathList"},
             "templates": {"$ref": "#/$defs/pathList"},
             "schemas": {"$ref": "#/$defs/pathList"},

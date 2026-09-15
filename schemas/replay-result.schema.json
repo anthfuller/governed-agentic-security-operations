@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/gaso/schemas/replay-result.schema.json",
+  "title": "Deterministic Replay Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["artifact_type", "schema_version", "correlation_id", "chain_verified", "external_action_executed", "timeline"],
+  "properties": {
+    "artifact_type": {"const": "replay_result"},
+    "schema_version": {"$ref": "common-defs.schema.json#/$defs/semver"},
+    "correlation_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "chain_verified": {"const": true},
+    "external_action_executed": {"const": false},
+    "timeline": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sequence", "event_time", "event_type", "actor_id", "outcome", "details"],
+        "properties": {
+          "sequence": {"type": "integer", "minimum": 1},
+          "event_time": {"$ref": "common-defs.schema.json#/$defs/timestamp"},
+          "event_type": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+          "actor_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+          "outcome": {"enum": ["recorded", "allowed", "denied", "failed_closed", "requires_approval", "not_executed", "succeeded", "failed"]},
+          "details": {"type": "object"}
+        }
+      }
+    }
+  }
+}

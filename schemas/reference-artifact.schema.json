@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/gaso/schemas/reference-artifact.schema.json",
+  "title": "Legacy Synthetic Reference Artifact Envelope",
+  "type": "object",
+  "required": ["artifact_type", "schema_version", "example_name"],
+  "properties": {
+    "artifact_type": {"type": "string", "minLength": 3},
+    "schema_version": {"$ref": "common-defs.schema.json#/$defs/semver"},
+    "example_name": {"type": "string", "minLength": 3}
+  },
+  "anyOf": [
+    {"required": ["request_id"]}, {"required": ["policy_decision_id"]},
+    {"required": ["approval_record_id"]}, {"required": ["audit_event_id"]},
+    {"required": ["evidence_manifest_id"]}, {"required": ["review_record_id"]},
+    {"required": ["timeline_output_id"]}, {"required": ["judge_output_id"]},
+    {"required": ["sanitization_review_record_id"]},
+    {"required": ["fleet_update_request_id"]}, {"required": ["release_request_id"]}
+  ]
+}

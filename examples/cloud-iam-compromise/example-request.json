@@ -1,4 +1,5 @@
 {
+  "artifact_type": "agentic_cloud_iam_compromise_request",
   "schema_version": "1.0.0",
   "example_name": "cloud-iam-compromise",
   "request_type": "agentic_cloud_iam_compromise_request",

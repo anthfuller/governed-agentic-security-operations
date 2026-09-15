@@ -1,0 +1,19 @@
+artifact_type: audit_event
+schema_version: 1.0.0
+event_id: audit-event-example-001
+sequence: 1
+correlation_id: correlation-example-isolation-001
+event_type: request_validated
+event_time: "2026-09-15T11:55:00Z"
+actor_id: service-example-gaso-validator
+actor_type: service
+scope:
+  customer_id: customer-example-001
+  tenant_id: tenant-example-001
+  case_id: case-example-2026-0001
+outcome: recorded
+details:
+  request_id: request-example-isolation-001
+  external_action_executed: false
+previous_event_hash: null
+event_hash: e999f2a819e2e979927de48c8fa912710b2318e5d9dd25aa0d4a1c3021140534

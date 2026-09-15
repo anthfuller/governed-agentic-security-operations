@@ -1,0 +1,8 @@
+artifact_type: tool_execution_result
+schema_version: 1.0.0
+execution_id: execution-example-isolation-001
+request_id: tool-request-example-isolation-001
+status: not_executed
+recorded_at: "2026-09-15T12:04:00Z"
+source_system: gaso validation fixture
+external_receipt_reference: null

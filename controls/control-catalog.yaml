@@ -11,7 +11,7 @@ controls:
     expected_evidence: [recorded authorization source, separation-of-duties review]
     failure_behavior: deny
     verification: [{type: automated, method: Reject decisions whose authorizer is an agent or judge.}]
-    related: {documents: [architecture/control-loop.md], templates: [templates/agent-card-template.md, templates/policy-decision-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
+    related: {controls: [GASO-POL-001, GASO-APR-001, GASO-ASR-001], documents: [architecture/control-loop.md], templates: [templates/agent-card-template.md, templates/policy-decision-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
     external_dependencies: []
   - id: GASO-GOV-002
     title: Assign accountable ownership
@@ -23,7 +23,7 @@ controls:
     expected_evidence: [ownership record, review record]
     failure_behavior: fail_closed
     verification: [{type: automated, method: Validate required ownership fields and non-agent role values.}]
-    related: {documents: [agent-governance/readme.md], templates: [templates/agent-card-template.md, templates/tool-contract-template.md], schemas: [], walkthroughs: [], tests: [tests/test_catalog.py]}
+    related: {controls: [GASO-IDN-001], documents: [agent-governance/readme.md], templates: [templates/agent-card-template.md, templates/tool-contract-template.md], schemas: [], walkthroughs: [], tests: [tests/test_catalog.py]}
     external_dependencies: []
   - id: GASO-GOV-003
     title: Govern material changes
@@ -35,7 +35,7 @@ controls:
     expected_evidence: [approval record, version record, rollback test]
     failure_behavior: fail_closed
     verification: [{type: manual, method: Confirm approval and rollback evidence before release.}]
-    related: {documents: [agent-governance/agent-change-management.md], templates: [templates/adr-template.md], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
+    related: {controls: [GASO-FLT-001, GASO-FLT-003], documents: [agent-governance/agent-change-management.md], templates: [templates/adr-template.md], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
     external_dependencies: [organization change-management system]
 
   - id: GASO-IDN-001
@@ -48,7 +48,7 @@ controls:
     expected_evidence: [identity identifier, lifecycle state, credential reference]
     failure_behavior: fail_closed
     verification: [{type: manual, method: Verify identity uniqueness and ownership in the external identity system.}]
-    related: {documents: [agent-governance/agent-identity-lifecycle.md], templates: [templates/agent-card-template.md], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
+    related: {controls: [GASO-GOV-002, GASO-IDN-003], documents: [agent-governance/agent-identity-lifecycle.md], templates: [templates/agent-card-template.md], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
     external_dependencies: [organization identity provider]
   - id: GASO-IDN-002
     title: Enforce least privilege
@@ -60,7 +60,7 @@ controls:
     expected_evidence: [permission review, scope match result]
     failure_behavior: deny
     verification: [{type: external, method: Compare effective permissions with the approved tool contract.}]
-    related: {documents: [agent-governance/agent-access-scope.md, tool-access/tool-access-model.md], templates: [templates/tool-contract-template.md], schemas: [], walkthroughs: [], tests: [tests/test_scope.py]}
+    related: {controls: [GASO-TEN-003, GASO-TOL-002], documents: [agent-governance/agent-access-scope.md, tool-access/tool-access-model.md], templates: [templates/tool-contract-template.md], schemas: [], walkthroughs: [], tests: [tests/test_scope.py]}
     external_dependencies: [organization identity provider, target platform authorization]
   - id: GASO-IDN-003
     title: Revoke inactive or compromised identities
@@ -72,7 +72,7 @@ controls:
     expected_evidence: [revocation record, denied-use audit event]
     failure_behavior: deny
     verification: [{type: external, method: Verify revocation and denied access in the identity provider.}]
-    related: {documents: [agent-governance/agent-identity-lifecycle.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
+    related: {controls: [GASO-AUD-001, GASO-FLT-003], documents: [agent-governance/agent-identity-lifecycle.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
     external_dependencies: [organization identity provider]
 
   - id: GASO-TEN-001
@@ -85,7 +85,7 @@ controls:
     expected_evidence: [scope validation result]
     failure_behavior: fail_closed
     verification: [{type: automated, method: Require and validate applicable scope identifiers.}]
-    related: {documents: [tenant-isolation/tenant-boundary-model.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_scope.py]}
+    related: {controls: [GASO-TEN-002], documents: [tenant-isolation/tenant-boundary-model.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_scope.py]}
     external_dependencies: []
   - id: GASO-TEN-002
     title: Preserve scope across handoffs
@@ -97,7 +97,7 @@ controls:
     expected_evidence: [cross-artifact scope validation result]
     failure_behavior: fail_closed
     verification: [{type: automated, method: Compare scope values across artifacts sharing a correlation identifier.}]
-    related: {documents: [tenant-isolation/tenant-scope-validation.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_scope.py]}
+    related: {controls: [GASO-TEN-001, GASO-TEN-003], documents: [tenant-isolation/tenant-scope-validation.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_scope.py]}
     external_dependencies: []
   - id: GASO-TEN-003
     title: Deny cross-scope access by default
@@ -109,7 +109,7 @@ controls:
     expected_evidence: [denial record, mismatch details]
     failure_behavior: deny
     verification: [{type: automated, method: Inject mismatched scope fixtures and require denial.}]
-    related: {documents: [tenant-isolation/cross-tenant-failure-modes.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_scope.py]}
+    related: {controls: [GASO-ASR-003, GASO-ING-003], documents: [tenant-isolation/cross-tenant-failure-modes.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_scope.py]}
     external_dependencies: [target data and action platforms]
 
   - id: GASO-POL-001
@@ -122,7 +122,7 @@ controls:
     expected_evidence: [policy decision record]
     failure_behavior: deny
     verification: [{type: automated, method: Reject requests without a valid matching policy decision.}]
-    related: {documents: [policy-enforcement/policy-decision-flow.md], templates: [templates/policy-decision-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
+    related: {controls: [GASO-POL-002, GASO-TOL-002], documents: [policy-enforcement/policy-decision-flow.md], templates: [templates/policy-decision-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
     external_dependencies: [production policy decision point when deployed]
   - id: GASO-POL-002
     title: Fail closed on indeterminate policy state
@@ -134,7 +134,7 @@ controls:
     expected_evidence: [fail-closed decision and reason codes]
     failure_behavior: fail_closed
     verification: [{type: automated, method: "Run malformed, stale, missing, and conflicting policy fixtures."}]
-    related: {documents: [policy-enforcement/fail-closed-behavior.md], templates: [templates/policy-decision-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
+    related: {controls: [GASO-AUD-001, GASO-POL-001], documents: [policy-enforcement/fail-closed-behavior.md], templates: [templates/policy-decision-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
     external_dependencies: []
   - id: GASO-POL-003
     title: Expire and revalidate decisions
@@ -146,7 +146,7 @@ controls:
     expected_evidence: [fresh decision or expiration denial]
     failure_behavior: deny
     verification: [{type: automated, method: Reject expired decisions and decisions bound to different context.}]
-    related: {documents: [policy-enforcement/policy-contract.md], templates: [templates/policy-decision-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
+    related: {controls: [GASO-APR-002, GASO-TOL-002], documents: [policy-enforcement/policy-contract.md], templates: [templates/policy-decision-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
     external_dependencies: []
 
   - id: GASO-APR-001
@@ -159,7 +159,7 @@ controls:
     expected_evidence: [approval record from an authorized role]
     failure_behavior: deny
     verification: [{type: automated, method: Reject review artifacts supplied as authorization.}]
-    related: {documents: [human-oversight/human-review-model.md], templates: [templates/human-approval-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
+    related: {controls: [GASO-ASR-001, GASO-GOV-001], documents: [human-oversight/human-review-model.md], templates: [templates/human-approval-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
     external_dependencies: [organization approval system]
   - id: GASO-APR-002
     title: Bind approval to exact scope
@@ -171,7 +171,7 @@ controls:
     expected_evidence: [scope-bound approval record]
     failure_behavior: deny
     verification: [{type: automated, method: Reject approval records that do not exactly match the request scope.}]
-    related: {documents: [human-oversight/approval-boundaries.md], templates: [templates/human-approval-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
+    related: {controls: [GASO-POL-003, GASO-TOL-003], documents: [human-oversight/approval-boundaries.md], templates: [templates/human-approval-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
     external_dependencies: []
   - id: GASO-APR-003
     title: Require customer authorization when contracted
@@ -183,7 +183,7 @@ controls:
     expected_evidence: [customer approval record]
     failure_behavior: deny
     verification: [{type: automated, method: Reject customer-impacting fixtures when required customer approval is absent.}]
-    related: {documents: [human-oversight/customer-approval-model.md], templates: [templates/customer-approval-record-template.md], schemas: [], walkthroughs: [walkthroughs/mssp-endpoint-isolation.md], tests: [tests/test_policy.py]}
+    related: {controls: [GASO-APR-002], documents: [human-oversight/customer-approval-model.md], templates: [templates/customer-approval-record-template.md], schemas: [], walkthroughs: [walkthroughs/mssp-endpoint-isolation.md], tests: [tests/test_policy.py]}
     external_dependencies: [contract and customer authorization channel]
 
   - id: GASO-TOL-001
@@ -196,7 +196,7 @@ controls:
     expected_evidence: [tool registration and review record]
     failure_behavior: deny
     verification: [{type: automated, method: "Reject unknown tools, operations, and inactive contract versions."}]
-    related: {documents: [tool-access/tool-registration-requirements.md], templates: [templates/tool-contract-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
+    related: {controls: [GASO-TOL-002], documents: [tool-access/tool-registration-requirements.md], templates: [templates/tool-contract-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
     external_dependencies: [production tool registry when deployed]
   - id: GASO-TOL-002
     title: Enforce decisions at the tool boundary
@@ -208,7 +208,7 @@ controls:
     expected_evidence: [PEP validation result, tool receipt]
     failure_behavior: deny
     verification: [{type: external, method: Test the production enforcement point with denied and mismatched requests.}]
-    related: {documents: [policy-enforcement/pep-pdp-model.md, tool-access/tool-access-model.md], templates: [templates/tool-contract-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
+    related: {controls: [GASO-POL-001, GASO-TOL-003], documents: [policy-enforcement/pep-pdp-model.md, tool-access/tool-access-model.md], templates: [templates/tool-contract-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
     external_dependencies: [production policy enforcement point]
   - id: GASO-TOL-003
     title: Constrain tool requests to approved parameters
@@ -220,7 +220,7 @@ controls:
     expected_evidence: [parameter comparison result]
     failure_behavior: deny
     verification: [{type: automated, method: "Reject fixtures with altered targets, parameters, or operations."}]
-    related: {documents: [tool-access/restricted-tool-patterns.md], templates: [templates/tool-contract-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
+    related: {controls: [GASO-APR-002, GASO-TEN-002], documents: [tool-access/restricted-tool-patterns.md], templates: [templates/tool-contract-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
     external_dependencies: []
 
   - id: GASO-EVD-001
@@ -233,7 +233,7 @@ controls:
     expected_evidence: [evidence manifest]
     failure_behavior: fail_closed
     verification: [{type: automated, method: "Validate evidence identifiers, hash algorithms, hash values, and required context."}]
-    related: {documents: [evidence-traceability/evidence-reference-requirements.md], templates: [templates/evidence-manifest-template.md], schemas: [], walkthroughs: [], tests: [tests/test_evidence.py]}
+    related: {controls: [GASO-EVD-002], documents: [evidence-traceability/evidence-reference-requirements.md], templates: [templates/evidence-manifest-template.md], schemas: [], walkthroughs: [], tests: [tests/test_evidence.py]}
     external_dependencies: [system preserving original evidence]
   - id: GASO-EVD-002
     title: Preserve derived-artifact lineage
@@ -245,7 +245,7 @@ controls:
     expected_evidence: [derived-artifact lineage record]
     failure_behavior: fail_closed
     verification: [{type: automated, method: Resolve every derived artifact to declared source evidence.}]
-    related: {documents: [evidence-traceability/evidence-traceability-model.md], templates: [templates/evidence-manifest-template.md], schemas: [], walkthroughs: [], tests: [tests/test_evidence.py]}
+    related: {controls: [GASO-EVD-001, GASO-EVD-003], documents: [evidence-traceability/evidence-traceability-model.md], templates: [templates/evidence-manifest-template.md], schemas: [], walkthroughs: [], tests: [tests/test_evidence.py]}
     external_dependencies: []
   - id: GASO-EVD-003
     title: Keep summaries separate from original evidence
@@ -257,7 +257,7 @@ controls:
     expected_evidence: [classification and lineage record]
     failure_behavior: fail_closed
     verification: [{type: automated, method: Reject derived artifacts that omit classification or source references.}]
-    related: {documents: [evidence-traceability/finding-support-requirements.md], templates: [templates/evidence-manifest-template.md], schemas: [], walkthroughs: [], tests: [tests/test_evidence.py]}
+    related: {controls: [GASO-ASR-002, GASO-LLM-002], documents: [evidence-traceability/finding-support-requirements.md], templates: [templates/evidence-manifest-template.md], schemas: [], walkthroughs: [], tests: [tests/test_evidence.py]}
     external_dependencies: []
 
   - id: GASO-AUD-001
@@ -270,7 +270,7 @@ controls:
     expected_evidence: [schema-valid audit event]
     failure_behavior: fail_closed
     verification: [{type: automated, method: Validate required identifiers and cross-event correlation.}]
-    related: {documents: [audit-replay/audit-event-model.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_audit.py]}
+    related: {controls: [GASO-AUD-002, GASO-AUD-003], documents: [audit-replay/audit-event-model.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_audit.py]}
     external_dependencies: [durable audit store when deployed]
   - id: GASO-AUD-002
     title: Detect audit-chain tampering
@@ -282,7 +282,7 @@ controls:
     expected_evidence: [audit-chain verification result]
     failure_behavior: fail_closed
     verification: [{type: automated, method: Recompute event hashes and previous-hash links for every event.}]
-    related: {documents: [audit-replay/immutable-audit-guidance.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_audit.py]}
+    related: {controls: [GASO-AUD-001], documents: [audit-replay/immutable-audit-guidance.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_audit.py]}
     external_dependencies: [production immutable or tamper-evident audit service]
   - id: GASO-AUD-003
     title: Replay without re-execution
@@ -294,7 +294,7 @@ controls:
     expected_evidence: [replay summary]
     failure_behavior: fail_closed
     verification: [{type: automated, method: Produce a deterministic timeline from verified events with no external calls.}]
-    related: {documents: [audit-replay/replayability-requirements.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_audit.py]}
+    related: {controls: [GASO-AUD-001, GASO-AUD-002], documents: [audit-replay/replayability-requirements.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_audit.py]}
     external_dependencies: []
 
   - id: GASO-FLT-001
@@ -307,7 +307,7 @@ controls:
     expected_evidence: [package validation and approval record]
     failure_behavior: deny
     verification: [{type: automated, method: Validate release manifest completeness and integrity metadata.}]
-    related: {documents: [agent-governance/agent-fleet-governance.md], templates: [], schemas: [], walkthroughs: [], tests: [tests/test_fleet.py]}
+    related: {controls: [GASO-FLT-002, GASO-GOV-003], documents: [agent-governance/agent-fleet-governance.md], templates: [], schemas: [], walkthroughs: [], tests: [tests/test_fleet.py]}
     external_dependencies: [artifact signing and distribution systems]
   - id: GASO-FLT-002
     title: Require eligibility and staged rollout
@@ -319,7 +319,7 @@ controls:
     expected_evidence: [stage decisions, monitoring results]
     failure_behavior: fail_closed
     verification: [{type: automated, method: Reject skipped stages and ineligible tenant assignments.}]
-    related: {documents: [agent-governance/agent-fleet-governance.md], templates: [], schemas: [], walkthroughs: [], tests: [tests/test_fleet.py]}
+    related: {controls: [GASO-FLT-001, GASO-FLT-003], documents: [agent-governance/agent-fleet-governance.md], templates: [], schemas: [], walkthroughs: [], tests: [tests/test_fleet.py]}
     external_dependencies: [production rollout and monitoring systems]
   - id: GASO-FLT-003
     title: Support rollback and emergency recall
@@ -331,7 +331,7 @@ controls:
     expected_evidence: [rollback test, recall record, affected scope]
     failure_behavior: fail_closed
     verification: [{type: automated, method: Validate rollback and recall records and reject unbounded recall scope.}]
-    related: {documents: [agent-governance/agent-version-lifecycle-and-rollbacks.md], templates: [], schemas: [], walkthroughs: [], tests: [tests/test_fleet.py]}
+    related: {controls: [GASO-FLT-002, GASO-IDN-003], documents: [agent-governance/agent-version-lifecycle-and-rollbacks.md], templates: [], schemas: [], walkthroughs: [], tests: [tests/test_fleet.py]}
     external_dependencies: [production deployment and identity-revocation systems]
 
   - id: GASO-LLM-001
@@ -344,7 +344,7 @@ controls:
     expected_evidence: [environment validation and processing record]
     failure_behavior: fail_closed
     verification: [{type: manual, method: Verify environment configuration against the declared processing boundary.}]
-    related: {documents: [local-llm-dfir/local-llm-dfir-model.md], templates: [templates/evidence-manifest-template.md], schemas: [], walkthroughs: [], tests: [tests/test_scope.py]}
+    related: {controls: [GASO-LLM-003, GASO-TEN-001], documents: [local-llm-dfir/local-llm-dfir-model.md], templates: [templates/evidence-manifest-template.md], schemas: [], walkthroughs: [], tests: [tests/test_scope.py]}
     external_dependencies: [approved private analysis environment]
   - id: GASO-LLM-002
     title: Treat model output as derived material
@@ -356,7 +356,7 @@ controls:
     expected_evidence: [lineage record, human review record]
     failure_behavior: fail_closed
     verification: [{type: automated, method: Reject model-derived artifacts without source lineage and review state.}]
-    related: {documents: [local-llm-dfir/local-model-output-boundaries.md], templates: [templates/evidence-manifest-template.md], schemas: [], walkthroughs: [], tests: [tests/test_evidence.py]}
+    related: {controls: [GASO-EVD-002, GASO-EVD-003], documents: [local-llm-dfir/local-model-output-boundaries.md], templates: [templates/evidence-manifest-template.md], schemas: [], walkthroughs: [], tests: [tests/test_evidence.py]}
     external_dependencies: []
   - id: GASO-LLM-003
     title: Prevent unauthorized external egress
@@ -368,7 +368,7 @@ controls:
     expected_evidence: [network-control review, egress test results]
     failure_behavior: deny
     verification: [{type: external, method: Test effective network controls and component egress behavior.}]
-    related: {documents: [local-llm-dfir/local-llm-dfir-model.md], templates: [], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
+    related: {controls: [GASO-IDN-002, GASO-LLM-001], documents: [local-llm-dfir/local-llm-dfir-model.md], templates: [], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
     external_dependencies: [network enforcement and monitoring systems]
 
   - id: GASO-ING-001
@@ -381,7 +381,7 @@ controls:
     expected_evidence: [source metadata record]
     failure_behavior: fail_closed
     verification: [{type: automated, method: Validate required provenance and source-scope fields.}]
-    related: {documents: [data-ingestion/source-system-metadata.md], templates: [], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
+    related: {controls: [GASO-ING-002], documents: [data-ingestion/source-system-metadata.md], templates: [], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
     external_dependencies: [source and ingestion platforms]
   - id: GASO-ING-002
     title: Preserve normalization lineage
@@ -393,7 +393,7 @@ controls:
     expected_evidence: [normalization lineage record]
     failure_behavior: fail_closed
     verification: [{type: automated, method: Validate transformation lineage and source references.}]
-    related: {documents: [data-ingestion/normalization-and-enrichment.md], templates: [], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
+    related: {controls: [GASO-EVD-002, GASO-ING-001], documents: [data-ingestion/normalization-and-enrichment.md], templates: [], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
     external_dependencies: [ingestion and normalization platforms]
   - id: GASO-ING-003
     title: Quarantine invalid ingestion
@@ -405,7 +405,7 @@ controls:
     expected_evidence: [quarantine or rejection event]
     failure_behavior: fail_closed
     verification: [{type: automated, method: Inject invalid and cross-scope records and require quarantine.}]
-    related: {documents: [data-ingestion/ingestion-failure-handling.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
+    related: {controls: [GASO-ING-001, GASO-TEN-003], documents: [data-ingestion/ingestion-failure-handling.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
     external_dependencies: [ingestion platform quarantine controls]
 
   - id: GASO-ASR-001
@@ -418,7 +418,7 @@ controls:
     expected_evidence: [assurance result with limitations]
     failure_behavior: escalate
     verification: [{type: automated, method: Reject assurance outputs containing authorization outcomes.}]
-    related: {documents: [governance-library/ai-assurance/judge-limitations.md], templates: [templates/judge-output-template.md], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
+    related: {controls: [GASO-GOV-001], documents: [governance-library/ai-assurance/judge-limitations.md], templates: [templates/judge-output-template.md], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
     external_dependencies: []
   - id: GASO-ASR-002
     title: Verify claim-to-evidence support
@@ -430,7 +430,7 @@ controls:
     expected_evidence: [evidence-support result and unsupported-claim list]
     failure_behavior: escalate
     verification: [{type: automated, method: Reject claims with missing evidence references or support status.}]
-    related: {documents: [governance-library/ai-assurance/evidence-support-judge.md], templates: [templates/judge-output-template.md], schemas: [], walkthroughs: [], tests: [tests/test_evidence.py]}
+    related: {controls: [GASO-EVD-003], documents: [governance-library/ai-assurance/evidence-support-judge.md], templates: [templates/judge-output-template.md], schemas: [], walkthroughs: [], tests: [tests/test_evidence.py]}
     external_dependencies: []
   - id: GASO-ASR-003
     title: Evaluate tenant-boundary risk
@@ -442,5 +442,5 @@ controls:
     expected_evidence: [tenant-boundary assurance result]
     failure_behavior: fail_closed
     verification: [{type: automated, method: Run cross-tenant negative fixtures and require failed assurance.}]
-    related: {documents: [governance-library/ai-assurance/tenant-boundary-judge.md], templates: [templates/judge-output-template.md], schemas: [], walkthroughs: [], tests: [tests/test_scope.py]}
+    related: {controls: [GASO-TEN-003], documents: [governance-library/ai-assurance/tenant-boundary-judge.md], templates: [templates/judge-output-template.md], schemas: [], walkthroughs: [], tests: [tests/test_scope.py]}
     external_dependencies: []

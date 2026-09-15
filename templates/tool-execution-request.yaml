@@ -1,0 +1,19 @@
+artifact_type: tool_execution_request
+schema_version: 1.0.0
+request_id: tool-request-example-isolation-001
+correlation_id: correlation-example-isolation-001
+tool_id: tool-example-endpoint-response
+tool_version: 1.0.0
+operation: isolate_endpoint
+target_id: host-example-001
+parameters:
+  isolation_type: full
+  reason: Synthetic suspicious endpoint behavior
+scope:
+  customer_id: customer-example-001
+  tenant_id: tenant-example-001
+  case_id: case-example-2026-0001
+  target_ids: [host-example-001]
+policy_decision_id: decision-example-isolation-001
+approval_ids: [approval-example-human-001, approval-example-customer-001]
+execution_mode: validate_only

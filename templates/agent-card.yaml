@@ -1,0 +1,17 @@
+artifact_type: agent_card
+schema_version: 1.0.0
+agent_id: agent-example-triage-001
+version: 1.0.0
+name: Synthetic Alert Triage Assistant
+owner_role: MDR service owner
+identity_reference: identity-example-agent-triage-001
+lifecycle_state: approved
+approved_missions: [summarize synthetic alerts, prepare recommendations for analyst review]
+allowed_tools: [tool-example-security-record-reader]
+prohibited_actions: [approve actions, execute containment, change tenant scope]
+scope:
+  customer_id: customer-example-001
+  tenant_id: tenant-example-001
+  environment: synthetic
+approval_requirements: [human approval for sensitive actions, customer approval when contractually required]
+external_dependencies: [identity provider, policy enforcement point, target-system authorization]

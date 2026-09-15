@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/gaso/schemas/tool-contract.schema.json",
+  "title": "Tool Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["artifact_type", "schema_version", "tool_id", "version", "owner_role", "lifecycle_state", "operations", "scope_dimensions", "prohibited_uses", "external_enforcement"],
+  "properties": {
+    "artifact_type": {"const": "tool_contract"},
+    "schema_version": {"$ref": "common-defs.schema.json#/$defs/semver"},
+    "tool_id": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+    "version": {"$ref": "common-defs.schema.json#/$defs/semver"},
+    "owner_role": {"type": "string", "minLength": 3},
+    "lifecycle_state": {"enum": ["draft", "approved", "active", "suspended", "retired"]},
+    "operations": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["name", "risk_class", "required_approvals", "allowed_parameters"],
+        "properties": {
+          "name": {"$ref": "common-defs.schema.json#/$defs/identifier"},
+          "risk_class": {"enum": ["read_only", "sensitive_read", "state_change", "destructive"]},
+          "required_approvals": {"type": "array", "items": {"enum": ["human", "customer"]}, "uniqueItems": true},
+          "allowed_parameters": {"$ref": "common-defs.schema.json#/$defs/stringList"}
+        }
+      }
+    },
+    "scope_dimensions": {"$ref": "common-defs.schema.json#/$defs/stringList"},
+    "prohibited_uses": {"$ref": "common-defs.schema.json#/$defs/stringList"},
+    "external_enforcement": {"type": "string", "minLength": 5}
+  }
+}

@@ -1,0 +1,18 @@
+artifact_type: policy_decision_record
+schema_version: 1.0.0
+decision_id: decision-example-isolation-001
+request_id: request-example-isolation-001
+policy_id: policy-example-response-001
+policy_version: 1.0.0
+outcome: REQUIRE_APPROVAL
+scope:
+  customer_id: customer-example-001
+  tenant_id: tenant-example-001
+  case_id: case-example-2026-0001
+  target_ids: [host-example-001]
+reason_codes: [state_change_requires_human_approval, contract_requires_customer_approval]
+required_approvals: [human, customer]
+obligations: [revalidate scope at the external enforcement point, preserve the external execution receipt]
+evaluated_at: "2026-09-15T11:58:00Z"
+expires_at: "2026-09-15T13:00:00Z"
+executed_action: false

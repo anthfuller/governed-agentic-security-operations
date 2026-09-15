@@ -1,0 +1,11 @@
+artifact_type: architecture_decision_record
+schema_version: 1.0.0
+adr_id: adr-example-001
+title: Keep conformance tooling offline and non-executing
+status: accepted
+context: The adoption kit must validate governance artifacts without becoming a production control plane.
+decision: Implement deterministic local validation and replay while excluding external tool execution.
+consequences: [no cloud credentials are required, validation cannot prove external enforcement]
+alternatives: [build a separate control-plane demonstration, provide documentation without executable validation]
+deciders: [repository maintainer]
+decided_at: "2026-09-15T09:00:00Z"
