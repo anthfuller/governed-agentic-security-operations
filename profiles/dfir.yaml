@@ -1,0 +1,83 @@
+artifact_type: implementation_profile
+profile_id: GASO-PROFILE-DFIR
+version: 0.1.0
+title: Digital Forensics and Incident Response profile
+description: Minimum governance contract for evidence-aware investigation and controlled private or local model assistance.
+applicable_controls:
+  - GASO-GOV-001
+  - GASO-GOV-002
+  - GASO-GOV-003
+  - GASO-IDN-001
+  - GASO-IDN-002
+  - GASO-IDN-003
+  - GASO-TEN-001
+  - GASO-TEN-002
+  - GASO-TEN-003
+  - GASO-POL-001
+  - GASO-POL-002
+  - GASO-POL-003
+  - GASO-APR-001
+  - GASO-APR-002
+  - GASO-TOL-001
+  - GASO-TOL-002
+  - GASO-TOL-003
+  - GASO-EVD-001
+  - GASO-EVD-002
+  - GASO-EVD-003
+  - GASO-AUD-001
+  - GASO-AUD-002
+  - GASO-AUD-003
+  - GASO-LLM-001
+  - GASO-LLM-002
+  - GASO-LLM-003
+  - GASO-ING-001
+  - GASO-ING-002
+  - GASO-ING-003
+  - GASO-ASR-001
+  - GASO-ASR-002
+  - GASO-ASR-003
+conditional_controls:
+  - control_id: GASO-APR-003
+    condition: Apply when a third-party service agreement retains customer authorization for the requested activity.
+  - control_id: GASO-FLT-001
+    condition: Apply when managed analysis agents or model packages are distributed as a fleet.
+  - control_id: GASO-FLT-002
+    condition: Apply when managed analysis agents or model packages are rolled out across environments.
+  - control_id: GASO-FLT-003
+    condition: Apply when managed analysis agents or model packages require centralized recall or rollback.
+roles:
+  - name: Investigation lead
+    responsibilities: [own case scope, approve investigative use of derived material]
+  - name: Evidence custodian
+    responsibilities: [preserve evidence references, hashes, custody context, and access records]
+  - name: Forensic examiner
+    responsibilities: [perform analysis, document methods, distinguish findings from source evidence]
+  - name: Model environment owner
+    responsibilities: [verify model, data, case, storage, telemetry, and egress boundaries]
+  - name: Report reviewer
+    responsibilities: [review source support, limitations, and release conditions]
+prohibited_actions:
+  - Modifying original evidence through repository tooling
+  - Treating model output or a generated timeline as original evidence
+  - Processing evidence outside the approved case or environment boundary
+  - Claiming legal sufficiency or forensic validity from schema validation
+required_approvals:
+  - Authorization for evidence access and processing purpose
+  - Approval for private or local model use when case policy requires it
+  - Human review before investigative or report reliance on model-derived material
+  - Release approval for externally distributed findings or reports
+scope_dimensions: [matter or customer, case, evidence object, derived artifact, examiner, model environment, processing purpose, time window]
+required_artifacts: [case scope, evidence manifest, derived-artifact lineage, model environment record when applicable, review record, audit events]
+required_commands:
+  - gaso validate profiles/dfir.yaml
+  - gaso verify-tenant-scope <artifact-set>
+  - gaso verify-evidence-manifest <manifest>
+  - gaso verify-audit-chain <events.jsonl>
+  - gaso replay <events.jsonl>
+conformance_tests:
+  - Evidence from another case is rejected
+  - Derived artifact without source lineage is rejected
+  - Model output without required review is rejected
+  - Undeclared external egress requirement fails closed
+  - Broken audit chain is rejected
+external_dependencies: [case management system, evidence repository, access-control system, isolated analysis environment, durable audit store]

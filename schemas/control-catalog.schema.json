@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/gaso/schemas/control-catalog.schema.json",
+  "title": "GASO Control Catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["artifact_type", "catalog_version", "controls"],
+  "properties": {
+    "artifact_type": {"const": "control_catalog"},
+    "catalog_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "controls": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/control"}
+    }
+  },
+  "$defs": {
+    "pathList": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "title", "purpose", "requirement", "profiles",
+        "accountable_role", "required_inputs", "expected_evidence",
+        "failure_behavior", "verification", "related", "external_dependencies"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^GASO-(GOV|IDN|TEN|POL|APR|TOL|EVD|AUD|FLT|LLM|ING|ASR)-[0-9]{3}$"
+        },
+        "title": {"type": "string", "minLength": 3},
+        "purpose": {"type": "string", "minLength": 10},
+        "requirement": {"type": "string", "minLength": 10},
+        "profiles": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"enum": ["MSSP", "MDR", "DFIR"]}
+        },
+        "accountable_role": {"type": "string", "minLength": 3},
+        "required_inputs": {"$ref": "#/$defs/pathList"},
+        "expected_evidence": {"$ref": "#/$defs/pathList"},
+        "failure_behavior": {"enum": ["deny", "fail_closed", "escalate"]},
+        "verification": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["type", "method"],
+            "properties": {
+              "type": {"enum": ["automated", "manual", "external"]},
+              "method": {"type": "string", "minLength": 5}
+            }
+          }
+        },
+        "related": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["documents", "templates", "schemas", "walkthroughs", "tests"],
+          "properties": {
+            "documents": {"$ref": "#/$defs/pathList"},
+            "templates": {"$ref": "#/$defs/pathList"},
+            "schemas": {"$ref": "#/$defs/pathList"},
+            "walkthroughs": {"$ref": "#/$defs/pathList"},
+            "tests": {"$ref": "#/$defs/pathList"}
+          }
+        },
+        "external_dependencies": {"$ref": "#/$defs/pathList"}
+      }
+    }
+  }
+}

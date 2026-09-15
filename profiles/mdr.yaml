@@ -1,0 +1,81 @@
+artifact_type: implementation_profile
+profile_id: GASO-PROFILE-MDR
+version: 0.1.0
+title: Managed Detection and Response profile
+description: Minimum governance contract for agent-assisted investigation, recommendation, and policy-gated response services.
+applicable_controls:
+  - GASO-GOV-001
+  - GASO-GOV-002
+  - GASO-GOV-003
+  - GASO-IDN-001
+  - GASO-IDN-002
+  - GASO-IDN-003
+  - GASO-TEN-001
+  - GASO-TEN-002
+  - GASO-TEN-003
+  - GASO-POL-001
+  - GASO-POL-002
+  - GASO-POL-003
+  - GASO-APR-001
+  - GASO-APR-002
+  - GASO-APR-003
+  - GASO-TOL-001
+  - GASO-TOL-002
+  - GASO-TOL-003
+  - GASO-EVD-001
+  - GASO-EVD-002
+  - GASO-EVD-003
+  - GASO-AUD-001
+  - GASO-AUD-002
+  - GASO-AUD-003
+  - GASO-FLT-001
+  - GASO-FLT-002
+  - GASO-FLT-003
+  - GASO-ING-001
+  - GASO-ING-002
+  - GASO-ING-003
+  - GASO-ASR-001
+  - GASO-ASR-002
+  - GASO-ASR-003
+conditional_controls:
+  - control_id: GASO-LLM-001
+    condition: Apply when investigation data is processed by a private or local model.
+  - control_id: GASO-LLM-002
+    condition: Apply when model-derived material supports a response recommendation or report.
+  - control_id: GASO-LLM-003
+    condition: Apply when sensitive investigation data enters a private or local model environment.
+roles:
+  - name: MDR service owner
+    responsibilities: [own response boundaries, approve service policy and exceptions]
+  - name: MDR analyst
+    responsibilities: [review evidence, recommendations, risk, and required escalation]
+  - name: Response approver
+    responsibilities: [authorize the exact response action and scope]
+  - name: Customer approver
+    responsibilities: [authorize customer-impacting response when contractually required]
+  - name: Enforcement owner
+    responsibilities: [verify the external PEP and target tool enforce the approved request]
+prohibited_actions:
+  - Autonomous containment based only on an agent recommendation
+  - Response outside the declared tenant, case, target, or time scope
+  - Approval substitution through analyst review or judge output
+  - Silent expansion of tool parameters after approval
+required_approvals:
+  - Scope-bound approval for sensitive containment or identity actions
+  - Customer authorization when required by the service agreement
+  - Change approval for policy, tool, and fleet behavior changes
+scope_dimensions: [customer, tenant, incident or case, evidence object, identity or asset target, tool, operation, time window]
+required_artifacts: [investigation request, evidence references, recommendation, assurance result, policy decision, approval record, tool request, audit events]
+required_commands:
+  - gaso validate profiles/mdr.yaml
+  - gaso verify-tenant-scope <artifact-set>
+  - gaso evaluate-policy <request> --policy <policy> --approvals <records>
+  - gaso verify-audit-chain <events.jsonl>
+  - gaso replay <events.jsonl>
+conformance_tests:
+  - Missing evidence support requires escalation or denial
+  - Missing or mismatched approval is denied
+  - Cross-tenant target is denied
+  - Altered response parameters are denied
+  - Broken audit chain is rejected
+external_dependencies: [identity provider, SIEM or XDR, policy enforcement point, approval system, target response tool, durable audit store]

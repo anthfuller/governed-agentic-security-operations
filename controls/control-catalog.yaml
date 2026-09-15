@@ -1,0 +1,446 @@
+artifact_type: control_catalog
+catalog_version: 0.1.0
+controls:
+  - id: GASO-GOV-001
+    title: Separate recommendation from authorization
+    purpose: Prevent an agent or assurance component from granting its own authority.
+    requirement: A recommendation, judge result, or model output MUST NOT authorize an external action.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Governance owner
+    required_inputs: [agent card, policy decision record]
+    expected_evidence: [recorded authorization source, separation-of-duties review]
+    failure_behavior: deny
+    verification: [{type: automated, method: Reject decisions whose authorizer is an agent or judge.}]
+    related: {documents: [architecture/control-loop.md], templates: [templates/agent-card-template.md, templates/policy-decision-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
+    external_dependencies: []
+  - id: GASO-GOV-002
+    title: Assign accountable ownership
+    purpose: Ensure each governed component and decision has a named accountable role.
+    requirement: Agents, policies, tools, releases, approvals, and exceptions MUST identify an accountable role.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Governance owner
+    required_inputs: [agent card, tool contract, implementation profile]
+    expected_evidence: [ownership record, review record]
+    failure_behavior: fail_closed
+    verification: [{type: automated, method: Validate required ownership fields and non-agent role values.}]
+    related: {documents: [agent-governance/readme.md], templates: [templates/agent-card-template.md, templates/tool-contract-template.md], schemas: [], walkthroughs: [], tests: [tests/test_catalog.py]}
+    external_dependencies: []
+  - id: GASO-GOV-003
+    title: Govern material changes
+    purpose: Prevent unreviewed changes to governed behavior and authority.
+    requirement: Material changes MUST be versioned, reviewed, approved at the required level, and reversible.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Change authority
+    required_inputs: [change record, validation results, rollback plan]
+    expected_evidence: [approval record, version record, rollback test]
+    failure_behavior: fail_closed
+    verification: [{type: manual, method: Confirm approval and rollback evidence before release.}]
+    related: {documents: [agent-governance/agent-change-management.md], templates: [templates/adr-template.md], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
+    external_dependencies: [organization change-management system]
+
+  - id: GASO-IDN-001
+    title: Use distinct governed identities
+    purpose: Make agent and service activity attributable and revocable.
+    requirement: Each active agent or service identity MUST be distinct, attributable, and lifecycle managed.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Identity owner
+    required_inputs: [agent identity record, owner record]
+    expected_evidence: [identity identifier, lifecycle state, credential reference]
+    failure_behavior: fail_closed
+    verification: [{type: manual, method: Verify identity uniqueness and ownership in the external identity system.}]
+    related: {documents: [agent-governance/agent-identity-lifecycle.md], templates: [templates/agent-card-template.md], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
+    external_dependencies: [organization identity provider]
+  - id: GASO-IDN-002
+    title: Enforce least privilege
+    purpose: Limit available authority to the current mission and scope.
+    requirement: Identity and tool permissions MUST be limited to approved operations and scope.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Identity owner
+    required_inputs: [approved scope, permission record]
+    expected_evidence: [permission review, scope match result]
+    failure_behavior: deny
+    verification: [{type: external, method: Compare effective permissions with the approved tool contract.}]
+    related: {documents: [agent-governance/agent-access-scope.md, tool-access/tool-access-model.md], templates: [templates/tool-contract-template.md], schemas: [], walkthroughs: [], tests: [tests/test_scope.py]}
+    external_dependencies: [organization identity provider, target platform authorization]
+  - id: GASO-IDN-003
+    title: Revoke inactive or compromised identities
+    purpose: Stop use of identities that are expired, suspended, or compromised.
+    requirement: Suspended, expired, recalled, or compromised identities MUST be denied and their credentials revoked externally.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Identity owner
+    required_inputs: [identity state, revocation trigger]
+    expected_evidence: [revocation record, denied-use audit event]
+    failure_behavior: deny
+    verification: [{type: external, method: Verify revocation and denied access in the identity provider.}]
+    related: {documents: [agent-governance/agent-identity-lifecycle.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
+    external_dependencies: [organization identity provider]
+
+  - id: GASO-TEN-001
+    title: Bind every artifact to explicit scope
+    purpose: Prevent ambiguous tenant, customer, case, or evidence context.
+    requirement: Governed requests and records MUST carry all applicable scope identifiers.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Service owner
+    required_inputs: [tenant identifier, customer identifier, case identifier]
+    expected_evidence: [scope validation result]
+    failure_behavior: fail_closed
+    verification: [{type: automated, method: Require and validate applicable scope identifiers.}]
+    related: {documents: [tenant-isolation/tenant-boundary-model.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_scope.py]}
+    external_dependencies: []
+  - id: GASO-TEN-002
+    title: Preserve scope across handoffs
+    purpose: Keep scope unchanged through retrieval, policy, approval, and tool requests.
+    requirement: Scope identifiers MUST remain consistent across every correlated artifact and handoff.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Workflow owner
+    required_inputs: [correlated artifact set]
+    expected_evidence: [cross-artifact scope validation result]
+    failure_behavior: fail_closed
+    verification: [{type: automated, method: Compare scope values across artifacts sharing a correlation identifier.}]
+    related: {documents: [tenant-isolation/tenant-scope-validation.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_scope.py]}
+    external_dependencies: []
+  - id: GASO-TEN-003
+    title: Deny cross-scope access by default
+    purpose: Block unauthorized cross-tenant, cross-customer, cross-case, and cross-evidence activity.
+    requirement: Any unresolved cross-scope mismatch MUST be denied and recorded.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Security owner
+    required_inputs: [requested scope, authorized scope]
+    expected_evidence: [denial record, mismatch details]
+    failure_behavior: deny
+    verification: [{type: automated, method: Inject mismatched scope fixtures and require denial.}]
+    related: {documents: [tenant-isolation/cross-tenant-failure-modes.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_scope.py]}
+    external_dependencies: [target data and action platforms]
+
+  - id: GASO-POL-001
+    title: Require a policy decision
+    purpose: Ensure governed requests are evaluated before an action or release.
+    requirement: A valid, current policy decision MUST precede any governed action or release request.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Policy owner
+    required_inputs: [request record, policy version, scope context]
+    expected_evidence: [policy decision record]
+    failure_behavior: deny
+    verification: [{type: automated, method: Reject requests without a valid matching policy decision.}]
+    related: {documents: [policy-enforcement/policy-decision-flow.md], templates: [templates/policy-decision-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
+    external_dependencies: [production policy decision point when deployed]
+  - id: GASO-POL-002
+    title: Fail closed on indeterminate policy state
+    purpose: Prevent ambiguous policy inputs from becoming implied authorization.
+    requirement: Missing, invalid, stale, conflicting, or unsupported policy inputs MUST produce FAIL_CLOSED.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Policy owner
+    required_inputs: [policy inputs, policy version]
+    expected_evidence: [fail-closed decision and reason codes]
+    failure_behavior: fail_closed
+    verification: [{type: automated, method: "Run malformed, stale, missing, and conflicting policy fixtures."}]
+    related: {documents: [policy-enforcement/fail-closed-behavior.md], templates: [templates/policy-decision-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
+    external_dependencies: []
+  - id: GASO-POL-003
+    title: Expire and revalidate decisions
+    purpose: Prevent reuse of obsolete authorization context.
+    requirement: Policy decisions MUST include validity bounds and MUST be re-evaluated after relevant context changes.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Policy owner
+    required_inputs: [decision timestamp, expiry, current context]
+    expected_evidence: [fresh decision or expiration denial]
+    failure_behavior: deny
+    verification: [{type: automated, method: Reject expired decisions and decisions bound to different context.}]
+    related: {documents: [policy-enforcement/policy-contract.md], templates: [templates/policy-decision-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
+    external_dependencies: []
+
+  - id: GASO-APR-001
+    title: Distinguish review from approval
+    purpose: Prevent analyst review from being treated as formal authorization.
+    requirement: Review records and approval records MUST use distinct types, roles, and outcomes.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Approval process owner
+    required_inputs: [review record, approval policy]
+    expected_evidence: [approval record from an authorized role]
+    failure_behavior: deny
+    verification: [{type: automated, method: Reject review artifacts supplied as authorization.}]
+    related: {documents: [human-oversight/human-review-model.md], templates: [templates/human-approval-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
+    external_dependencies: [organization approval system]
+  - id: GASO-APR-002
+    title: Bind approval to exact scope
+    purpose: Prevent approval reuse for a different action, target, tenant, case, or time window.
+    requirement: Approvals MUST bind the approver, action, target, scope, decision, conditions, and validity period.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Approver
+    required_inputs: [approval request, policy decision]
+    expected_evidence: [scope-bound approval record]
+    failure_behavior: deny
+    verification: [{type: automated, method: Reject approval records that do not exactly match the request scope.}]
+    related: {documents: [human-oversight/approval-boundaries.md], templates: [templates/human-approval-record-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
+    external_dependencies: []
+  - id: GASO-APR-003
+    title: Require customer authorization when contracted
+    purpose: Preserve the customer's retained authority over sensitive actions.
+    requirement: Customer authorization MUST be present when the service agreement or action class requires it.
+    profiles: [MSSP, MDR]
+    accountable_role: Service delivery owner
+    required_inputs: [service agreement rule, requested action]
+    expected_evidence: [customer approval record]
+    failure_behavior: deny
+    verification: [{type: automated, method: Reject customer-impacting fixtures when required customer approval is absent.}]
+    related: {documents: [human-oversight/customer-approval-model.md], templates: [templates/customer-approval-record-template.md], schemas: [], walkthroughs: [walkthroughs/mssp-endpoint-isolation.md], tests: [tests/test_policy.py]}
+    external_dependencies: [contract and customer authorization channel]
+
+  - id: GASO-TOL-001
+    title: Register tools before use
+    purpose: Prevent invocation of unknown or ungoverned tools.
+    requirement: Every referenced tool and operation MUST exist in an approved, current tool contract.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Tool owner
+    required_inputs: [tool contract, operation identifier]
+    expected_evidence: [tool registration and review record]
+    failure_behavior: deny
+    verification: [{type: automated, method: "Reject unknown tools, operations, and inactive contract versions."}]
+    related: {documents: [tool-access/tool-registration-requirements.md], templates: [templates/tool-contract-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
+    external_dependencies: [production tool registry when deployed]
+  - id: GASO-TOL-002
+    title: Enforce decisions at the tool boundary
+    purpose: Ensure approved scope cannot be bypassed between policy and execution.
+    requirement: A policy enforcement point MUST validate the current decision and approval before external tool execution.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Enforcement owner
+    required_inputs: [tool request, policy decision, required approvals]
+    expected_evidence: [PEP validation result, tool receipt]
+    failure_behavior: deny
+    verification: [{type: external, method: Test the production enforcement point with denied and mismatched requests.}]
+    related: {documents: [policy-enforcement/pep-pdp-model.md, tool-access/tool-access-model.md], templates: [templates/tool-contract-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
+    external_dependencies: [production policy enforcement point]
+  - id: GASO-TOL-003
+    title: Constrain tool requests to approved parameters
+    purpose: Prevent parameter substitution or expansion after approval.
+    requirement: Tool name, operation, target, parameters, and scope MUST match the approved request and tool contract.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Enforcement owner
+    required_inputs: [tool request, approval, tool contract]
+    expected_evidence: [parameter comparison result]
+    failure_behavior: deny
+    verification: [{type: automated, method: "Reject fixtures with altered targets, parameters, or operations."}]
+    related: {documents: [tool-access/restricted-tool-patterns.md], templates: [templates/tool-contract-template.md], schemas: [], walkthroughs: [], tests: [tests/test_policy.py]}
+    external_dependencies: []
+
+  - id: GASO-EVD-001
+    title: Identify and hash evidence references
+    purpose: Make referenced evidence objects unambiguous and integrity-checkable.
+    requirement: Evidence manifests MUST identify each object and record an approved cryptographic hash and acquisition context.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Evidence custodian
+    required_inputs: [evidence object reference, acquisition metadata]
+    expected_evidence: [evidence manifest]
+    failure_behavior: fail_closed
+    verification: [{type: automated, method: "Validate evidence identifiers, hash algorithms, hash values, and required context."}]
+    related: {documents: [evidence-traceability/evidence-reference-requirements.md], templates: [templates/evidence-manifest-template.md], schemas: [], walkthroughs: [], tests: [tests/test_evidence.py]}
+    external_dependencies: [system preserving original evidence]
+  - id: GASO-EVD-002
+    title: Preserve derived-artifact lineage
+    purpose: Distinguish transformed or model-assisted outputs from source evidence.
+    requirement: Every derived artifact MUST identify its source references, transformation, producer, and integrity value.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Evidence custodian
+    required_inputs: [source references, transformation record]
+    expected_evidence: [derived-artifact lineage record]
+    failure_behavior: fail_closed
+    verification: [{type: automated, method: Resolve every derived artifact to declared source evidence.}]
+    related: {documents: [evidence-traceability/evidence-traceability-model.md], templates: [templates/evidence-manifest-template.md], schemas: [], walkthroughs: [], tests: [tests/test_evidence.py]}
+    external_dependencies: []
+  - id: GASO-EVD-003
+    title: Keep summaries separate from original evidence
+    purpose: Prevent reports and model outputs from being misrepresented as original evidence.
+    requirement: Summaries, findings, timelines, and model outputs MUST be labeled as derived artifacts and MUST NOT replace original evidence references.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Investigation owner
+    required_inputs: [output artifact, source evidence references]
+    expected_evidence: [classification and lineage record]
+    failure_behavior: fail_closed
+    verification: [{type: automated, method: Reject derived artifacts that omit classification or source references.}]
+    related: {documents: [evidence-traceability/finding-support-requirements.md], templates: [templates/evidence-manifest-template.md], schemas: [], walkthroughs: [], tests: [tests/test_evidence.py]}
+    external_dependencies: []
+
+  - id: GASO-AUD-001
+    title: Correlate governed events
+    purpose: Reconstruct the complete request, decision, approval, and outcome path.
+    requirement: Governed audit events MUST carry stable event, correlation, actor, scope, time, and artifact references.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Audit owner
+    required_inputs: [governed event]
+    expected_evidence: [schema-valid audit event]
+    failure_behavior: fail_closed
+    verification: [{type: automated, method: Validate required identifiers and cross-event correlation.}]
+    related: {documents: [audit-replay/audit-event-model.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_audit.py]}
+    external_dependencies: [durable audit store when deployed]
+  - id: GASO-AUD-002
+    title: Detect audit-chain tampering
+    purpose: Detect deletion, reordering, or modification of recorded events.
+    requirement: Ordered audit fixtures MUST use the documented SHA-256 hash-chain construction and verify without gaps.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Audit owner
+    required_inputs: [ordered audit event set]
+    expected_evidence: [audit-chain verification result]
+    failure_behavior: fail_closed
+    verification: [{type: automated, method: Recompute event hashes and previous-hash links for every event.}]
+    related: {documents: [audit-replay/immutable-audit-guidance.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_audit.py]}
+    external_dependencies: [production immutable or tamper-evident audit service]
+  - id: GASO-AUD-003
+    title: Replay without re-execution
+    purpose: Review recorded decisions without repeating agent, policy, or tool behavior.
+    requirement: Replay MUST reconstruct recorded state transitions and MUST NOT invoke agents, models, policies, or tools.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Audit owner
+    required_inputs: [verified audit event set]
+    expected_evidence: [replay summary]
+    failure_behavior: fail_closed
+    verification: [{type: automated, method: Produce a deterministic timeline from verified events with no external calls.}]
+    related: {documents: [audit-replay/replayability-requirements.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_audit.py]}
+    external_dependencies: []
+
+  - id: GASO-FLT-001
+    title: Verify fleet release provenance
+    purpose: Prevent unknown or altered agent packages from entering rollout.
+    requirement: Fleet release manifests MUST identify versioned components, provenance, integrity values, owner, and approval state.
+    profiles: [MSSP, MDR]
+    accountable_role: Fleet owner
+    required_inputs: [fleet release manifest]
+    expected_evidence: [package validation and approval record]
+    failure_behavior: deny
+    verification: [{type: automated, method: Validate release manifest completeness and integrity metadata.}]
+    related: {documents: [agent-governance/agent-fleet-governance.md], templates: [], schemas: [], walkthroughs: [], tests: [tests/test_fleet.py]}
+    external_dependencies: [artifact signing and distribution systems]
+  - id: GASO-FLT-002
+    title: Require eligibility and staged rollout
+    purpose: Limit the blast radius of fleet changes.
+    requirement: Fleet changes MUST validate tenant eligibility and progress through approved stages with recorded gates.
+    profiles: [MSSP, MDR]
+    accountable_role: Fleet owner
+    required_inputs: [release manifest, tenant eligibility, rollout plan]
+    expected_evidence: [stage decisions, monitoring results]
+    failure_behavior: fail_closed
+    verification: [{type: automated, method: Reject skipped stages and ineligible tenant assignments.}]
+    related: {documents: [agent-governance/agent-fleet-governance.md], templates: [], schemas: [], walkthroughs: [], tests: [tests/test_fleet.py]}
+    external_dependencies: [production rollout and monitoring systems]
+  - id: GASO-FLT-003
+    title: Support rollback and emergency recall
+    purpose: Stop or reverse harmful fleet behavior.
+    requirement: Every active fleet release MUST have a tested rollback target and an authorized recall path.
+    profiles: [MSSP, MDR]
+    accountable_role: Fleet owner
+    required_inputs: [rollback target, recall criteria, authorization rules]
+    expected_evidence: [rollback test, recall record, affected scope]
+    failure_behavior: fail_closed
+    verification: [{type: automated, method: Validate rollback and recall records and reject unbounded recall scope.}]
+    related: {documents: [agent-governance/agent-version-lifecycle-and-rollbacks.md], templates: [], schemas: [], walkthroughs: [], tests: [tests/test_fleet.py]}
+    external_dependencies: [production deployment and identity-revocation systems]
+
+  - id: GASO-LLM-001
+    title: Bound local model processing
+    purpose: Keep sensitive DFIR data inside the approved analysis environment.
+    requirement: Local or private model processing MUST declare environment, data, case, model, and egress boundaries.
+    profiles: [DFIR]
+    accountable_role: DFIR environment owner
+    required_inputs: [case scope, approved environment record, model record]
+    expected_evidence: [environment validation and processing record]
+    failure_behavior: fail_closed
+    verification: [{type: manual, method: Verify environment configuration against the declared processing boundary.}]
+    related: {documents: [local-llm-dfir/local-llm-dfir-model.md], templates: [templates/evidence-manifest-template.md], schemas: [], walkthroughs: [], tests: [tests/test_scope.py]}
+    external_dependencies: [approved private analysis environment]
+  - id: GASO-LLM-002
+    title: Treat model output as derived material
+    purpose: Prevent local model output from becoming unreviewed evidence or fact.
+    requirement: Model outputs MUST be labeled as derived, linked to sources, and reviewed before investigative or reporting use.
+    profiles: [DFIR]
+    accountable_role: Investigation owner
+    required_inputs: [model output, evidence references]
+    expected_evidence: [lineage record, human review record]
+    failure_behavior: fail_closed
+    verification: [{type: automated, method: Reject model-derived artifacts without source lineage and review state.}]
+    related: {documents: [local-llm-dfir/local-model-output-boundaries.md], templates: [templates/evidence-manifest-template.md], schemas: [], walkthroughs: [], tests: [tests/test_evidence.py]}
+    external_dependencies: []
+  - id: GASO-LLM-003
+    title: Prevent unauthorized external egress
+    purpose: Protect sensitive case and evidence data from undeclared disclosure.
+    requirement: Local DFIR workflows MUST deny undeclared network, telemetry, retrieval, update, and support-channel egress.
+    profiles: [DFIR]
+    accountable_role: DFIR environment owner
+    required_inputs: [egress policy, component inventory]
+    expected_evidence: [network-control review, egress test results]
+    failure_behavior: deny
+    verification: [{type: external, method: Test effective network controls and component egress behavior.}]
+    related: {documents: [local-llm-dfir/local-llm-dfir-model.md], templates: [], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
+    external_dependencies: [network enforcement and monitoring systems]
+
+  - id: GASO-ING-001
+    title: Record source provenance
+    purpose: Preserve the origin and collection context of ingested security data.
+    requirement: Ingested records MUST retain source system, source tenant, collection time, and provenance metadata.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Data pipeline owner
+    required_inputs: [source record, connector metadata]
+    expected_evidence: [source metadata record]
+    failure_behavior: fail_closed
+    verification: [{type: automated, method: Validate required provenance and source-scope fields.}]
+    related: {documents: [data-ingestion/source-system-metadata.md], templates: [], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
+    external_dependencies: [source and ingestion platforms]
+  - id: GASO-ING-002
+    title: Preserve normalization lineage
+    purpose: Make transformed security data traceable to its source representation.
+    requirement: Normalization and enrichment MUST record transformation version, inputs, outputs, and rejected fields.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Data pipeline owner
+    required_inputs: [source record, transformation definition]
+    expected_evidence: [normalization lineage record]
+    failure_behavior: fail_closed
+    verification: [{type: automated, method: Validate transformation lineage and source references.}]
+    related: {documents: [data-ingestion/normalization-and-enrichment.md], templates: [], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
+    external_dependencies: [ingestion and normalization platforms]
+  - id: GASO-ING-003
+    title: Quarantine invalid ingestion
+    purpose: Prevent malformed or mis-scoped records from contaminating governed context.
+    requirement: Invalid, duplicate, unverifiable, or scope-conflicting records MUST be rejected or quarantined and audited.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: Data pipeline owner
+    required_inputs: [ingestion validation result]
+    expected_evidence: [quarantine or rejection event]
+    failure_behavior: fail_closed
+    verification: [{type: automated, method: Inject invalid and cross-scope records and require quarantine.}]
+    related: {documents: [data-ingestion/ingestion-failure-handling.md], templates: [templates/audit-event-template.md], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
+    external_dependencies: [ingestion platform quarantine controls]
+
+  - id: GASO-ASR-001
+    title: Keep assurance non-authoritative
+    purpose: Prevent an agent judge from acting as an approval or policy authority.
+    requirement: Assurance outputs MUST be advisory inputs and MUST NOT produce authorization.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: AI assurance owner
+    required_inputs: [assurance contract, evaluated artifact]
+    expected_evidence: [assurance result with limitations]
+    failure_behavior: escalate
+    verification: [{type: automated, method: Reject assurance outputs containing authorization outcomes.}]
+    related: {documents: [governance-library/ai-assurance/judge-limitations.md], templates: [templates/judge-output-template.md], schemas: [], walkthroughs: [], tests: [tests/test_controls.py]}
+    external_dependencies: []
+  - id: GASO-ASR-002
+    title: Verify claim-to-evidence support
+    purpose: Identify unsupported or weakly supported recommendations and findings.
+    requirement: Material claims MUST identify supporting evidence references and an explicit support result.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: AI assurance owner
+    required_inputs: [claims, evidence references]
+    expected_evidence: [evidence-support result and unsupported-claim list]
+    failure_behavior: escalate
+    verification: [{type: automated, method: Reject claims with missing evidence references or support status.}]
+    related: {documents: [governance-library/ai-assurance/evidence-support-judge.md], templates: [templates/judge-output-template.md], schemas: [], walkthroughs: [], tests: [tests/test_evidence.py]}
+    external_dependencies: []
+  - id: GASO-ASR-003
+    title: Evaluate tenant-boundary risk
+    purpose: Detect scope leakage before policy evaluation or release.
+    requirement: Assurance checks MUST report tenant-boundary mismatches and MUST escalate unresolved risk.
+    profiles: [MSSP, MDR, DFIR]
+    accountable_role: AI assurance owner
+    required_inputs: [evaluated artifact, authorized scope]
+    expected_evidence: [tenant-boundary assurance result]
+    failure_behavior: fail_closed
+    verification: [{type: automated, method: Run cross-tenant negative fixtures and require failed assurance.}]
+    related: {documents: [governance-library/ai-assurance/tenant-boundary-judge.md], templates: [templates/judge-output-template.md], schemas: [], walkthroughs: [], tests: [tests/test_scope.py]}
+    external_dependencies: []

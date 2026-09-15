@@ -1,74 +1,49 @@
-# Quick Start for PoC Builders
+# Quick Start for Adoption-Kit Builders
 
-This path is for engineers or architects planning a separate runnable proof-of-concept control plane based on the architecture in this repository.
-
-This repository remains documentation-first. The PoC should live in a separate companion repository.
+This path is for engineers and architects using the repository's controls, profiles, templates, schemas, and deterministic conformance tooling.
 
 ## Goal
 
-Use this path to answer one question:
+Use the kit to answer a bounded question:
 
-> What is the smallest safe demonstration that shows agent recommendation, policy decision, approval, scoped enforcement, audit event generation, and replay without touching real systems?
+> Are the selected governance artifacts structurally valid, consistently scoped, policy-complete, evidence-aware, and replayable before an external platform is asked to enforce them?
+
+The kit does not operate a SOC, invoke an agent or model, or execute an action in a customer or production environment.
 
 ## Recommended Path
 
-| Step | Read | What to Extract for a PoC |
+| Step | Read or run | Outcome |
 |---:|---|---|
-| 1 | [`../architecture/engineering-view.md`](../architecture/engineering-view.md) | Core components: orchestration, AI assurance, PDP, PEP, tools, audit. |
-| 2 | [`../architecture/control-loop.md`](../architecture/control-loop.md) | The runtime sequence to simulate. |
-| 3 | [`../examples/readme.md`](../examples/readme.md) | Example record shapes for requests, decisions, approvals, evidence, and audit. |
-| 4 | [`../templates/readme.md`](../templates/readme.md) | Candidate templates to convert into schemas later. |
-| 5 | [`../policy-enforcement/readme.md`](../policy-enforcement/readme.md) | PDP decision logic, risk classification, approval policy, and fail-closed behavior. |
-| 6 | [`../tool-access/readme.md`](../tool-access/readme.md) | How to model scoped tools without performing real actions. |
-| 7 | [`../audit-replay/readme.md`](../audit-replay/readme.md) | What events must be emitted so the flow can be replayed. |
-| 8 | [`../walkthroughs/mssp-endpoint-isolation.md`](../walkthroughs/mssp-endpoint-isolation.md) | A first end-to-end scenario to implement with synthetic data. |
+| 1 | [`../controls/README.md`](../controls/README.md) | Understand the normative controls and identifiers. |
+| 2 | [`../profiles/README.md`](../profiles/README.md) | Select the MSSP, MDR, or DFIR profile. |
+| 3 | [`../architecture/engineering-view.md`](../architecture/engineering-view.md) | Identify which controls are validated here and which require external enforcement. |
+| 4 | [`../templates/readme.md`](../templates/readme.md) | Create the required local governance artifacts. |
+| 5 | `gaso validate <artifact>` | Validate schema and artifact type. |
+| 6 | `gaso verify-tenant-scope <artifact-set>` | Check tenant, customer, case, evidence, target, and tool-scope consistency. |
+| 7 | `gaso evaluate-policy ...` | Evaluate a synthetic reference policy without executing an action. |
+| 8 | `gaso verify-audit-chain ...` and `gaso replay ...` | Verify and reconstruct the recorded workflow. |
 
-## Minimum PoC Flow
-
-A separate companion PoC should start with a narrow synthetic flow:
+## Reference Flow
 
 ```text
-synthetic alert
-→ scoped evidence references
-→ agent recommendation record
-→ assurance / judge validation record
-→ PDP decision record
-→ human approval record
-→ PEP-scoped tool execution simulation
-→ audit event
-→ replay summary
+synthetic request
+→ scope and schema validation
+→ recommendation and assurance records
+→ deterministic reference policy decision
+→ scope-bound approval validation
+→ non-executing tool request validation
+→ tamper-evident audit verification
+→ deterministic replay
 ```
 
-## Suggested Companion Repo Skeleton
+## Required Boundaries
 
-```text
-agentic-security-operations-control-plane-poc/
-├── README.md
-├── data/
-│   ├── alerts/
-│   ├── evidence/
-│   └── tenants/
-├── schemas/
-│   ├── agent-recommendation.schema.json
-│   ├── policy-decision.schema.json
-│   ├── approval-record.schema.json
-│   ├── tool-execution.schema.json
-│   └── audit-event.schema.json
-├── examples/
-│   └── endpoint-isolation/
-├── src/
-│   ├── pdp/
-│   ├── pep/
-│   ├── judges/
-│   ├── approvals/
-│   └── audit/
-└── tests/
-```
-
-## PoC Boundaries
-
-The PoC should use synthetic data only. It should not include customer data, tenant data, real EDR actions, real SIEM/SOAR actions, employer confidential information, or non-public product information.
+- Use synthetic data only.
+- Do not include credentials or real tenant, customer, incident, case, or evidence data.
+- Do not interpret `gaso` output as authorization to execute an action.
+- Implement identity, approval, policy enforcement, tool mediation, audit durability, and evidence preservation in the external systems that own those responsibilities.
+- Record tailoring and exceptions explicitly; do not silently remove control requirements.
 
 ## Expected Output
 
-After this path, a builder should know what to implement first and what to intentionally leave out of the documentation-first architecture repository.
+After completing this path, a builder has a validated set of governance artifacts, explicit external enforcement dependencies, passing positive and negative conformance tests, and a replayable synthetic workflow. The result is evidence of repository conformance—not evidence that a production system is secure or compliant.

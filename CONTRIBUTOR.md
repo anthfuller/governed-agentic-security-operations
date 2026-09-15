@@ -2,9 +2,9 @@
 
 Thank you for your interest in contributing to this repository.
 
-This repository is a conceptual reference architecture and documentation scaffold for governed agentic security operations across MSSP, MDR, SOC, cloud incident response, and private/local LLM-assisted DFIR workflows.
+This repository is a conceptual reference architecture, adoption kit, and offline conformance toolkit for governed agentic security operations across MSSP, MDR, SOC, cloud incident response, and private/local LLM-assisted DFIR workflows.
 
-It is documentation-first. Contributions should strengthen architecture clarity, governance boundaries, operating-model usefulness, threat-model accuracy, reusable templates, or control-surface completeness.
+Contributions should strengthen architecture clarity, governance boundaries, operating-model usefulness, threat-model accuracy, reusable contracts, deterministic validation, or control-surface completeness.
 
 ## Independent Project Notice
 
@@ -27,7 +27,8 @@ Good contributions may include:
 - Improvements to readability, consistency, and navigation
 - Additional architecture patterns that align with the repository scope
 - Additional governance-library controls that preserve policy, tenant, evidence, approval, and audit boundaries
-- Additional synthetic example records that improve architecture discussion without becoming runtime payloads
+- Additional synthetic example records governed by repository schemas
+- JSON Schemas, deterministic validators, conformance tests, and CI checks aligned with the control catalog
 
 Contributions should remain aligned to the repository purpose: governed agentic security operations with explicit policy enforcement, human accountability, tenant isolation, evidence traceability, auditability, and controlled use of AI-assisted workflows.
 
@@ -36,8 +37,7 @@ Contributions should remain aligned to the repository purpose: governed agentic 
 Do not submit contributions that add:
 
 - Production deployment code
-- Runtime source code
-- CI/CD workflows
+- Agent, model, orchestration, or external-action runtime code
 - Docker files
 - Infrastructure-as-code deployment artifacts
 - Real customer data, tenant data, incident data, forensic evidence, or regulated data
@@ -52,7 +52,7 @@ Do not submit contributions that add:
 - Sensitive forensic material or chain-of-custody records
 - Confidential employer, vendor, partner, or customer information
 
-Runtime code, tests, schemas, policy execution files, KQL query packs, infrastructure automation, Docker files, CI pipelines, and implementation-specific control-plane code belong in a separate companion implementation or PoC repository, not in this architecture repository.
+The repository accepts deterministic, offline code that validates artifacts and conformance with the published control contracts. Production control-plane code, external tool execution, KQL query packs, infrastructure automation, Docker deployment assets, and vendor-specific runtime integrations remain out of scope.
 
 ## Data and Example Requirements
 
@@ -159,7 +159,8 @@ Before opening a pull request, confirm that the contribution:
 - Improves the repository without weakening existing control language
 - Keeps documentation clear, practical, and architecture-focused
 - Updates links, file paths, diagrams, directory references, or README files if new files are added
-- Does not shift this repository from conceptual architecture into production implementation
+- Does not shift this repository from reference architecture and conformance tooling into production implementation
+- Adds positive and negative tests for every new validator or policy rule
 - Does not add unsupported claims about security outcomes, compliance outcomes, production readiness, forensic validity, or operational safety
 
 For large structural changes, new architecture views, new control areas, new example families, new threat-model categories, or new governance-library sections, open an issue or discussion first so the scope can be reviewed before a pull request is created.
