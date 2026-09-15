@@ -46,3 +46,10 @@ def test_reversed_approval_window_fails_closed():
     artifact["valid_from"], artifact["valid_until"] = artifact["valid_until"], artifact["valid_from"]
     with pytest.raises(ConformanceError, match="valid_from"):
         SchemaStore(ROOT / "schemas").validate(artifact, "reversed approval")
+
+
+def test_reversed_policy_decision_window_fails_closed():
+    artifact = load("templates/policy-decision-record.yaml")
+    artifact["expires_at"] = artifact["evaluated_at"]
+    with pytest.raises(ConformanceError, match="expires_at"):
+        SchemaStore(ROOT / "schemas").validate(artifact, "expired decision")
