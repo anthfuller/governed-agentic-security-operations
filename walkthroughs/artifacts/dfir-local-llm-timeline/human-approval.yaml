@@ -1,0 +1,22 @@
+artifact_type: human_approval_record
+schema_version: 1.0.0
+approval_id: approval-walkthrough-dfir-human-001
+request_id: request-walkthrough-dfir-review-001
+request_digest: 2d9bc746c02f17f6cd03c64d144b2e4f294c9557b5eecb95b1ef7339b15d79d9
+policy_decision_id: decision:request-walkthrough-dfir-review-001:1.0.0
+approver:
+  identity_id: user-walkthrough-forensic-reviewer-001
+  role: forensic timeline reviewer
+  is_agent: false
+decision: approved
+approved_actions: [record_timeline_review]
+scope:
+  customer_id: customer-walkthrough-003
+  case_id: case-walkthrough-dfir-001
+  evidence_ids: [evidence-walkthrough-event-log-001]
+  target_ids: [derived-walkthrough-timeline-001]
+  environment: synthetic-isolated-analysis
+conditions: [internal investigative review only, no claim of forensic or legal sufficiency]
+valid_from: "2026-09-15T16:10:00Z"
+valid_until: "2026-09-15T16:30:00Z"
+recorded_at: "2026-09-15T16:14:00Z"

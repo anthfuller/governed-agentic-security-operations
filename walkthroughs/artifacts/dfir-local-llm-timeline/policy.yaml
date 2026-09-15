@@ -1,0 +1,22 @@
+artifact_type: reference_policy
+schema_version: 1.0.0
+policy_id: policy-walkthrough-dfir-timeline
+version: 1.0.0
+profile: DFIR
+default_outcome: FAIL_CLOSED
+decision_ttl_seconds: 1800
+actions:
+  - name: record_timeline_review
+    allowed: true
+    risk_class: sensitive_read
+    required_tool_id: tool-walkthrough-case-record
+    required_approvals: [human]
+    required_scope_fields: [customer_id, case_id, evidence_ids, target_ids, environment]
+    allowed_parameters: [purpose, disposition]
+  - name: release_timeline_externally
+    allowed: false
+    risk_class: state_change
+    required_tool_id: tool-walkthrough-case-record
+    required_approvals: [human, customer]
+    required_scope_fields: [customer_id, case_id, evidence_ids, target_ids, environment]
+    allowed_parameters: [destination]

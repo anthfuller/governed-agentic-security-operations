@@ -1,0 +1,17 @@
+artifact_type: governed_action_request
+schema_version: 1.0.0
+request_id: request-walkthrough-mdr-session-revoke-001
+correlation_id: correlation-walkthrough-mdr-cloud-iam-001
+profile: MDR
+action: revoke_identity_sessions
+tool_id: tool-walkthrough-cloud-identity
+target_id: identity-walkthrough-001
+parameters:
+  reason: Changed after approval
+scope:
+  customer_id: customer-walkthrough-002
+  tenant_id: tenant-walkthrough-002
+  case_id: case-walkthrough-mdr-001
+  target_ids: [identity-walkthrough-001]
+requested_at: "2026-09-15T15:05:00Z"
+external_action_executed: false

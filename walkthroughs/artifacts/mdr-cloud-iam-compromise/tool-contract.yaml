@@ -1,0 +1,14 @@
+artifact_type: tool_contract
+schema_version: 1.0.0
+tool_id: tool-walkthrough-cloud-identity
+version: 1.0.0
+owner_role: MDR cloud identity tooling owner
+lifecycle_state: approved
+operations:
+  - name: revoke_identity_sessions
+    risk_class: state_change
+    required_approvals: [human, customer]
+    allowed_parameters: [reason]
+scope_dimensions: [customer_id, tenant_id, case_id, target_id]
+prohibited_uses: [cross-tenant action, identity deletion, execution by this repository]
+external_enforcement: A production PEP and customer identity platform must authorize and execute the action.

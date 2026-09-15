@@ -1,0 +1,17 @@
+artifact_type: assurance_result
+schema_version: 1.0.0
+result_id: assurance-walkthrough-mssp-001
+evaluator_id: assurance-walkthrough-scope-and-support-001
+authoritative: false
+evaluated_artifact_ids: [recommendation-walkthrough-mssp-isolation-001]
+scope:
+  provider_id: provider-walkthrough-001
+  customer_id: customer-walkthrough-001
+  tenant_id: tenant-walkthrough-001
+  case_id: case-walkthrough-mssp-001
+  target_ids: [host-walkthrough-001]
+outcome: REVIEW
+evidence_supported: true
+unsupported_claims: []
+limitations: [advisory only, does not grant authorization, synthetic fixture does not establish factual correctness]
+created_at: "2026-09-15T13:57:00Z"

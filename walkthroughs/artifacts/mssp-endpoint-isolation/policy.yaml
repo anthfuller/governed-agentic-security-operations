@@ -1,0 +1,22 @@
+artifact_type: reference_policy
+schema_version: 1.0.0
+policy_id: policy-walkthrough-mssp-endpoint
+version: 1.0.0
+profile: MSSP
+default_outcome: FAIL_CLOSED
+decision_ttl_seconds: 1800
+actions:
+  - name: isolate_endpoint
+    allowed: true
+    risk_class: state_change
+    required_tool_id: tool-walkthrough-endpoint
+    required_approvals: [human, customer]
+    required_scope_fields: [provider_id, customer_id, tenant_id, case_id, target_ids]
+    allowed_parameters: [isolation_type, reason]
+  - name: delete_endpoint_data
+    allowed: false
+    risk_class: destructive
+    required_tool_id: tool-walkthrough-endpoint
+    required_approvals: [human, customer]
+    required_scope_fields: [provider_id, customer_id, tenant_id, case_id, target_ids]
+    allowed_parameters: [path]

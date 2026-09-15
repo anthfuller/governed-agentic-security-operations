@@ -1,0 +1,19 @@
+artifact_type: governed_action_request
+schema_version: 1.0.0
+request_id: request-walkthrough-mssp-isolation-001
+correlation_id: correlation-walkthrough-mssp-isolation-001
+profile: MSSP
+action: isolate_endpoint
+tool_id: tool-walkthrough-endpoint
+target_id: host-walkthrough-foreign
+parameters:
+  isolation_type: full
+  reason: Synthetic endpoint behavior requires containment
+scope:
+  provider_id: provider-walkthrough-001
+  customer_id: customer-walkthrough-001
+  tenant_id: tenant-walkthrough-001
+  case_id: case-walkthrough-mssp-001
+  target_ids: [host-walkthrough-001]
+requested_at: "2026-09-15T14:05:00Z"
+external_action_executed: false

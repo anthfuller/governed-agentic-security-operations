@@ -1,0 +1,17 @@
+artifact_type: assurance_result
+schema_version: 1.0.0
+result_id: assurance-walkthrough-dfir-001
+evaluator_id: assurance-walkthrough-lineage-and-support-001
+authoritative: false
+evaluated_artifact_ids: [derived-walkthrough-timeline-001]
+scope:
+  customer_id: customer-walkthrough-003
+  case_id: case-walkthrough-dfir-001
+  evidence_ids: [evidence-walkthrough-event-log-001]
+  target_ids: [derived-walkthrough-timeline-001]
+  environment: synthetic-isolated-analysis
+outcome: REVIEW
+evidence_supported: true
+unsupported_claims: []
+limitations: [advisory only, does not establish forensic validity, does not authorize external release]
+created_at: "2026-09-15T16:12:00Z"

@@ -1,0 +1,8 @@
+artifact_type: tool_execution_result
+schema_version: 1.0.0
+execution_id: execution-walkthrough-mssp-isolation-001
+request_id: tool-request-walkthrough-mssp-isolation-001
+status: not_executed
+recorded_at: "2026-09-15T14:06:00Z"
+source_system: gaso synthetic walkthrough
+external_receipt_reference: null

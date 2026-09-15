@@ -1,0 +1,22 @@
+artifact_type: customer_approval_record
+schema_version: 1.0.0
+approval_id: approval-walkthrough-mssp-customer-001
+request_id: request-walkthrough-mssp-isolation-001
+request_digest: 727308a3eb6e07a3fc118cf5a58023542092238d5f155d8a8e3bef4806296ae7
+policy_decision_id: decision:request-walkthrough-mssp-isolation-001:1.0.0
+approver:
+  identity_id: user-walkthrough-customer-approver-001
+  role: customer incident commander
+  is_agent: false
+decision: approved
+approved_actions: [isolate_endpoint]
+scope:
+  provider_id: provider-walkthrough-001
+  customer_id: customer-walkthrough-001
+  tenant_id: tenant-walkthrough-001
+  case_id: case-walkthrough-mssp-001
+  target_ids: [host-walkthrough-001]
+conditions: [notify customer incident commander after external action]
+valid_from: "2026-09-15T14:00:00Z"
+valid_until: "2026-09-15T14:20:00Z"
+recorded_at: "2026-09-15T14:03:00Z"

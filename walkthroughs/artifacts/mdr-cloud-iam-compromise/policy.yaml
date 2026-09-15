@@ -1,0 +1,29 @@
+artifact_type: reference_policy
+schema_version: 1.0.0
+policy_id: policy-walkthrough-mdr-cloud-iam
+version: 1.0.0
+profile: MDR
+default_outcome: FAIL_CLOSED
+decision_ttl_seconds: 900
+actions:
+  - name: read_identity_signin_state
+    allowed: true
+    risk_class: sensitive_read
+    required_tool_id: tool-walkthrough-cloud-identity
+    required_approvals: []
+    required_scope_fields: [customer_id, tenant_id, case_id, target_ids]
+    allowed_parameters: [lookback_minutes]
+  - name: revoke_identity_sessions
+    allowed: true
+    risk_class: state_change
+    required_tool_id: tool-walkthrough-cloud-identity
+    required_approvals: [human, customer]
+    required_scope_fields: [customer_id, tenant_id, case_id, target_ids]
+    allowed_parameters: [reason]
+  - name: delete_identity
+    allowed: false
+    risk_class: destructive
+    required_tool_id: tool-walkthrough-cloud-identity
+    required_approvals: [human, customer]
+    required_scope_fields: [customer_id, tenant_id, case_id, target_ids]
+    allowed_parameters: [reason]
