@@ -14,7 +14,7 @@ An implementation-oriented governance and adoption kit for MSSP, MDR, and DFIR t
 - Schema-governed requests, approvals, decisions, evidence, and audit records
 - Request-digest-bound approvals
 - Tenant, customer, case, and target-scope validation
-- Tamper-evident audit-chain verification and deterministic replay
+- Hash-chained audit-record verification and deterministic replay
 - 56 automated tests
 - Three end-to-end walkthroughs
 
@@ -23,7 +23,7 @@ An implementation-oriented governance and adoption kit for MSSP, MDR, and DFIR t
 - Governed agentic security architecture
 - Translation of governance requirements into machine-readable contracts
 - Deterministic policy and approval validation
-- Tenant-safe MSSP, MDR, and DFIR operating models
+- Tenant-scope-aware MSSP, MDR, and DFIR operating models
 - Evidence lineage, auditability, and replay
 - Clear separation between offline conformance validation and external production enforcement
 
