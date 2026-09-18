@@ -6,6 +6,18 @@ This file describes the layered architecture used to organize the **Agentic MSSP
 
 The architecture is intended to support **MSSP**, **MDR**, **SOC / Incident Response**, **DFIR**, and **Private / Local LLM-assisted DFIR** where applicable. It should not force agentic or LLM-based patterns into workflows that are purely manual or do not require AI assistance.
 
+---
+
+## Shared Operating Model Diagram
+
+![Governed Agentic Shared Operating Model showing six operating layers, service models, operating principles, and the control and governance spine](diagrams/governed-agentic-shared-operating-model.png)
+
+[Open the full-resolution governed agentic shared operating-model diagram](diagrams/governed-agentic-shared-operating-model.png)
+
+The diagram is a conceptual view of the layered operating model and its governance boundaries. It does not represent a deployed production environment or claim that every depicted capability is implemented by this repository.
+
+---
+
 ## Architecture Summary
 
 The layered architecture separates the system into practical operating layers. Each layer has a specific role and must preserve tenant, customer, case, evidence, policy, and audit boundaries.
@@ -134,6 +146,12 @@ Runtime approval for a tenant-scoped workflow does not authorize cross-tenant re
 Cross-tenant learning must remain sanitized, reviewed, approved, scoped, monitored, and reversible before it can become shared fleet context.
 
 ## Cross-Cutting Operating Boundaries
+
+![Shared Operating Boundaries applied across MSSP, MDR, Cloud IR, DFIR, and Private or Local LLM-assisted DFIR service models](../service-models/diagrams/shared-operating-boundaries.png)
+
+[Open the full-resolution shared operating-boundaries diagram](../service-models/diagrams/shared-operating-boundaries.png)
+
+The diagram summarizes common control boundaries across the supported service models. It does not establish production enforcement, compliance, or operational implementation.
 
 The following controls apply across the layered architecture:
 
