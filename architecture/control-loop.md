@@ -6,6 +6,18 @@ The F7-LAS Agentic Execution Control Loop defines the runtime governance pattern
 
 Its purpose is to ensure that agentic systems do not act on implicit trust, but operate through explicit mission context, policy decisioning, enforcement points, human oversight, auditability, and fail-closed controls.
 
+---
+
+## Control Loop Diagram
+
+![F7-LAS Agentic Execution Control Loop showing policy-gated agent reasoning, human oversight, scoped execution, validation, monitoring, and continuous assurance](diagrams/control-Loop.png)
+
+[Open the full-resolution F7-LAS execution control-loop diagram](diagrams/control-Loop.png)
+
+The diagram is a conceptual runtime-governance view. It illustrates how agent requests and proposed actions move through policy evaluation, conditional human oversight, scoped execution, tool enforcement, output validation, monitoring, and governed feedback. It does not represent a deployed production environment or claim that every depicted capability is implemented by this repository.
+
+---
+
 ## Where It Applies
 
 This file defines the runtime action-control loop; fleet package rollout, rollback, recall, and cross-tenant intelligence distribution are handled by the fleet control-loop and tenant-isolation documents.
