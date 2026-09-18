@@ -12,6 +12,16 @@ This repository provides a reference architecture and control model. Organizatio
 
 ---
 
+## Executive Architecture Diagram
+
+![Agentic MSSP, MDR, and DFIR security operations architecture — executive view](diagrams/executive-architecture.png)
+
+[Open the full-resolution executive architecture diagram](diagrams/executive-architecture.png)
+
+The diagram is a conceptual executive view of the governed operating model, service boundaries, control planes, human oversight, and intended operational outcomes. It does not represent a deployed production environment or claim that every depicted capability is implemented by this repository.
+
+---
+
 ## Executive Summary
 
 The **Governed Agentic Security Operations Architecture** is a conceptual enterprise reference pattern for applying Agentic AI to MSSP, MDR, Cloud Incident Response, and DFIR workflows.
