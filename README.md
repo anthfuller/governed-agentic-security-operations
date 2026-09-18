@@ -12,6 +12,7 @@ An implementation-oriented governance and adoption kit for MSSP, MDR, and DFIR t
 - MSSP, MDR, and DFIR implementation profiles
 - Deterministic `gaso` offline conformance CLI
 - Schema-governed requests, approvals, decisions, evidence, and audit records
+- AI Assurance and Agent Judge patterns for evidence support, unsupported claims, tenant boundaries, HITL compliance, output quality, and ATT&CK/ATLAS mapping
 - Request-digest-bound approvals
 - Tenant, customer, case, and target-scope validation
 - Hash-chained audit-record verification and deterministic replay
@@ -25,6 +26,7 @@ An implementation-oriented governance and adoption kit for MSSP, MDR, and DFIR t
 - Deterministic policy and approval validation
 - Tenant-scope-aware MSSP, MDR, and DFIR operating models
 - Evidence lineage, auditability, and replay
+- Separation of Agent Judge assurance from PDP authorization, PEP enforcement, and human approval
 - Clear separation between offline conformance validation and external production enforcement
 
 ## Scope Boundary
@@ -110,6 +112,7 @@ An `ALLOW` result means only that the synthetic request satisfied the selected r
 | Compare MSSP, MDR, and DFIR profiles | [`profiles/`](profiles/README.md) |
 | Inspect schemas and templates | [`schemas/`](schemas/index.json) and [`templates/`](templates/readme.md) |
 | Review policy and enforcement boundaries | [`policy-enforcement/`](policy-enforcement/readme.md) |
+| Review AI assurance and Agent Judge patterns | [`AI Assurance & Analytics`](governance-library/ai-assurance/readme.md) and [`Agent Judges overview`](governance-library/ai-assurance/agent-judges-overview.md) |
 | Review threats and failure modes | [`threat-model/`](threat-model/readme.md) |
 | Browse the complete repository structure | [`REPO-STRUCTURE.md`](REPO-STRUCTURE.md) |
 
