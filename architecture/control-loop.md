@@ -8,13 +8,21 @@ Its purpose is to ensure that agentic systems do not act on implicit trust, but 
 
 ---
 
-## Control Loop Diagram
+## Executive Control Loop Diagram
+
+![F7-LAS Executive Control Loop showing the governed path from mission request through policy decision, enforcement, scoped execution, validation, audit, evaluation, and continuous assurance](diagrams/f7-las-executive-control-loop-agentic-systems.png)
+
+[Open the full-resolution F7-LAS executive control-loop diagram](diagrams/f7-las-executive-control-loop-agentic-systems.png)
+
+The executive diagram summarizes the governed operating sequence, decision outcomes, conditional human approval, and continuous-assurance feedback at a high level.
+
+## Agentic Execution Control Loop Diagram
 
 ![F7-LAS Agentic Execution Control Loop showing policy-gated agent reasoning, human oversight, scoped execution, validation, monitoring, and continuous assurance](diagrams/control-Loop.png)
 
 [Open the full-resolution F7-LAS execution control-loop diagram](diagrams/control-Loop.png)
 
-The diagram is a conceptual runtime-governance view. It illustrates how agent requests and proposed actions move through policy evaluation, conditional human oversight, scoped execution, tool enforcement, output validation, monitoring, and governed feedback. It does not represent a deployed production environment or claim that every depicted capability is implemented by this repository.
+The technical diagram shows the corresponding layer responsibilities and enforcement sequence. Both diagrams are conceptual runtime-governance views. They illustrate how agent requests and proposed actions move through policy evaluation, conditional human oversight, enforcement, scoped execution, result validation, audit, evaluation, and governed feedback. They do not represent a deployed production environment or claim that every depicted capability is implemented by this repository.
 
 ---
 
@@ -38,31 +46,28 @@ Not every workflow requires every branch in the loop. For example, read-only enr
 
 ## Control Loop Flow
 
-1. **Agent Request & Mission Context**  
+1. **L1–L2 Request & Grounded Context**
    Captures the task, tenant or case scope, retrieved context, identity, authority, and operational purpose.
 
-2. **L1–L3 Agent Reasoning & Action Proposal**  
-   The agent reasons over context, retrieves supporting information, plans the next step, and proposes an action. The proposed action should remain non-executing until policy and enforcement controls approve it.
+2. **L3–L4 Agent Planning & Proposed Action**
+   The agent reasons over context, retrieves supporting information, plans the next step, and produces a complete tool-action contract. The proposed action remains data, not authority, and must not execute until policy and enforcement controls permit it.
 
 3. **L5 Policy Decision Point (PDP)**  
    A policy decision is made before execution. The policy engine evaluates authorization, risk, tenant/case scope, tool permissions, approval requirements, data boundaries, and policy-as-code rules.
 
-4. **Conditional Human Oversight**  
-   Human review is required for sensitive, destructive, customer-impacting, privileged, evidence-related, or policy-exception actions.
+4. **Conditional Human Approval**
+   Human approval is required for sensitive, destructive, customer-impacting, privileged, evidence-related, or policy-exception actions. The approval is bound to the proposed action, scope, policy, and expiry and returns to the PDP for reevaluation; it does not authorize direct execution.
 
-5. **L6 Sandbox / Scoped Runtime**  
-   Approved actions execute only within a scoped runtime using containment, bounded permissions, approved tools, and least privilege.
+5. **L5 Policy Enforcement Point (PEP)**
+   Only a PDP permit reaches the PEP. The PEP verifies the decision, binding, scope, and obligations before authorizing access to execution.
 
-6. **L4 Tool & API Access via PEP**  
-   Tool and API access is enforced through a Policy Enforcement Point. The PEP applies identity, secrets, API controls, runtime constraints, and execution boundaries.
+6. **L6 Permitted Execution Boundary**
+   Permitted actions execute only within an approved scope using containment, bounded permissions, approved tools, and least privilege. L4 tool access and the executor operate inside this boundary only after PEP authorization.
 
-7. **Execution Result & Output Validation**  
-   Results are checked for correctness, quality, policy alignment, evidence support, tenant/case scope, and customer-impact risk before being used, escalated, or released.
+7. **L7 Result Validation, Audit & Evaluation**
+   Results and correlated records are checked for correctness, quality, policy alignment, evidence support, tenant/case scope, and customer-impact risk before being used, escalated, or released. Decisions, approvals, denials, tool calls, telemetry, and outcomes are retained for audit and evaluation.
 
-8. **L7 Monitoring, Logging & Evaluation**  
-   Telemetry, audit trails, alerts, metrics, decisions, tool calls, approvals, denials, and execution outcomes are logged and evaluated.
-
-9. **Feedback & Continuous Assurance**  
+8. **Feedback & Continuous Assurance**
    Monitoring and evaluation results feed back into prompts, policies, test cases, process improvements, assurance controls, and operating procedures through governed change control.
 
 ## Fleet and Propagation Boundary
@@ -77,10 +82,10 @@ Cross-tenant propagation requires sanitization, human review, policy approval, t
 
 The loop should support explicit decision paths:
 
-- **Allow** — proceed to scoped execution.
-- **Deny** — block the action and fail closed.
-- **Require Approval** — route to human oversight before execution.
-- **Return for Clarification** — request more context when the mission, authority, data scope, evidence basis, or policy basis is insufficient.
+- **Permit / Allow** — send the bound decision to the PEP, then proceed to scoped execution only after successful enforcement.
+- **Deny / Block** — terminate the path without PEP authorization or execution.
+- **Require Approval** — route to human approval, then return the bound approval to the PDP for reevaluation.
+- **Clarify / Refer to Human** — terminate the current path and require new input when the mission, authority, data scope, evidence basis, or policy basis is insufficient.
 
 ## Key Control Principles
 
