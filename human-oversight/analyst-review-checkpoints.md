@@ -8,7 +8,7 @@ This repository provides a reference architecture and control model. Organizatio
 
 The `human-oversight/analyst-review-checkpoints.md` file defines baseline checkpoints analysts should apply when reviewing agent-assisted security operations output in governed Agentic SOC, MSSP, MDR, Cloud Incident Response, and private/local LLM-assisted DFIR workflows.
 
-These checkpoints exist to ensure that analyst review is evidence-based, tenant-aware, auditable, and aligned to the sensitivity of the proposed output or action. They are not a replacement for PEP/PDP enforcement, Agent Judge evaluation, incident command authority, customer approval, legal review, or formal DFIR leadership approval where those controls are required.
+These checkpoints exist to ensure that analyst review is evidence-based, tenant-aware, auditable, and aligned to the sensitivity of the proposed output or action. They are not a replacement for PDP decisioning, PEP enforcement, Agent Judge evaluation, incident command authority, customer approval, legal review, or formal DFIR leadership approval where those controls are required.
 
 ## Scope
 
@@ -27,7 +27,7 @@ This file covers analyst review checkpoints for:
 
 This file does not define:
 
-- PDP authorization logic.
+- PDP decision logic.
 - PEP implementation behavior.
 - Agent Judge scoring contracts.
 - Evidence ingestion or forensic parsing procedures.
@@ -78,7 +78,7 @@ Required review inputs include, where applicable:
 | `allowed_use` | Required where output use is constrained by workflow, case, customer, legal, governance, evidence-handling, reporting, reuse, customer-facing output, or DFIR purpose. |
 | `retention_policy_id` | Required where retention, reuse, evidence handling, customer-facing output, governance evidence, or DFIR conclusions affect the analyst-reviewed output. |
 | Risk classification and operational impact | Determines whether review, escalation, or formal approval is required. |
-| PEP/PDP decision and obligations, where applicable | Confirms authorization state and required approval handling. |
+| PDP decision and PEP obligations, where applicable | Confirms authorization state and required approval handling. |
 | Agent Judge findings, where applicable | Identifies unsupported-claim, evidence-support, tenant-boundary, HITL, or quality concerns. |
 | Output destination and audience | Determines whether customer-facing, privileged, external, or cross-tenant release controls apply. |
 | Known limitations, uncertainty, missing evidence, or conflicting context | Ensures uncertainty is not hidden from the reviewer. |
@@ -170,14 +170,14 @@ Review questions:
 - Is the action reversible or irreversible?
 - What is the expected blast radius?
 - Does the recommendation require customer approval, incident commander approval, or policy exception review?
-- Has PEP/PDP authorization and required approval routing been satisfied?
+- Has the PDP decision been reevaluated with any required bound approval evidence, and has the PEP enforced the resulting permit and obligations?
 
 Fail-closed conditions:
 
 - Blast radius is unclear.
 - Reversibility is unknown.
 - The action is privileged, destructive, or customer-impacting and approval is missing.
-- The recommendation bypasses PEP/PDP or approval workflow requirements.
+- The recommendation bypasses PDP decisioning, required approval reevaluation, PEP enforcement, or approval workflow requirements.
 
 ### 6. Escalation and Routing Check
 
@@ -257,7 +257,7 @@ The analyst MUST verify whether the output or action requires additional approva
 Review questions:
 
 - Does policy require approval for this action, destination, risk level, or customer impact?
-- Has the PEP/PDP returned `ALLOW`, `DENY`, or `REQUIRE_APPROVAL`?
+- Has the PDP returned `ALLOW`, `DENY`, or `REQUIRE_APPROVAL`?
 - Is approval valid, scoped, unexpired, and issued by an authorized approver?
 - Does approval apply only to the specific tenant, customer, case, action, evidence set, destination, and time window?
 
@@ -304,7 +304,7 @@ Audit records MUST include, where applicable:
 - `data_classification`, `sensitivity_label`, `allowed_use`, and `retention_policy_id` where sensitive data handling, release, reuse, retention, customer-facing output, governance evidence, approval routing, or DFIR conclusions are involved.
 - `human_review_record_id`, `approval_record_id`, and `customer_approval_record_id` where review, formal approval, or customer approval is required or completed.
 - Agent Judge findings considered during review.
-- PEP/PDP decision and obligations, where applicable.
+- PDP decision and PEP obligations, where applicable.
 - Review outcome and rationale.
 - Required approval status and approval reference, where applicable.
 - Output destination and approved audience.
@@ -322,8 +322,8 @@ Analyst review MUST fail closed or escalate when:
 - Evidence references are missing for material investigative, DFIR, governance, approval, or customer-facing output.
 - Material claims are unsupported or contradicted by evidence.
 - Agent Judge findings identify unresolved unsupported claims, tenant-boundary risk, evidence insufficiency, or HITL non-compliance.
-- PEP/PDP returns `DENY`. Analyst review MUST fail closed. Escalation MAY occur only for separately governed exception review where explicitly permitted by policy, and must not permit execution by default.
-- PEP/PDP returns `REQUIRE_APPROVAL` and valid approval is not present.
+- PDP returns `DENY`. Analyst review MUST fail closed. Escalation MAY occur only for separately governed exception review where explicitly permitted by policy, and must not permit execution by default.
+- PDP returns `REQUIRE_APPROVAL` and valid approval is not present as bound evidence for PDP reevaluation.
 - The analyst lacks authority for the tenant, customer, case, action type, risk level, or destination.
 - The proposed action is irreversible, destructive, privileged, customer-impacting, or externally visible and required approval is missing.
 - Audit logging or context preservation fails.
@@ -372,7 +372,7 @@ Relevant alignment includes:
 - L4 Tools: tool actions must remain mediated and policy-gated.
 - L5 Policy: approval and authorization requirements must not be bypassed by analyst review.
 - L6 Sandbox / Blast Radius: containment and response recommendations must account for operational impact.
-- L7 Monitoring: analyst decisions, evidence references, outcomes, and escalations must be auditable.
+- L7 Monitoring & Evaluation: analyst decisions, evidence references, outcomes, and escalations must remain observable and auditable.
 
 F7-LAS supports the checkpoint model but does not replace the MSSP / MDR / DFIR operating model.
 
@@ -384,7 +384,7 @@ This file is acceptable when analyst review checkpoints:
 - Require evidence support for material claims.
 - Require human validation of DFIR conclusions and customer-facing outputs.
 - Require additional approval for containment, escalation, privileged, irreversible, external, or customer-impacting actions.
-- Separate analyst review from Agent Judge assurance and PEP/PDP enforcement.
+- Separate analyst review from Agent Judge assurance, PDP decisioning, and PEP enforcement.
 - Define explicit review outcomes.
 - Define fail-closed handling for missing context, unsupported claims, invalid approvals, unauthorized reviewers, and audit failures.
 - Preserve auditability across reviewer identity, authority scope, evidence references, rationale, outcome, and routing.

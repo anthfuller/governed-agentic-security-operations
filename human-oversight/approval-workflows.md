@@ -22,7 +22,7 @@ Approval workflows apply to human-oversight decisions across:
 - Sensitive operational recommendations
 - Approval gates returned by policy-enforcement workflows
 
-This file does not define the full PEP/PDP contract, Agent Judge evaluation model, evidence validation model, or tenant-isolation model. Those controls belong in their respective architecture areas. This file defines how human approval is requested, evaluated, recorded, constrained, expired, and audited.
+This file does not define the full PDP decision contract, PEP enforcement contract, Agent Judge evaluation model, evidence validation model, or tenant-isolation model. Those controls belong in their respective architecture areas. This file defines how human approval is requested, evaluated, recorded, constrained, expired, and audited.
 
 ## Architecture Alignment
 
@@ -193,17 +193,19 @@ Approval scope MUST include the applicable attributes needed to bind the approva
 - required conditions
 - rollback or review requirements where applicable
 
-## Relationship to PEP/PDP
+## Relationship to PDP Decisioning and PEP Enforcement
 
 Approval workflows do not replace policy enforcement.
 
 | PDP Result | Approval Workflow Behavior |
 |---|---|
 | ALLOW | The workflow MAY proceed if no separate approval requirement applies. |
-| REQUIRE_APPROVAL | The workflow MUST remain blocked until valid approval is granted within scope. |
+| REQUIRE_APPROVAL | The workflow MUST remain blocked until valid approval becomes bound evidence and the request returns to the PDP for reevaluation. |
 | DENY | The workflow MUST fail closed. Escalation MAY occur only for separately governed exception review where explicitly permitted by policy, and MUST NOT permit execution by default. |
 
-The PEP MUST enforce the PDP decision and any returned obligations. If the PEP cannot verify valid approval, approval scope, approval expiration, approver authority, or required audit logging, the workflow MUST fail closed.
+Human approval is bound evidence that returns to the PDP for reevaluation; it does not directly authorize execution. Only the resulting PDP permit reaches the PEP.
+
+The PEP MUST enforce the resulting PDP decision and obligations before authorizing access. If the PEP cannot verify valid approval, approval scope, approval expiration, approver authority, or required audit logging, the workflow MUST fail closed.
 
 The PEP or workflow gate MUST revalidate approval status, scope, expiration, approver authority, and required conditions before execution or release.
 
@@ -285,7 +287,7 @@ Approval workflows MUST fail closed when:
 - approval scope does not match the requested action
 - approver authority cannot be validated
 - tenant, customer, case, evidence, or destination context is missing, ambiguous, or mismatched
-- PEP/PDP returns `DENY`
+- PDP returns `DENY`
 - PDP returns `REQUIRE_APPROVAL` and no valid approval exists
 - required evidence references are missing or unverifiable
 - customer approval is required but missing
@@ -371,9 +373,9 @@ F7-LAS may be used as a supporting control lens for approval workflows.
 Approval workflows primarily align with:
 
 - L4 Tool Layer, where mediated tool execution requires gated authorization for sensitive actions.
-- L5 Policy Engine Layer, where PEP/PDP decisions may require human approval before execution.
+- L5 Policy Engine Layer, where PDP decisions may require human approval and the PEP enforces the resulting decision and obligations before authorizing access.
 - L6 Sandbox / Blast-Radius Layer, where approval constrains operational scope and impact.
-- L7 Monitoring Layer, where approval decisions, escalations, exceptions, and audit events remain observable.
+- L7 Monitoring & Evaluation, where approval decisions, escalations, exceptions, and audit events remain observable and auditable.
 
 F7-LAS should support the architecture’s accountability model. It should not replace the MSSP / MDR / DFIR operating model or become the primary subject of this file.
 

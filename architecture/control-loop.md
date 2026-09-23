@@ -2,7 +2,7 @@
 
 ## Purpose
 
-The F7-LAS Agentic Execution Control Loop defines the runtime governance pattern used across the **Agentic MSSP / MDR / DFIR Security Operations Architecture**. It shows how agentic actions are proposed, policy-evaluated, human-reviewed when required, executed within scoped boundaries, validated, monitored, and fed back into continuous assurance.
+The F7-LAS Agentic Execution Control Loop defines the runtime governance pattern used across the **Agentic MSSP / MDR / DFIR Security Operations Architecture**. It presents a six-stage runtime flow while preserving all seven F7-LAS architectural responsibilities. It shows how agentic actions are proposed, policy-evaluated, human-reviewed when required, executed within scoped boundaries, observed, and fed back into continuous assurance.
 
 Its purpose is to ensure that agentic systems do not act on implicit trust, but operate through explicit mission context, policy decisioning, enforcement points, human oversight, auditability, and fail-closed controls.
 
@@ -10,19 +10,36 @@ Its purpose is to ensure that agentic systems do not act on implicit trust, but 
 
 ## Executive Control Loop Diagram
 
-![F7-LAS Executive Control Loop showing the governed path from mission request through policy decision, enforcement, scoped execution, validation, audit, evaluation, and continuous assurance](diagrams/f7-las-executive-control-loop-agentic-systems.png)
+![F7-LAS executive control loop showing six runtime stages governed across all seven layers, conditional human approval, PDP and PEP gates, scoped execution, lifecycle-wide Layer 7 monitoring and governed feedback](diagrams/f7-las-executive-control-loop-agentic-systems.png)
 
 [Open the full-resolution F7-LAS executive control-loop diagram](diagrams/f7-las-executive-control-loop-agentic-systems.png)
 
-The executive diagram summarizes the governed operating sequence, decision outcomes, conditional human approval, and continuous-assurance feedback at a high level.
+The numbered elements are runtime stages, not F7-LAS layer numbers. The executive diagram summarizes a **six-stage runtime flow governed across all seven F7-LAS layers**. L1 Prompt and L2 Grounding remain distinct architectural responsibilities even though they are compressed into the first runtime stage.
 
 ## Agentic Execution Control Loop Diagram
 
-![F7-LAS Agentic Execution Control Loop showing policy-gated agent reasoning, human oversight, scoped execution, validation, monitoring, and continuous assurance](diagrams/control-Loop.png)
+![F7-LAS technical execution control loop showing all seven responsibility layers, permit-only PDP-to-PEP routing, Layer 4 tool access inside the Layer 6 boundary, lifecycle-wide Layer 7 monitoring and evaluation, and governed feedback](diagrams/control-Loop.png)
 
 [Open the full-resolution F7-LAS execution control-loop diagram](diagrams/control-Loop.png)
 
-The technical diagram shows the corresponding layer responsibilities and enforcement sequence. Both diagrams are conceptual runtime-governance views. They illustrate how agent requests and proposed actions move through policy evaluation, conditional human oversight, enforcement, scoped execution, result validation, audit, evaluation, and governed feedback. They do not represent a deployed production environment or claim that every depicted capability is implemented by this repository.
+The technical diagram shows the corresponding layer responsibilities and enforcement sequence. Its six displayed runtime stages are workflow compression; they do not merge or redefine the seven architectural layers.
+
+Both diagrams are conceptual runtime-governance views. They do not represent a deployed production environment, claim that every depicted capability is implemented by this repository, or establish production enforcement. The repository CLI performs offline conformance checks and does not execute external actions.
+
+### Canonical F7-LAS semantics
+
+- **L7 Monitoring & Evaluation** performs result validation, audit, telemetry, evidence, and assurance.
+- Layer 7 observes the complete lifecycle: request, grounding, planning, proposed actions, policy decisions, approvals, denials, enforcement, execution, outputs, and feedback.
+- Runtime stages and terminal outcomes flow into Layer 7 observation.
+- **Feedback & Continuous Assurance** is governed feedback produced from Layer 7 observations. It is not an eighth layer and does not permit uncontrolled self-modification.
+- Conditional human approval returns to the PDP for reevaluation and never authorizes direct execution.
+- Only a PDP permit reaches the PEP. PEP authorization precedes Layer 4 tool access and Layer 6 execution.
+- **Deny / Block** and **Clarify / Refer to Human** are distinct terminal outcomes.
+
+| Diagram asset | Dimensions | SHA-256 |
+|---|---:|---|
+| `diagrams/f7-las-executive-control-loop-agentic-systems.png` | 1920 × 1080 | `0e250eff8f021973608a77df78f01b276ed8c1147f25d24e493f9d96bc8b38ff` |
+| `diagrams/control-Loop.png` | 1920 × 1080 | `777f4a5de48dcc98ea0332358c0d9272ca4ca13d12889143a3e42464d4e6187d` |
 
 ---
 
@@ -46,29 +63,29 @@ Not every workflow requires every branch in the loop. For example, read-only enr
 
 ## Control Loop Flow
 
-1. **L1–L2 Request & Grounded Context**
-   Captures the task, tenant or case scope, retrieved context, identity, authority, and operational purpose.
+The runtime sequence is compressed into six stages for readability. The F7-LAS layers remain distinct responsibility domains and do not have to execute in simple numeric order.
 
-2. **L3–L4 Agent Planning & Proposed Action**
-   The agent reasons over context, retrieves supporting information, plans the next step, and produces a complete tool-action contract. The proposed action remains data, not authority, and must not execute until policy and enforcement controls permit it.
+1. **Runtime Stage 1 — L1 Prompt + L2 Grounding: Mission Request & Grounded Context**
+   L1 establishes the governed request, identity, purpose, scope, and constraints. L2 supplies authorized evidence and grounded context. They remain distinct responsibilities within the compressed stage.
 
-3. **L5 Policy Decision Point (PDP)**  
-   A policy decision is made before execution. The policy engine evaluates authorization, risk, tenant/case scope, tool permissions, approval requirements, data boundaries, and policy-as-code rules.
+2. **Runtime Stage 2 — L3 Agent Planning & Proposed Action**
+   Agent Planning creates a bounded plan and proposed Layer 4 tool action. The proposed action remains data, not authority, and must not execute until policy and enforcement controls permit it.
 
-4. **Conditional Human Approval**
-   Human approval is required for sensitive, destructive, customer-impacting, privileged, evidence-related, or policy-exception actions. The approval is bound to the proposed action, scope, policy, and expiry and returns to the PDP for reevaluation; it does not authorize direct execution.
+3. **Runtime Stage 3 — L5 Policy Decision Point (PDP)**
+   The PDP evaluates authorization, risk, tenant/case scope, tool permissions, approval requirements, data boundaries, and policy-as-code rules. If approval is required, the approval is bound to the proposed action, scope, policy, and expiry and returns to the PDP for reevaluation. Deny / Block and Clarify / Refer to Human terminate the current path without execution.
 
-5. **L5 Policy Enforcement Point (PEP)**
-   Only a PDP permit reaches the PEP. The PEP verifies the decision, binding, scope, and obligations before authorizing access to execution.
+4. **Runtime Stage 4 — L5 Policy Enforcement Point (PEP)**
+   Only a PDP permit reaches the PEP. The PEP verifies the decision, binding, scope, and obligations before authorizing access.
 
-6. **L6 Permitted Execution Boundary**
-   Permitted actions execute only within an approved scope using containment, bounded permissions, approved tools, and least privilege. L4 tool access and the executor operate inside this boundary only after PEP authorization.
+5. **Runtime Stage 5 — L4 Tool Access + L6 Scoped Execution**
+   Layer 4 tool access and the executor operate inside the approved Layer 6 boundary only after PEP authorization, using containment, bounded permissions, approved tools, and least privilege.
 
-7. **L7 Result Validation, Audit & Evaluation**
-   Results and correlated records are checked for correctness, quality, policy alignment, evidence support, tenant/case scope, and customer-impact risk before being used, escalated, or released. Decisions, approvals, denials, tool calls, telemetry, and outcomes are retained for audit and evaluation.
+6. **Runtime Stage 6 — Outputs & Results**
+   The runtime emits correlated results and execution evidence. These outputs do not bypass validation, release, evidence, or customer-impact controls.
 
-8. **Feedback & Continuous Assurance**
-   Monitoring and evaluation results feed back into prompts, policies, test cases, process improvements, assurance controls, and operating procedures through governed change control.
+**L7 Monitoring & Evaluation** observes every runtime stage and terminal outcome. It receives the decisions, telemetry, evidence, and outcomes needed for result validation, audit, evaluation, and assurance.
+
+**Feedback & Continuous Assurance** uses Layer 7 observations to inform governed prompt, policy, test, process, assurance-control, and operating-procedure changes. Those changes follow change control; they are not direct runtime self-modification.
 
 ## Fleet and Propagation Boundary
 

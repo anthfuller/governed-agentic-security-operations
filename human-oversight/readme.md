@@ -20,11 +20,11 @@ This directory covers:
 - Customer approval and customer-facing release controls.
 - Escalation, exception, and break-glass oversight.
 - Human review of DFIR conclusions, containment recommendations, governance evidence, and operational response decisions.
-- Oversight handoffs between agents, Agent Judges, PEP/PDP enforcement, evidence handling, audit logging, and service tower operations.
+- Oversight handoffs between agents, Agent Judges, PDP decisioning, PEP enforcement, evidence handling, audit logging, and service tower operations.
 
 This directory does not define:
 
-- PEP/PDP authorization logic.
+- PDP decision logic or PEP enforcement behavior.
 - Agent Judge evaluation contracts.
 - Agent identity lifecycle controls.
 - Tenant-isolation implementation details.
@@ -51,9 +51,9 @@ The control intent is to ensure that:
 
 Within the governed Agentic MSSP / MDR / DFIR architecture, human oversight acts as an accountability layer across the operating model.
 
-Agents may propose actions or draft outputs. Agent Judges may assess quality, policy alignment, unsupported claims, evidence support, tenant-boundary risk, and HITL compliance. PEP/PDP components enforce authorization decisions. Human approvers validate sensitive decisions, approve or reject actions, resolve ambiguity, and accept accountability for operational outcomes.
+Agents may propose actions or draft outputs. Agent Judges may assess quality, policy alignment, unsupported claims, evidence support, tenant-boundary risk, and HITL compliance. The PDP makes policy decisions and determines whether approval is required. Human approval becomes bound evidence that returns to the PDP for reevaluation; it does not directly authorize execution. Only the resulting PDP permit reaches the PEP, which enforces the decision and obligations before authorizing access. Human approvers validate sensitive decisions, approve or reject actions, resolve ambiguity, and accept accountability for operational outcomes.
 
-Human oversight is not a substitute for policy enforcement. Policy enforcement remains a PEP/PDP responsibility. Human approval MUST NOT override a PDP `DENY` decision unless the request is routed through a separately governed exception process explicitly permitted by policy. Human oversight is also not an Agent Judge function. Agent Judges provide assurance signals, not final accountability.
+Human oversight is not a substitute for policy decisioning or enforcement. PDP decisioning and PEP enforcement remain separate responsibilities. Human approval MUST NOT override a PDP `DENY` decision unless the request is routed through a separately governed exception process explicitly permitted by policy. Human oversight is also not an Agent Judge function. Agent Judges provide assurance signals, not final accountability.
 
 Microsoft Entra Agent ID and Microsoft Agent 365 belong in the Agent Governance & Identity Control Plane. They should not be treated as operational SOC agents or human-oversight decision makers.
 
@@ -97,7 +97,7 @@ Human review MUST be required when any of the following conditions apply:
 | Output affects escalation. | Validate severity, service-tower ownership, routing, and recipient scope. |
 | Output affects governance evidence. | Validate source evidence, limitations, control interpretation, and approval record. |
 | Agent Judge flags unsupported claims, hallucination risk, tenant-boundary risk, or insufficient evidence. | Require analyst validation or escalation before use. |
-| PEP/PDP returns `REQUIRE_APPROVAL`. | Route to the authorized approval workflow before execution. |
+| PDP returns `REQUIRE_APPROVAL`. | Route to the authorized approval workflow, bind valid approval evidence, and return the request to the PDP for reevaluation before execution. |
 | Policy exception or break-glass handling is requested. | Require documented approval, risk acceptance, and post-event review. |
 | The destination is external, customer-facing, privileged, or shared across tenants. | Validate release authorization and destination boundary. |
 
@@ -115,7 +115,7 @@ Required inputs include, where applicable:
 - Risk classification and approval requirement.
 - Evidence object references and evidence tenant-attribution metadata.
 - Agent Judge findings, including unsupported-claim, evidence-support, tenant-boundary, and HITL compliance signals.
-- PEP/PDP decision, obligations, constraints, and approval requirements.
+- PDP decision and approval requirements, plus PEP obligations and constraints.
 - Tool name, tool contract, action type, and output destination.
 - Known limitations, uncertainty, missing evidence, or conflicting context.
 - Prior approvals, exception records, or customer authorization requirements.
@@ -167,7 +167,7 @@ Agents MUST NOT:
 - Release customer-facing content without authorized approval.
 - Declare DFIR conclusions as final without human validation.
 - Initiate containment actions unless explicitly authorized through policy and approval workflows.
-- Bypass PEP/PDP enforcement.
+- Bypass PDP decisioning, required approval reevaluation, or PEP enforcement.
 - Suppress Agent Judge findings or audit events.
 - Alter, delete, or fabricate evidence references.
 - Reuse approvals outside the approved scope.
@@ -186,7 +186,7 @@ Audit records MUST include, where applicable:
 - Evidence object references and tenant-attribution metadata.
 - Agent identity, session identity, workflow identity, and initiating user or system.
 - Agent Judge findings used during review.
-- PEP/PDP decision and obligations.
+- PDP decision and PEP obligations.
 - Approval outcome, rejection reason, escalation reason, or request for more evidence.
 - Approval scope, expiration, constraints, and destination.
 - Timestamp, source system, workflow step, and correlation identifier.
@@ -204,7 +204,7 @@ The workflow MUST fail closed or route to escalation when:
 - Tenant, customer, workspace, case, evidence, or destination context is incomplete or mismatched.
 - Evidence references are missing for investigative, DFIR, approval, governance, or customer-facing output.
 - Agent Judge findings indicate unsupported claims, tenant-boundary risk, insufficient evidence, or HITL non-compliance and the issue is unresolved.
-- PEP/PDP requires approval and no valid approval is present.
+- PDP returns `REQUIRE_APPROVAL` and no valid approval is present as bound evidence for PDP reevaluation.
 - The approval workflow is unavailable or cannot produce an auditable decision.
 - The output destination is external, shared, privileged, or customer-facing and release authorization is not verified.
 - Break-glass handling is requested without required authorization and post-event review requirements.
@@ -238,7 +238,7 @@ Human oversight depends on controlled handoffs with other architecture areas:
 | `ai-assurance/` | Provides Agent Judge findings and evaluation signals for human review. |
 | `policy-enforcement/` | Provides PDP decisions, PEP obligations, risk classifications, and approval requirements. |
 | `local-llm-dfir/` | Provides private/local evidence handling context, draft findings, and analyst validation requirements. |
-| `workflows/` | Defines end-to-end routing between agents, judges, PEP/PDP, humans, tools, evidence stores, and audit systems. |
+| `workflows/` | Defines end-to-end routing between agents, judges, the PDP, the PEP, humans, tools, evidence stores, and audit systems. |
 | `threat-model/` | Defines abuse cases, bypass paths, reviewer manipulation risks, and residual risks. |
 | `templates/` | Provides reusable approval, escalation, exception, and review templates. |
 
@@ -267,9 +267,9 @@ F7-LAS may be used as a supporting control lens for human oversight.
 Human oversight primarily aligns with:
 
 - L4 Tool Layer, where mediated tool execution prevents direct uncontrolled action.
-- L5 Policy Engine Layer, where PEP/PDP decisions require explicit approval routing.
+- L5 Policy Engine Layer, where PDP decisions may require approval and the PEP enforces the resulting decision and obligations before authorizing access.
 - L6 Sandbox / Blast-Radius Layer, where human approval helps constrain operational impact.
-- L7 Monitoring Layer, where review decisions, audit events, and escalation outcomes must remain observable.
+- L7 Monitoring & Evaluation, where review decisions, audit events, and escalation outcomes must remain observable and auditable.
 
 F7-LAS should support the architecture’s accountability model. It should not replace the MSSP / MDR / DFIR operating model or become the primary subject of this directory.
 
@@ -299,7 +299,7 @@ Files in this directory SHOULD remain focused on human accountability and approv
 Human-oversight content is acceptable when it:
 
 - Clearly defines when human review is required.
-- Separates human approval from Agent Judge assurance and PEP/PDP enforcement.
+- Separates human approval from Agent Judge assurance, PDP decisioning, and PEP enforcement.
 - Identifies reviewer roles and accountable decision owners.
 - Requires human approval for sensitive, customer-facing, DFIR, containment, escalation, governance, exception, and cross-tenant-risk workflows.
 - Requires evidence references and tenant-attribution metadata for review decisions where applicable.
@@ -316,7 +316,7 @@ Avoid the following:
 - Treating agent recommendations as approved decisions.
 - Allowing agents to self-approve or suppress review requirements.
 - Using Agent Judges as enforcement authorities.
-- Treating PEP/PDP approval requirements as optional.
+- Treating PDP approval requirements or PEP obligations as optional.
 - Releasing customer-facing reports without review.
 - Making DFIR conclusions without validated evidence.
 - Reusing approvals outside their original scope.
@@ -331,4 +331,4 @@ Avoid the following:
 
 Human oversight is the accountability boundary for governed Agentic MSSP / MDR / DFIR operations. It ensures that agent-assisted analysis, recommendations, reports, escalations, and sensitive actions remain subject to authorized human judgment, evidence validation, tenant-boundary review, and auditable approval.
 
-Agents can assist. Agent Judges can evaluate. PEP/PDP components can enforce. Humans remain accountable for sensitive operational, investigative, customer-facing, exception, and governance decisions.
+Agents can assist. Agent Judges can evaluate. The PDP can decide, and the PEP can enforce the resulting permit and obligations. Humans remain accountable for sensitive operational, investigative, customer-facing, exception, and governance decisions.
