@@ -269,7 +269,7 @@ Human oversight primarily aligns with:
 - L4 Tool Layer, where mediated tool execution prevents direct uncontrolled action.
 - L5 Policy Engine Layer, where PEP/PDP decisions require explicit approval routing.
 - L6 Sandbox / Blast-Radius Layer, where human approval helps constrain operational impact.
-- L7 Monitoring Layer, where review decisions, audit events, and escalation outcomes must remain observable.
+- L7 Monitoring & Evaluation, where review decisions, audit events, and escalation outcomes must remain observable and auditable.
 
 F7-LAS should support the architecture’s accountability model. It should not replace the MSSP / MDR / DFIR operating model or become the primary subject of this directory.
 

@@ -373,7 +373,7 @@ Approval workflows primarily align with:
 - L4 Tool Layer, where mediated tool execution requires gated authorization for sensitive actions.
 - L5 Policy Engine Layer, where PEP/PDP decisions may require human approval before execution.
 - L6 Sandbox / Blast-Radius Layer, where approval constrains operational scope and impact.
-- L7 Monitoring Layer, where approval decisions, escalations, exceptions, and audit events remain observable.
+- L7 Monitoring & Evaluation, where approval decisions, escalations, exceptions, and audit events remain observable and auditable.
 
 F7-LAS should support the architecture’s accountability model. It should not replace the MSSP / MDR / DFIR operating model or become the primary subject of this file.
 

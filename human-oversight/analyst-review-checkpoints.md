@@ -372,7 +372,7 @@ Relevant alignment includes:
 - L4 Tools: tool actions must remain mediated and policy-gated.
 - L5 Policy: approval and authorization requirements must not be bypassed by analyst review.
 - L6 Sandbox / Blast Radius: containment and response recommendations must account for operational impact.
-- L7 Monitoring: analyst decisions, evidence references, outcomes, and escalations must be auditable.
+- L7 Monitoring & Evaluation: analyst decisions, evidence references, outcomes, and escalations must remain observable and auditable.
 
 F7-LAS supports the checkpoint model but does not replace the MSSP / MDR / DFIR operating model.
 
