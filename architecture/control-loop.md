@@ -6,6 +6,11 @@ The F7-LAS Agentic Execution Control Loop defines the runtime governance pattern
 
 Its purpose is to ensure that agentic systems do not act on implicit trust, but operate through explicit mission context, policy decisioning, enforcement points, human oversight, auditability, and fail-closed controls.
 
+## Canonical F7-LAS Sources
+
+- Framework repository: [F7-LAS](https://github.com/anthfuller/F7-LAS)
+- Current publication: [F7-LAS Whitepaper v4.1](https://zenodo.org/records/22979681)
+
 ---
 
 ## Executive Control Loop Diagram
