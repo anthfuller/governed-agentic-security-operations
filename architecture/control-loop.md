@@ -4,6 +4,8 @@
 
 The F7-LAS Agentic Execution Control Loop defines the runtime governance pattern used across the **Agentic MSSP / MDR / DFIR Security Operations Architecture**. It presents a six-stage runtime flow while preserving all seven F7-LAS architectural responsibilities. It shows how agentic actions are proposed, policy-evaluated, human-reviewed when required, executed within scoped boundaries, observed, and fed back into continuous assurance.
 
+Source framework: [F7-LAS™ repository](https://github.com/anthfuller/F7-LAS) and [F7-LAS Whitepaper v4.1 — Restored Full Edition](https://github.com/anthfuller/F7-LAS/blob/main/docs/whitepaper/F7-LAS-Whitepaper-v4.1-Restored-Full-Edition.pdf).
+
 Its purpose is to ensure that agentic systems do not act on implicit trust, but operate through explicit mission context, policy decisioning, enforcement points, human oversight, auditability, and fail-closed controls.
 
 ---

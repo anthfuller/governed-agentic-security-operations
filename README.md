@@ -29,6 +29,10 @@ An implementation-oriented governance and adoption kit for MSSP, MDR, and DFIR t
 - Separation of Agent Judge assurance from PDP authorization, PEP enforcement, and human approval
 - Clear separation between offline conformance validation and external production enforcement
 
+## Relationship to F7-LAS
+
+This repository applies the [F7-LAS™ framework](https://github.com/anthfuller/F7-LAS) as a supporting control lens for governed agentic security operations. The current framework publication is the [F7-LAS Whitepaper v4.1 — Restored Full Edition](https://github.com/anthfuller/F7-LAS/blob/main/docs/whitepaper/F7-LAS-Whitepaper-v4.1-Restored-Full-Edition.pdf). F7-LAS does not replace the MSSP, MDR, or DFIR operating model, tenant isolation, policy enforcement, human oversight, or evidence-handling responsibilities defined in this repository.
+
 ## Scope Boundary
 
 This repository is not a SOC product, autonomous response platform, production control plane, SIEM/SOAR replacement, legally sufficient DFIR evidence system, or customer-ready managed security service.
