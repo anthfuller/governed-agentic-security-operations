@@ -116,4 +116,16 @@ An `ALLOW` result means only that the synthetic request satisfied the selected r
 | Review threats and failure modes | [`threat-model/`](threat-model/readme.md) |
 | Browse the complete repository structure | [`REPO-STRUCTURE.md`](REPO-STRUCTURE.md) |
 
+## License and Attribution
+
+Copyright 2026 Anthony Fuller.
+
+This repository is licensed under the [Apache License, Version 2.0](LICENSE). The license permits use, modification, and redistribution subject to its terms. Attribution information is provided in [`NOTICE`](NOTICE) consistent with Section 4(d) of the license; the `NOTICE` file does not modify the license.
+
+Publication under Apache License 2.0 is a license grant and does not transfer copyright ownership. Existing copies and prior releases remain governed by the Apache 2.0 terms under which they were distributed.
+
+The canonical source for this project is:
+
+https://github.com/anthfuller/governed-agentic-security-operations
+
 Architecture, machine-readable contracts, synthetic examples, offline checks, and external production responsibilities remain deliberately separated throughout the repository.

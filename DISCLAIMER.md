@@ -19,3 +19,5 @@ All sample alerts, logs, decisions, outputs, policies, schemas, workflows, tenan
 Any references to third-party products, services, frameworks, standards, or vendors are provided for illustrative architecture context only. Such references do not imply endorsement, certification, partnership, sponsorship, approval, or product recommendation.
 
 No trademark, logo, brand name, product name, or service name is claimed by this repository. All trademarks, logos, brand names, product names, and service names remain the property of their respective owners.
+
+Publication under the Apache License, Version 2.0 grants the permissions stated in that license. It does not, by itself, assign or transfer copyright ownership.
