@@ -6,6 +6,9 @@ build-backend = "setuptools.build_meta"
 name = "gaso-conformance"
 version = "0.1.0"
 description = "Offline governance artifact validation and conformance tooling"
+authors = [
+  { name = "Anthony Fuller" }
+]
 readme = "README.md"
 requires-python = ">=3.11"
 license = {file = "LICENSE"}
@@ -19,6 +22,9 @@ dev = ["pytest>=8,<10"]
 
 [project.scripts]
 gaso = "gaso.cli:main"
+
+[project.urls]
+Repository = "https://github.com/anthfuller/governed-agentic-security-operations"
 
 [tool.setuptools.packages.find]
 where = ["src"]
